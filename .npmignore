@@ -1,12 +1,16 @@
 /.github
 /.husky
+/.vscode
 /src
 /__tests__
 
 .commitlintrc.yml
-.eslint.config.mjs
 .node-version
-.jest.config.cts
+.keqrc.ts
+.keqignore
+pnpm-workspace.yaml
+eslint.config.mjs
+jest.config.cts
 tsup.config.ts
 tsconfig.json
 tsconfig.*.json

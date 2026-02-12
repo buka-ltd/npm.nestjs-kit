@@ -1,7 +1,0 @@
-export * from './entity-enum.decorator'
-export * from './entity-property.decorator'
-export * from './entity-transient.decorator'
-export * from './entity-one-to-one.decorator'
-export * from './entity-one-to-many.decorator'
-export * from './entity-many-to-one.decorator'
-export * from './entity-many-to-many.decorator'

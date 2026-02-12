@@ -14,8 +14,18 @@
         "panel": "dedicated"
       },
       "runOptions": {
-        "instanceLimit": 1,
-        "runOn": "folderOpen"
+        "instanceLimit": 1
+      }
+    },
+    {
+      "type": "shell",
+      "command": "pnpm build",
+      "problemMatcher": ["$tsup", "$tsup-dts"],
+      "label": "tsup:build",
+      "detail": "tsup --build",
+      "group": {
+        "kind": "build",
+        "isDefault": true
       }
     }
   ]

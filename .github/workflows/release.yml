@@ -22,8 +22,8 @@ jobs:
           app-id: ${{ vars.BOT_APP_ID }}
           private-key: ${{ secrets.BOT_PRIVATE_KEY }}
 
-      - uses: GoogleCloudPlatform/release-please-action@v4
-        id: release
+      - id: release
+        uses: googleapis/release-please-action@v4
         with:
           token: ${{ steps.app-token.outputs.token }}
           release-type: node

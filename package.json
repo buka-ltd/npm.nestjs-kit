@@ -1,7 +1,7 @@
 {
   "name": "@buka/nestjs-kit",
   "version": "3.0.1",
-  "description": "An easy to use nestjs config module",
+  "description": "Buka Nestjs Kit",
   "packageManager": "pnpm@10.24.0+sha512.01ff8ae71b4419903b65c60fb2dc9d34cf8bb6e06d03bde112ef38f7a34d6904c424ba66bea5cdcf12890230bf39f9580473140ed9c946fef328b6e5238a345a",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
@@ -10,10 +10,6 @@
       "types": "./dist/index.d.ts",
       "require": "./dist/index.js",
       "import": "./dist/index.mjs"
-    },
-    "./plugin": {
-      "types": "./dist/plugin/index.d.ts",
-      "require": "./dist/plugin/index.js"
     }
   },
   "scripts": {
@@ -38,20 +34,21 @@
   ],
   "author": "Val.istar.Guo <val.istar.guo@gmail.com>",
   "license": "MIT",
-  "homepage": "https://github.com/buka-lnc/npm.nestjs-type-helper/#readme",
+  "homepage": "https://github.com/buka-inc/npm.nestjs-kit#readme",
   "bugs": {
-    "url": "https://github.com/buka-lnc/npm.nestjs-type-helper/issues"
+    "url": "https://github.com/buka-inc/npm.nestjs-kit/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/buka-inc/npm.nestjs-type-helper"
+    "url": "https://github.com/buka-inc/npm.nestjs-kit"
   },
   "devDependencies": {
     "@buka/class-transformer-extra": "^2.1.4",
-    "@buka/eslint-config": "^3.0.3",
+    "@buka/eslint-config": "^4.0.0",
     "@commitlint/cli": "^20.2.0",
     "@commitlint/config-conventional": "^20.2.0",
     "@jest/globals": "^30.2.0",
+    "@keq-request/cli": "file:///../../@keq/keq/packages/cli",
     "@mikro-orm/core": "^6.6.2",
     "@mikro-orm/migrations": "^6.6.2",
     "@nestjs/common": "^11.1.11",
@@ -60,14 +57,14 @@
     "@nestjs/swagger": "^11.2.3",
     "@nestjs/testing": "^11.1.11",
     "@swc/core": "^1.15.8",
-    "@types/express": "^5.0.6",
     "@types/node": "^22.19.3",
     "@types/object-path": "^0.11.4",
+    "@types/ramda": "^0.31.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.3",
     "commitizen": "^4.3.1",
     "cz-conventional-changelog": "^3.3.0",
-    "eslint": "^9.39.2",
+    "eslint": "^10.1.0",
     "husky": "^9.1.7",
     "is-ci": "^4.1.0",
     "jest": "^30.2.0",
@@ -79,11 +76,21 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
-    "@types/ramda": "^0.31.1",
+    "@aws-sdk/client-s3": "^3.975.0",
+    "@aws-sdk/lib-storage": "^3.975.0",
+    "@aws-sdk/s3-request-presigner": "^3.975.0",
+    "@buka/error-codes": "^1.1.1",
+    "@buka/exception": "^1.0.4",
+    "@keq-request/exception": "file:///../../@keq/keq/packages/exception",
+    "@keq-request/headers": "5.0.0-alpha.31",
+    "@keq-request/nestjs": "5.0.0-alpha.31",
+    "@keq-request/url": "5.0.0-alpha.31",
+    "bcryptjs": "^3.0.3",
     "jsonschema": "^1.5.0",
+    "keq": "file:///../../@keq/keq/packages/keq",
     "ramda": "^0.32.0",
-    "ts-custom-error": "^3.3.1",
-    "type-fest": "^5.3.1"
+    "type-fest": "^5.3.1",
+    "uuid": "^11.1.0"
   },
   "peerDependencies": {
     "@buka/class-transformer-extra": "^2",
@@ -93,7 +100,6 @@
     "@nestjs/core": "^10 || ^11",
     "@nestjs/mapped-types": "^2",
     "@nestjs/swagger": "^10 || ^11",
-    "@types/express": "*",
     "class-transformer": "*",
     "class-validator": "*"
   }

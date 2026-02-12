@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "noImplicitAny": false,
+    "noEmitOnError": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "moduleResolution": "nodenext",
+    "module": "nodenext",
+    "target": "esnext"
+  },
+  "include": [".*.ts", "*.config.ts", "*.config.cts"]
+}

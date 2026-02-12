@@ -1,5 +1,0 @@
-export * from './model.decorator'
-export * from './property.decorator'
-export * from './model.register'
-export * from './relation.decorator'
-export * from './nested.decorator'

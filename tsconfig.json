@@ -6,16 +6,16 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "declaration": true,
+    "noEmit": true,
     "noEmitOnError": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "moduleResolution": "nodenext",
     "module": "nodenext",
     "target": "esnext",
-    "baseUrl": "./src",
     "paths": {
-      "~/*": ["./*"],
-      "~~/*": ["../*"]
+      "~/*": ["./src/*"],
+      "~~/*": ["./*"]
     }
   },
   "ts-node": {
