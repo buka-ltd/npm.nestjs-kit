@@ -1,4 +1,6 @@
-import { EntityName, ManyToOne as OrmManyToOne, ManyToOneOptions } from '@mikro-orm/core'
+import type { EntityName } from '@mikro-orm/core'
+import { ManyToOne as OrmManyToOne } from '@mikro-orm/decorators/legacy'
+import type { ManyToOneOptions } from '@mikro-orm/core'
 import { ApiHideProperty } from '@nestjs/swagger'
 import { Type } from '@nestjs/common'
 import { resolveEntityType } from './_resolve-entity-class'
@@ -17,22 +19,21 @@ import { Composite } from '~/modules/core'
  * }
  * ```
  */
-export function ManyToOne<T extends object, O>(
-  entity?: ManyToOneOptions<T, O> | string | ((e?: any) => EntityName<T>),
-  options?: Partial<ManyToOneOptions<T, O>>,
-): PropertyDecorator {
+export function ManyToOne<Target extends object, Owner extends object>(
+  entity?: ManyToOneOptions<Owner, Target> | ((e?: any) => EntityName<Target>),
+  options?: Partial<ManyToOneOptions<Owner, Target>>,
+): (target: Owner, propertyName: string) => void {
   return (target, propertyKey) => {
-    if (typeof propertyKey !== 'string') throw new TypeError()
-
-    OrmManyToOne(entity, options)(target, propertyKey)
+    if (typeof entity === 'function') {
+      OrmManyToOne(entity, options)(target, propertyKey)
+    } else if (entity) {
+      OrmManyToOne(entity)(target, propertyKey)
+    } else {
+      OrmManyToOne(options)(target, propertyKey)
+    }
 
     const resolvedOptions = typeof entity === 'object' ? entity : options
-    const entityRef: string | (() => EntityName<T>) | undefined
-      = typeof entity === 'function'
-        ? entity as () => EntityName<T>
-        : typeof entity === 'string'
-          ? entity
-          : resolvedOptions?.entity as string | (() => EntityName<T>) | undefined
+    const entityRef = typeof entity === 'function' ? entity : resolvedOptions?.entity
 
     if (resolvedOptions?.hidden) {
       ApiHideProperty()(target, propertyKey)

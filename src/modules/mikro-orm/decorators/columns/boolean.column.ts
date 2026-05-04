@@ -1,4 +1,5 @@
-import { Property as MikroOrmProperty, PropertyOptions } from '@mikro-orm/core'
+import { Property as MikroOrmProperty } from '@mikro-orm/decorators/legacy'
+import type { PropertyOptions } from '@mikro-orm/core'
 import { IsBoolean } from 'class-validator'
 import { applyDecorators } from '@nestjs/common'
 import { Property } from '~/modules/core/decorators'
@@ -26,10 +27,8 @@ interface BooleanOptions<T extends object> extends Omit<PropertyOptions<T>, 'typ
  * }
  * ```
  */
-export function Boolean<T extends object>(options?: BooleanOptions<T>): PropertyDecorator {
+export function Boolean<T extends object>(options?: BooleanOptions<T>): (target: T, propertyName: string) => void {
   return (target, propertyKey) => {
-    if (typeof propertyKey !== 'string') throw new TypeError()
-
     MikroOrmProperty({ ...options, type: 'boolean' })(target, propertyKey)
 
     applyDecorators(

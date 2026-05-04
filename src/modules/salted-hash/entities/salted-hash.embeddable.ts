@@ -1,4 +1,5 @@
-import { Embeddable, Hidden, Property } from '@mikro-orm/core'
+import { Embeddable, Property } from '@mikro-orm/decorators/legacy'
+import { Hidden } from '@mikro-orm/core'
 import { ApiHideProperty } from '@nestjs/swagger'
 
 

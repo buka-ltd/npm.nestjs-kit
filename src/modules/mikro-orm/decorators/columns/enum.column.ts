@@ -1,4 +1,6 @@
-import { AnyEntity, Enum as MikroOrmEnum, EnumOptions } from '@mikro-orm/core'
+import type { AnyEntity } from '@mikro-orm/core'
+import { Enum as MikroOrmEnum } from '@mikro-orm/decorators/legacy'
+import type { EnumOptions } from '@mikro-orm/core'
 import { applyDecorators } from '@nestjs/common'
 import { Property } from '~/modules/core/decorators'
 import { SchemaObject } from '~/swagger-patcher/swagger-patcher'
@@ -28,10 +30,8 @@ interface ColumnEnumOptions extends Omit<EnumOptions<AnyEntity>, 'type' | 'colum
  * }
  * ```
  */
-export function Enum(options: ColumnEnumOptions): PropertyDecorator {
+export function Enum<T extends object>(options: ColumnEnumOptions): (target: T, propertyName: string) => void {
   return (target, propertyKey) => {
-    if (typeof propertyKey !== 'string') throw new TypeError()
-
     MikroOrmEnum(options)(target, propertyKey)
 
     const items = options.items as ((() => (string | number)[]) | (string | number)[] | undefined)

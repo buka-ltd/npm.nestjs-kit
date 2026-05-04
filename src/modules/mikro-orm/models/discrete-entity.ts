@@ -1,4 +1,6 @@
-import { Config, DefineConfig, PrimaryKey, PrimaryKeyProp } from '@mikro-orm/core'
+import { Config, PrimaryKeyProp } from '@mikro-orm/core'
+import type { DefineConfig } from '@mikro-orm/core'
+import { PrimaryKey } from '@mikro-orm/decorators/legacy'
 import { TimestampedEntity } from './timestamped-entity.js'
 import { IsString, IsUUID } from 'class-validator'
 import { v7 as uuidv7 } from 'uuid'

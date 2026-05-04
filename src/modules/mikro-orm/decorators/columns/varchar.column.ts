@@ -1,4 +1,5 @@
-import { Property as MikroOrmProperty, PropertyOptions } from '@mikro-orm/core'
+import { Property as MikroOrmProperty } from '@mikro-orm/decorators/legacy'
+import type { PropertyOptions } from '@mikro-orm/core'
 import { IsString, MaxLength } from 'class-validator'
 import { applyDecorators } from '@nestjs/common'
 import { Property } from '~/modules/core/decorators'
@@ -27,10 +28,8 @@ interface VarcharOptions<T extends object> extends Omit<PropertyOptions<T>, 'typ
  * }
  * ```
  */
-export function Varchar<T extends object>(options?: VarcharOptions<T>): PropertyDecorator {
+export function Varchar<T extends object>(options?: VarcharOptions<T>): (target: T, propertyName: string) => void {
   return (target, propertyKey) => {
-    if (typeof propertyKey !== 'string') throw new TypeError()
-
     MikroOrmProperty({ ...options, type: 'varchar' })(target, propertyKey)
 
     applyDecorators(

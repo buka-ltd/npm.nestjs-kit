@@ -120,3 +120,4 @@ es
 # Lock File
 package-lock.json
 yarn.lock
+.claude/*.local.json

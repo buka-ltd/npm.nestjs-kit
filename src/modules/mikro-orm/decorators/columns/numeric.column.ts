@@ -1,4 +1,5 @@
-import { Property as MikroOrmProperty, PropertyOptions } from '@mikro-orm/core'
+import { Property as MikroOrmProperty } from '@mikro-orm/decorators/legacy'
+import type { PropertyOptions } from '@mikro-orm/core'
 import { IsNumber } from 'class-validator'
 import { applyDecorators } from '@nestjs/common'
 import { Property } from '~/modules/core/decorators'
@@ -27,10 +28,8 @@ interface NumericOptions<T extends object> extends Omit<PropertyOptions<T>, 'typ
  * }
  * ```
  */
-export function Numeric<T extends object>(options?: NumericOptions<T>): PropertyDecorator {
+export function Numeric<T extends object>(options?: NumericOptions<T>): (target: T, propertyName: string) => void {
   return (target, propertyKey) => {
-    if (typeof propertyKey !== 'string') throw new TypeError()
-
     MikroOrmProperty({ ...options, type: 'numeric' })(target, propertyKey)
 
     applyDecorators(

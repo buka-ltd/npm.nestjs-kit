@@ -1,4 +1,5 @@
-import { Embeddable, Hidden, Property } from '@mikro-orm/core'
+import { Embeddable, Property } from '@mikro-orm/decorators/legacy'
+import { Hidden, HiddenProps } from '@mikro-orm/core'
 import { ApiHideProperty } from '@nestjs/swagger'
 
 /**
@@ -20,6 +21,8 @@ import { ApiHideProperty } from '@nestjs/swagger'
  */
 @Embeddable()
 export class EncryptedPayload {
+  [HiddenProps]?: 'ciphertext' | 'cipherIv' | 'cipherTag';
+
   /**
    * 加密后的数据（二进制）
    */
@@ -29,7 +32,7 @@ export class EncryptedPayload {
     hidden: true,
   })
   @ApiHideProperty()
-  ciphertext!: Buffer & Hidden
+  ciphertext!: Buffer
 
   /**
    * 初始化向量（二进制）
@@ -40,7 +43,7 @@ export class EncryptedPayload {
     hidden: true,
   })
   @ApiHideProperty()
-  cipherIv!: Buffer & Hidden
+  cipherIv!: Buffer
 
   /**
    * 认证标签（二进制，用于 GCM 模式验证数据完整性）
@@ -51,7 +54,7 @@ export class EncryptedPayload {
     hidden: true,
   })
   @ApiHideProperty()
-  cipherTag!: Buffer & Hidden
+  cipherTag!: Buffer
 
   /**
    * 加密算法版本号

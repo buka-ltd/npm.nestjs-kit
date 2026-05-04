@@ -1,4 +1,5 @@
-import { Property as MikroOrmProperty, PropertyOptions } from '@mikro-orm/core'
+import { Property as MikroOrmProperty } from '@mikro-orm/decorators/legacy'
+import type { PropertyOptions } from '@mikro-orm/core'
 import { ApiHideProperty, ApiPropertyOptions } from '@nestjs/swagger'
 import { Composite, Dictionary, List } from '~/modules/core/decorators'
 import { Class } from 'type-fest'
@@ -30,15 +31,14 @@ interface JsonbOptions<T extends object> extends Omit<PropertyOptions<T>, 'type'
  * }
  * ```
  */
-export function Jsonb<T extends object>(options: JsonbOptions<T>): PropertyDecorator {
+export function Jsonb<T extends object>(options: JsonbOptions<T>): (target: T, propertyName: string) => void {
   const { type, kind = 'composite', schema, ...ormOptions } = options
 
   return (target, propertyKey) => {
-    if (typeof propertyKey !== 'string') throw new TypeError()
-
     MikroOrmProperty({
       ...ormOptions,
       columnType: 'jsonb',
+      type: 'json',
     })(target, propertyKey)
 
     if (ormOptions.hidden) {
@@ -59,15 +59,15 @@ export function Jsonb<T extends object>(options: JsonbOptions<T>): PropertyDecor
     }
 
     switch (kind) {
-    case 'list':
-      List(decoratorOptions)(target, propertyKey)
-      break
-    case 'dictionary':
-      Dictionary(decoratorOptions)(target, propertyKey)
-      break
-    default:
-      Composite(decoratorOptions)(target, propertyKey)
-      break
+      case 'list':
+        List(decoratorOptions)(target, propertyKey)
+        break
+      case 'dictionary':
+        Dictionary(decoratorOptions)(target, propertyKey)
+        break
+      default:
+        Composite(decoratorOptions)(target, propertyKey)
+        break
     }
   }
 }

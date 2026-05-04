@@ -1,4 +1,6 @@
-import { BigIntType, Config, DefineConfig, PrimaryKey, PrimaryKeyProp } from '@mikro-orm/core'
+import { BigIntType, Config, PrimaryKeyProp } from '@mikro-orm/core'
+import type { DefineConfig } from '@mikro-orm/core'
+import { PrimaryKey } from '@mikro-orm/decorators/legacy'
 import { IsNumberString } from 'class-validator'
 import { TimestampedEntity } from './timestamped-entity.js'
 import { Property } from '~/modules/core/decorators/index.js'

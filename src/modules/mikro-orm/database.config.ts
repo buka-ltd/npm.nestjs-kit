@@ -4,7 +4,8 @@ import { IsBoolean, IsNumber, IsString } from 'class-validator'
 import * as R from 'ramda'
 import * as util from 'util'
 import { Migrator } from '@mikro-orm/migrations'
-import { FlushMode, Options } from '@mikro-orm/core'
+import type { Options } from '@mikro-orm/core'
+import { FlushMode } from '@mikro-orm/core'
 import { BadRequestException } from '@nestjs/common'
 
 
@@ -34,8 +35,8 @@ export class DatabaseConfig {
   @IsString()
   timezone? = '+08:00'
 
-  toMikroOrmOptions(config?: Partial<Options>): Options {
-    let options: Options = {
+  toMikroOrmOptions(config?: Partial<Options>): Partial<Options> {
+    let options: Partial<Options> = {
       host: this.host,
       port: this.port,
       user: this.user,
@@ -63,7 +64,7 @@ export class DatabaseConfig {
           path: 'migrations',
           fileName: (timestamp) => `migration-${timestamp}`,
         },
-      } satisfies Options)
+      })
     }
 
     return R.mergeDeepRight(options, config || {})

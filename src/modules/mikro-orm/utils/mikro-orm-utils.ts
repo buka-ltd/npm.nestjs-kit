@@ -8,7 +8,7 @@ export function getMetadata<T>(classRef: Type<T>): EntityProperty<T>[] {
 
   let parent: any = classRef
   do {
-    const meta = MetadataStorage.getMetadataFromDecorator(parent)
+    const meta = MetadataStorage.getMetadata(parent.name, parent[MetadataStorage.PATH_SYMBOL])
     if (meta instanceof EntityMetadata) metadatas.push(meta)
     parent = Object.getPrototypeOf(parent)
   } while (parent && parent !== Object.prototype)

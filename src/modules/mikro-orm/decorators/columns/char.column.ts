@@ -1,4 +1,5 @@
-import { Property as MikroOrmProperty, PropertyOptions } from '@mikro-orm/core'
+import { Property as MikroOrmProperty } from '@mikro-orm/decorators/legacy'
+import type { PropertyOptions } from '@mikro-orm/core'
 import { IsString, MaxLength, MinLength } from 'class-validator'
 import { applyDecorators } from '@nestjs/common'
 import { Property } from '~/modules/core/decorators'
@@ -28,10 +29,8 @@ interface CharOptions<T extends object> extends Omit<PropertyOptions<T>, 'type' 
  * }
  * ```
  */
-export function Char<T extends object>(options?: CharOptions<T>): PropertyDecorator {
+export function Char<T extends object>(options?: CharOptions<T>): (target: T, propertyName: string) => void {
   return (target, propertyKey) => {
-    if (typeof propertyKey !== 'string') throw new TypeError()
-
     MikroOrmProperty({ ...options, type: 'char' })(target, propertyKey)
 
     applyDecorators(

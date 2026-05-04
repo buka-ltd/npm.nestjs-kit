@@ -1,4 +1,6 @@
-import { BigIntType, Property as MikroOrmProperty, PropertyOptions } from '@mikro-orm/core'
+import { BigIntType } from '@mikro-orm/core'
+import { Property as MikroOrmProperty } from '@mikro-orm/decorators/legacy'
+import type { PropertyOptions } from '@mikro-orm/core'
 import { IsInt, IsString } from 'class-validator'
 import { applyDecorators } from '@nestjs/common'
 import { Property } from '~/modules/core/decorators'
@@ -31,10 +33,8 @@ interface BigintOptions<T extends object> extends Omit<PropertyOptions<T>, 'type
  * }
  * ```
  */
-export function Bigint<T extends object>(options?: BigintOptions<T>): PropertyDecorator {
+export function Bigint<T extends object>(options?: BigintOptions<T>): (target: T, propertyName: string) => void {
   return (target, propertyKey) => {
-    if (typeof propertyKey !== 'string') throw new TypeError()
-
     const mode = options?.mode ?? 'string'
 
     MikroOrmProperty({

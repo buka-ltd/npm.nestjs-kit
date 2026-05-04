@@ -1,4 +1,5 @@
-import { Property as MikroOrmProperty, PropertyOptions } from '@mikro-orm/core'
+import { Property as MikroOrmProperty } from '@mikro-orm/decorators/legacy'
+import type { PropertyOptions } from '@mikro-orm/core'
 import { IsString } from 'class-validator'
 import { applyDecorators } from '@nestjs/common'
 import { Property } from '~/modules/core/decorators'
@@ -26,10 +27,8 @@ interface UuidOptions<T extends object> extends Omit<PropertyOptions<T>, 'type' 
  * }
  * ```
  */
-export function Uuid<T extends object>(options?: UuidOptions<T>): PropertyDecorator {
+export function Uuid<T extends object>(options?: UuidOptions<T>): (target: T, propertyName: string) => void {
   return (target, propertyKey) => {
-    if (typeof propertyKey !== 'string') throw new TypeError()
-
     MikroOrmProperty({ ...options, type: 'uuid' })(target, propertyKey)
 
     applyDecorators(

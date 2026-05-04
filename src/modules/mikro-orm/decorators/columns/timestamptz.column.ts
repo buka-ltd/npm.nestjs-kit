@@ -1,4 +1,5 @@
-import { Property as MikroOrmProperty, PropertyOptions } from '@mikro-orm/core'
+import { Property as MikroOrmProperty } from '@mikro-orm/decorators/legacy'
+import type { PropertyOptions } from '@mikro-orm/core'
 import { IsISO8601 } from 'class-validator'
 import { applyDecorators } from '@nestjs/common'
 import { Property } from '~/modules/core/decorators'
@@ -26,10 +27,8 @@ interface TimestamptzOptions<T extends object> extends Omit<PropertyOptions<T>, 
  * }
  * ```
  */
-export function Timestamptz<T extends object>(options?: TimestamptzOptions<T>): PropertyDecorator {
+export function Timestamptz<T extends object>(options?: TimestamptzOptions<T>): (target: T, propertyName: string) => void {
   return (target, propertyKey) => {
-    if (typeof propertyKey !== 'string') throw new TypeError()
-
     MikroOrmProperty({ ...options, type: 'timestamptz' })(target, propertyKey)
 
     applyDecorators(

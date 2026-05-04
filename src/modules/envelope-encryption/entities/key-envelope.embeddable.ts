@@ -1,4 +1,5 @@
-import { Embeddable, Hidden, Property } from '@mikro-orm/core'
+import { Embeddable, Property } from '@mikro-orm/decorators/legacy'
+import { Hidden, HiddenProps } from '@mikro-orm/core'
 import { ApiHideProperty } from '@nestjs/swagger'
 
 /**
@@ -20,6 +21,8 @@ import { ApiHideProperty } from '@nestjs/swagger'
  */
 @Embeddable()
 export class KeyEnvelope {
+  [HiddenProps]?: 'dek';
+
   /**
    * 加密数据的唯一标识符，用于 AAD 绑定
    */
@@ -52,5 +55,5 @@ export class KeyEnvelope {
     hidden: true,
   })
   @ApiHideProperty()
-  dek!: Buffer & Hidden
+  dek!: Buffer
 }

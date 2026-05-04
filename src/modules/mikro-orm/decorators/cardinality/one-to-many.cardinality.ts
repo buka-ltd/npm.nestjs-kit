@@ -1,4 +1,5 @@
-import { EntityName, OneToMany as OrmOneToMany, OneToManyOptions } from '@mikro-orm/core'
+import { OneToMany as OrmOneToMany } from '@mikro-orm/decorators/legacy'
+import type { OneToManyOptions } from '@mikro-orm/core'
 import { ApiHideProperty, getSchemaPath } from '@nestjs/swagger'
 import { Type } from '@nestjs/common'
 import { resolveEntityType } from './_resolve-entity-class'
@@ -19,10 +20,8 @@ import { List } from '~/modules/core'
  * }
  * ```
  */
-export function OneToMany<Target, Owner>(options: OneToManyOptions<Owner, Target>): PropertyDecorator {
+export function OneToMany<Target extends object, Owner extends object>(options: OneToManyOptions<Owner, Target>): (target: Owner, propertyName: string) => void {
   return (target, propertyKey) => {
-    if (typeof propertyKey !== 'string') throw new TypeError()
-
     OrmOneToMany(options)(target, propertyKey)
 
     if (options.hidden) {
@@ -30,7 +29,7 @@ export function OneToMany<Target, Owner>(options: OneToManyOptions<Owner, Target
       return
     }
 
-    const entityRef: string | (() => EntityName<Target>) | undefined = options.entity
+    const entityRef = options.entity
 
     const type = (): Type => resolveEntityType(entityRef, options.eager)
 

@@ -1,4 +1,5 @@
-import { Embedded as MikroOrmEmbedded, EmbeddedOptions, EntityName } from '@mikro-orm/core'
+import { Embedded as MikroOrmEmbedded } from '@mikro-orm/decorators/legacy'
+import type { EmbeddedOptions, EntityName } from '@mikro-orm/core'
 import { Composite, List } from '~/modules/core/decorators'
 import { Type } from '@nestjs/common'
 
@@ -26,10 +27,8 @@ import { Type } from '@nestjs/common'
 export function Embedded<Owner extends object, Target>(
   type?: EmbeddedOptions<Owner, Target> | (() => EntityName<Target> | EntityName<Target>[]),
   options?: EmbeddedOptions<Owner, Target>,
-): PropertyDecorator {
+): (target: Owner, propertyName: string) => void {
   return (target, propertyKey) => {
-    if (typeof propertyKey !== 'string') throw new TypeError()
-
     MikroOrmEmbedded(type, options)(target, propertyKey)
 
     const resolvedOptions = typeof type === 'object' ? type : options
