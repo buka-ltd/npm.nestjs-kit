@@ -13,6 +13,7 @@
     "moduleResolution": "nodenext",
     "module": "nodenext",
     "target": "esnext",
+    "types": ["node"],
     "paths": {
       "~/*": ["./src/*"],
       "~~/*": ["./*"]
@@ -21,7 +22,8 @@
   "ts-node": {
     "compilerOptions": {
       "moduleResolution": "node",
-      "module": "commonjs"
+      "module": "commonjs",
+      "ignoreDeprecations": "6.0"
     }
   }
 }

@@ -5,9 +5,9 @@
       "type": "shell",
       "command": "pnpm dev",
       "isBackground": true,
-      "problemMatcher": ["$tsup-watch", "$tsup-dts-watch"],
-      "label": "tsup:watch",
-      "detail": "tsup --watch",
+      "problemMatcher": ["$tsc-watch"],
+      "label": "tsdown:watch",
+      "detail": "tsdown --watch",
       "group": "build",
       "presentation": {
         "reveal": "silent",
@@ -20,9 +20,9 @@
     {
       "type": "shell",
       "command": "pnpm build",
-      "problemMatcher": ["$tsup", "$tsup-dts"],
-      "label": "tsup:build",
-      "detail": "tsup --build",
+      "problemMatcher": ["$tsc"],
+      "label": "tsdown:build",
+      "detail": "tsdown",
       "group": {
         "kind": "build",
         "isDefault": true

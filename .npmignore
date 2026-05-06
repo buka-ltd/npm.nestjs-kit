@@ -11,6 +11,6 @@
 pnpm-workspace.yaml
 eslint.config.mjs
 jest.config.cts
-tsup.config.ts
+tsdown.config.ts
 tsconfig.json
 tsconfig.*.json

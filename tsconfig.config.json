@@ -9,7 +9,8 @@
     "skipLibCheck": true,
     "moduleResolution": "nodenext",
     "module": "nodenext",
-    "target": "esnext"
+    "target": "esnext",
+    "types": ["node"]
   },
   "include": [".*.ts", "*.config.ts", "*.config.cts"]
 }
