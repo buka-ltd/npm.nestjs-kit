@@ -37,13 +37,13 @@
   ],
   "author": "Val.istar.Guo <val.istar.guo@gmail.com>",
   "license": "MIT",
-  "homepage": "https://github.com/buka-inc/npm.nestjs-kit#readme",
+  "homepage": "https://github.com/buka-ltd/npm.nestjs-kit#readme",
   "bugs": {
-    "url": "https://github.com/buka-inc/npm.nestjs-kit/issues"
+    "url": "https://github.com/buka-ltd/npm.nestjs-kit/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/buka-inc/npm.nestjs-kit"
+    "url": "https://github.com/buka-ltd/npm.nestjs-kit"
   },
   "devDependencies": {
     "@buka/class-transformer-extra": "^2.1.4",

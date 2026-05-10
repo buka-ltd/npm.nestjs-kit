@@ -36,7 +36,7 @@ export function IsUrn(validationOptions?: ValidationOptions) {
           }
         },
         defaultMessage() {
-          return '$property must be a valid URN (urn:buka-inc:<namespace>[:<resource>[:<identifier>]])'
+          return '$property must be a valid URN (urn:buka:<namespace>[:<resource>[:<identifier>]])'
         },
       },
     })
@@ -71,7 +71,7 @@ export function IsNamespaceUrn(validationOptions?: ValidationOptions) {
           }
         },
         defaultMessage() {
-          return '$property must be a namespace-level URN (urn:buka-inc:<namespace>)'
+          return '$property must be a namespace-level URN (urn:buka:<namespace>)'
         },
       },
     })
@@ -106,7 +106,7 @@ export function IsResourceUrn(validationOptions?: ValidationOptions) {
           }
         },
         defaultMessage() {
-          return '$property must be a resource-level URN (urn:buka-inc:<namespace>:<resource>)'
+          return '$property must be a resource-level URN (urn:buka:<namespace>:<resource>)'
         },
       },
     })
@@ -141,7 +141,7 @@ export function IsIdentifierUrn(validationOptions?: ValidationOptions) {
           }
         },
         defaultMessage() {
-          return '$property must be an identifier-level URN (urn:buka-inc:<namespace>:<resource>:<identifier>)'
+          return '$property must be an identifier-level URN (urn:buka:<namespace>:<resource>:<identifier>)'
         },
       },
     })

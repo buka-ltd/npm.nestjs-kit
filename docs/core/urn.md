@@ -16,12 +16,12 @@ import {
 ## URN 格式
 
 ```
-urn:buka-inc:<namespace>[:<resource>[:<identifier>]]
+urn:buka:<namespace>[:<resource>[:<identifier>]]
 ```
 
 | 层级         | 含义                          | 规则                                             |
 | ------------ | ----------------------------- | ------------------------------------------------ |
-| `buka-inc`   | 组织前缀                      | 固定值                                           |
+| `buka`       | 组织前缀                      | 固定值                                           |
 | `namespace`  | 资源类型所有者（概念域/平台） | 小写 kebab-case，如 `galaxy`、`infra`            |
 | `resource`   | 资源类型                      | 小写 kebab-case，如 `principal`、`oauth2-client` |
 | `identifier` | 资源唯一标识                  | UUID、hex 或其他自定义格式                       |
@@ -30,11 +30,11 @@ urn:buka-inc:<namespace>[:<resource>[:<identifier>]]
 
 URN 支持三种粒度，`resource` 和 `identifier` 均为可选：
 
-| 粒度         | 类型            | 格式                                | 示例                                         | 用途                               |
-| ------------ | --------------- | ----------------------------------- | -------------------------------------------- | ---------------------------------- |
-| namespace 级 | `NamespaceUrn`  | `urn:buka-inc:<ns>`                 | `urn:buka-inc:galaxy`                        | 标识平台/系统整体，如 JWT audience |
-| 资源类型级   | `ResourceUrn`   | `urn:buka-inc:<ns>:<resource>`      | `urn:buka-inc:galaxy:principal`              | 标识一类资源                       |
-| 实例级       | `IdentifierUrn` | `urn:buka-inc:<ns>:<resource>:<id>` | `urn:buka-inc:galaxy:principal:550e8400-...` | 标识具体资源实例，如 JWT subject   |
+| 粒度         | 类型            | 格式                            | 示例                                     | 用途                               |
+| ------------ | --------------- | ------------------------------- | ---------------------------------------- | ---------------------------------- |
+| namespace 级 | `NamespaceUrn`  | `urn:buka:<ns>`                 | `urn:buka:galaxy`                        | 标识平台/系统整体，如 JWT audience |
+| 资源类型级   | `ResourceUrn`   | `urn:buka:<ns>:<resource>`      | `urn:buka:galaxy:principal`              | 标识一类资源                       |
+| 实例级       | `IdentifierUrn` | `urn:buka:<ns>:<resource>:<id>` | `urn:buka:galaxy:principal:550e8400-...` | 标识具体资源实例，如 JWT subject   |
 
 ### namespace 划分原则
 
@@ -69,12 +69,12 @@ static parse(urn: string): Urn
 ```
 
 ```typescript
-const urn = Urn.parse("urn:buka-inc:galaxy:principal:abc-123");
+const urn = Urn.parse("urn:buka:galaxy:principal:abc-123");
 urn.namespace; // → 'galaxy'
 urn.resource; // → 'principal'
 urn.identifier; // → 'abc-123'
 
-const nsUrn = Urn.parse("urn:buka-inc:galaxy");
+const nsUrn = Urn.parse("urn:buka:galaxy");
 nsUrn.namespace; // → 'galaxy'
 nsUrn.resource; // → undefined
 nsUrn.identifier; // → undefined
@@ -92,7 +92,7 @@ toString(): string
 
 ```typescript
 Urn.of("galaxy", "principal", "abc-123").toString();
-// → 'urn:buka-inc:galaxy:principal:abc-123'
+// → 'urn:buka:galaxy:principal:abc-123'
 ```
 
 ### is
@@ -104,7 +104,7 @@ is(namespace: string, resource?: string, identifier?: string): boolean
 ```
 
 ```typescript
-const urn = Urn.parse("urn:buka-inc:galaxy:principal:abc-123");
+const urn = Urn.parse("urn:buka:galaxy:principal:abc-123");
 
 urn.is("galaxy"); // → true（仅匹配 namespace）
 urn.is("galaxy", "principal"); // → true
