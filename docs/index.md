@@ -14,6 +14,7 @@ pnpm install @buka/nestjs-kit
 import { Module } from "@nestjs/common";
 import {
   BukaModule,
+  LoggerModule,
   ExceptionModule,
   BlindIndexModule,
   SaltedHashModule,
@@ -23,6 +24,9 @@ import {
   imports: [
     // 核心模块（全局验证管道）
     BukaModule.register({}),
+
+    // 统一日志（Grafana/Loki 友好 JSON 格式）
+    LoggerModule.register({ serviceName: "my-service" }),
 
     // 异常处理（systemId 支持十进制数字或 Crockford Base32 字符串）
     ExceptionModule.register({ systemId: "Z9" }),
@@ -47,6 +51,7 @@ export class AppModule {}
 | `BlindIndexModule`         | 对加密数据生成可搜索的哈希索引                                                  | [blind-index.md](./blind-index.md)                 |
 | `SaltedHashModule`         | 密码安全存储与校验（bcrypt）                                                    | [salted-hash.md](./salted-hash.md)                 |
 | `ObjectStorageModule`      | S3 兼容的对象存储客户端                                                         | [object-storage.md](./object-storage.md)           |
+| `LoggerModule`        | 统一日志方案，基于 nestjs-pino，Grafana/Loki 友好格式                          | [logger.md](./logger.md)                         |
 | **SwaggerPatcher**         | Swagger 文档后处理工具                                                          | [swagger-patcher.md](./swagger-patcher.md)         |
 
 ## 模块依赖关系
@@ -54,6 +59,7 @@ export class AppModule {}
 ```
 BukaModule               (独立，建议所有项目引入)
 ExceptionModule           (独立)
+LoggerModule          (独立)
 OpenBaoModule             (独立)
 EnvelopeEncryptionModule  ──依赖──▶ OpenBaoModule
 BlindIndexModule          (独立)

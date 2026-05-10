@@ -92,6 +92,8 @@
     "bcryptjs": "^3.0.3",
     "jsonschema": "^1.5.0",
     "keq": "5.0.0-beta.1",
+    "nestjs-pino": "^4.4.1",
+    "pino": "^10.3.1",
     "ramda": "^0.32.0",
     "type-fest": "^5.6.0",
     "uuid": "^14.0.0"

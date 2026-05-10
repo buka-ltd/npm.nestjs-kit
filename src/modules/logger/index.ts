@@ -1,0 +1,5 @@
+export { Logger, LoggerErrorInterceptor } from 'nestjs-pino'
+export { LoggerModule } from './logger.module'
+export { InjectLogger } from './decorators/inject-logger.decorator'
+export { LoggerConfig } from './logger.config'
+export type { LoggerModuleOptions } from './types/logger-module-options'
