@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.1.1](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.1.0...v4.1.1) (2026-05-10)
+
+
+### Bug Fixes
+
+* rename buka-inc to buka-ltd ([43e72ca](https://github.com/buka-ltd/npm.nestjs-kit/commit/43e72ca4065676cc384f07daf1953f2e04565244))
+
 ## [4.1.0](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.0.0...v4.1.0) (2026-05-10)
 
 ### Features
