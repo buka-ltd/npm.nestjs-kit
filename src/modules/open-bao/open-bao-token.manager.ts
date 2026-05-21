@@ -163,8 +163,14 @@ export class OpenBaoTokenManager implements OnModuleInit, OnModuleDestroy {
     }
 
     const renewBuffer = this.config.renewBufferSeconds ?? 30
-    // 在 Token 过期前 renewBuffer 秒触发续期，最少 1 秒
-    const renewInMs = Math.max((this.leaseDuration - renewBuffer) * 1000, 1000)
+    // 续期间隔上限：min(7天, TTL * 70%)，避免 setTimeout 32 位溢出和时间漂移
+    const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000
+    const maxCheckInterval = Math.min(SEVEN_DAYS_MS, this.leaseDuration * 0.7 * 1000)
+    // 在 Token 过期前 renewBuffer 秒触发续期，但不超过上限，最少 1 秒
+    const renewInMs = Math.min(
+      Math.max((this.leaseDuration - renewBuffer) * 1000, 1000),
+      maxCheckInterval,
+    )
 
     this.renewalTimer = setTimeout(() => {
       void this.renewToken()
