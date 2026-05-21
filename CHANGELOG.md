@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.1.4](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.1.3...v4.1.4) (2026-05-21)
+
+
+### Bug Fixes
+
+* 修复setTimeout溢出问题 ([ac82108](https://github.com/buka-ltd/npm.nestjs-kit/commit/ac82108f1d958cc436584bc86bd1db01f215830c))
+
 ## [4.1.3](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.1.2...v4.1.3) (2026-05-21)
 
 
