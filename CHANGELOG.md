@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.1.3](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.1.2...v4.1.3) (2026-05-21)
+
+
+### Bug Fixes
+
+* 修复格式化错误无效的问题 ([6fca5cb](https://github.com/buka-ltd/npm.nestjs-kit/commit/6fca5cbb5526055f34dc35028e9eb82c8c709866))
+
 ## [4.1.2](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.1.1...v4.1.2) (2026-05-21)
 
 
