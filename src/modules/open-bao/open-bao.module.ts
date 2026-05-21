@@ -22,10 +22,11 @@ const KEQ_REQUEST_PROVIDER: Provider = {
   useFactory: (options: OpenBaoModuleOptions, tokenManager: OpenBaoTokenManager): KeqRequest => {
     const request = new KeqRequest()
 
+    // formatError 必须最先注册，作为最外层中间件捕获下游所有异常
+    request.use(formatError())
     request.use(setBaseUrl(options.address + '/v1/'))
     request.use(setOpenBaoToken(() => tokenManager.getToken()))
     request.use(validateStatusCode())
-    request.use(formatError())
 
     return request
   },
