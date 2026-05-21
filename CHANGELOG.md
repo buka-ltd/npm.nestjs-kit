@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.1.2](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.1.1...v4.1.2) (2026-05-21)
+
+
+### Performance Improvements
+
+* 优化 openbao module 报错信息提示准确性 ([2245b17](https://github.com/buka-ltd/npm.nestjs-kit/commit/2245b1765b7d65ee4827727eb2f5fddb67b523a2))
+
 ## [4.1.1](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.1.0...v4.1.1) (2026-05-10)
 
 
