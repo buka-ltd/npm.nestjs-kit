@@ -6,6 +6,7 @@ import { OpenBaoHttpClient } from '../../apis/open-bao-http/open-bao-http.client
 import { OpenBaoTokenManager } from './open-bao-token.manager'
 import { ConfigurableModuleClass, MODULE_OPTIONS_TOKEN } from './open-bao.module-definition'
 import { setOpenBaoToken } from './set-open-bao-token.middleware'
+import { formatError } from './request/format-error'
 import type { OpenBaoModuleOptions } from './types'
 
 /**
@@ -24,6 +25,7 @@ const KEQ_REQUEST_PROVIDER: Provider = {
     request.use(setBaseUrl(options.address + '/v1/'))
     request.use(setOpenBaoToken(() => tokenManager.getToken()))
     request.use(validateStatusCode())
+    request.use(formatError())
 
     return request
   },
