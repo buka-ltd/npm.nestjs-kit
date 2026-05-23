@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.1.6](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.1.5...v4.1.6) (2026-05-23)
+
+
+### Performance Improvements
+
+* 控制数据库连接数 ([55ea1ed](https://github.com/buka-ltd/npm.nestjs-kit/commit/55ea1ed660e5c948d6591d6c7605b525e399b5a5))
+
 ## [4.1.5](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.1.4...v4.1.5) (2026-05-23)
 
 
