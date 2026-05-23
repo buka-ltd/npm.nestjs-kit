@@ -35,6 +35,18 @@ export class DatabaseConfig {
   @IsString()
   timezone? = '+08:00'
 
+  @ToNumber()
+  @IsNumber({ allowNaN: false })
+  poolMax: number = 10
+
+  @ToNumber()
+  @IsNumber({ allowNaN: false })
+  poolMin: number = 0
+
+  @ToNumber()
+  @IsNumber({ allowNaN: false })
+  poolIdleTimeoutMillis: number = 30000
+
   toMikroOrmOptions(config?: Partial<Options>): Partial<Options> {
     let options: Partial<Options> = {
       host: this.host,
@@ -48,6 +60,12 @@ export class DatabaseConfig {
       forceUndefined: true,
       populateAfterFlush: false,
       flushMode: FlushMode.COMMIT,
+
+      pool: {
+        max: this.poolMax,
+        min: this.poolMin,
+        idleTimeoutMillis: this.poolIdleTimeoutMillis,
+      },
 
       serialization: {
         forceObject: true,
