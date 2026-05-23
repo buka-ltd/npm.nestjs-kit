@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.1.8](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.1.7...v4.1.8) (2026-05-23)
+
+
+### Bug Fixes
+
+* 修复dek缓存返回原始数据被删除后缓存损坏的问题 ([5761659](https://github.com/buka-ltd/npm.nestjs-kit/commit/57616596144eaacb9e9488ed26d441f45ef1d9ac))
+
 ## [4.1.7](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.1.6...v4.1.7) (2026-05-23)
 
 
