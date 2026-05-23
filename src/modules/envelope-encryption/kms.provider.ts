@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger, OnModuleDestroy, OnModuleInit } from '@nestjs/common'
+import { Inject, Injectable, Logger, OnApplicationBootstrap, OnModuleDestroy } from '@nestjs/common'
 import { OpenBaoHttpClient } from '../../apis/open-bao-http/open-bao-http.client'
 import { MODULE_OPTIONS_TOKEN } from './envelope-encryption.module-definition'
 import type { EnvelopeEncryptionModuleOptions } from './types/envelope-encryption-module-options'
@@ -23,7 +23,7 @@ interface DekCacheEntry {
 
 
 @Injectable()
-export class KmsProvider implements OnModuleInit, OnModuleDestroy {
+export class KmsProvider implements OnApplicationBootstrap, OnModuleDestroy {
   private readonly logger = new Logger(KmsProvider.name)
 
   // ----- KEK 元数据缓存 -----
@@ -55,7 +55,7 @@ export class KmsProvider implements OnModuleInit, OnModuleDestroy {
     @Inject(MODULE_OPTIONS_TOKEN) private readonly options: EnvelopeEncryptionModuleOptions,
   ) {}
 
-  async onModuleInit(): Promise<void> {
+  async onApplicationBootstrap(): Promise<void> {
     const keks = this.options.keks ?? []
     await Promise.all(keks.map((kekId) => this.getOrLoadKekMetadata(kekId)))
 
