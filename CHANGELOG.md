@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.1.7](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.1.6...v4.1.7) (2026-05-23)
+
+
+### Bug Fixes
+
+* 修复预热dek和openbao初始化鉴权冲突的问题 ([4e75b91](https://github.com/buka-ltd/npm.nestjs-kit/commit/4e75b914cfa8d2a503b277215fb88ef0eaef136f))
+
 ## [4.1.6](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.1.5...v4.1.6) (2026-05-23)
 
 
