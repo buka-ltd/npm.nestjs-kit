@@ -1,19 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import * as R from 'ramda'
-import { ModelPropertiesAccessor } from '@nestjs/swagger/dist/services/model-properties-accessor'
-import { DECORATORS } from '@nestjs/swagger/dist/constants'
-import { SchemaObjectMetadata } from '@nestjs/swagger/dist/interfaces/schema-object-metadata.interface'
-import { METADATA_FACTORY_NAME } from '@nestjs/swagger/dist/plugin/plugin-constants'
 import { Type } from '@nestjs/common'
-import { clonePluginMetadataFactory } from '@nestjs/swagger/dist/type-helpers/mapped-types.utils'
-import { ApiProperty } from '@nestjs/swagger'
-import { isFunction } from '@nestjs/common/utils/shared.utils'
-import { isBuiltInType } from '@nestjs/swagger/dist/utils/is-built-in-type.util'
+import { ApiProperty, DECORATORS } from '@nestjs/swagger'
+import { isFunction } from './internals/nestjs-common'
+import type { SchemaObjectMetadata } from './internals/nestjs-swagger'
+import {
+  METADATA_FACTORY_NAME,
+  getModelProperties,
+  clonePluginMetadataFactory,
+  isBuiltInType,
+} from './internals/nestjs-swagger'
 
-export { SchemaObjectMetadata } from '@nestjs/swagger/dist/interfaces/schema-object-metadata.interface'
-
-
-const modelPropertiesAccessor = new ModelPropertiesAccessor()
+export type { SchemaObjectMetadata }
 
 /**
  * 克隆 @nestjs/swagger Plugin 添加的元数据
@@ -30,7 +28,7 @@ export function cloneMetadata(target: Function, source: Type<unknown>, keys: str
   for (const propertyKey of keys) {
     const metadata = getMetadataOfDecorator(source, propertyKey)
     if (metadata) {
-      ApiProperty(metadata)(target.prototype, propertyKey)
+      ApiProperty(metadata as any)(target.prototype, propertyKey)
     }
   }
 }
@@ -45,8 +43,7 @@ export function getMetadataOfDecorator(classRef: Type<any>, propertyKey?: string
     return Reflect.getMetadata(DECORATORS.API_MODEL_PROPERTIES, classRef.prototype, propertyKey)
   }
 
-  const props = modelPropertiesAccessor
-    .getModelProperties(classRef.prototype)
+  const props = getModelProperties(classRef.prototype)
 
   return R.fromPairs(
     props.map((prop) => [
