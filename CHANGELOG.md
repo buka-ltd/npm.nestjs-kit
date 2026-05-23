@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.1.5](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.1.4...v4.1.5) (2026-05-23)
+
+
+### Bug Fixes
+
+* deep import error ([0b0645f](https://github.com/buka-ltd/npm.nestjs-kit/commit/0b0645f6018d6ed810aaa305380d6105379b5e59))
+
 ## [4.1.4](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.1.3...v4.1.4) (2026-05-21)
 
 
