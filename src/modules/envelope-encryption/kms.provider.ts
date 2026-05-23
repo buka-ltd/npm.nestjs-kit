@@ -133,7 +133,7 @@ export class KmsProvider implements OnApplicationBootstrap, OnModuleDestroy {
     if (ttl > 0) {
       const cached = this.dekCache.get(cacheKey)
       if (cached && cached.expireAt > Date.now()) {
-        return Promise.resolve(cached.dek)
+        return Promise.resolve(Buffer.from(cached.dek))
       }
 
       const inflight = this.dekDecryptingPromises.get(cacheKey)
@@ -158,7 +158,7 @@ export class KmsProvider implements OnApplicationBootstrap, OnModuleDestroy {
         const dek = Buffer.from(dekResponse.data.plaintext, 'base64')
 
         if (ttl > 0) {
-          this.dekCache.set(cacheKey, { dek, expireAt: Date.now() + ttl * 1000 })
+          this.dekCache.set(cacheKey, { dek: Buffer.from(dek), expireAt: Date.now() + ttl * 1000 })
         }
 
         return dek
