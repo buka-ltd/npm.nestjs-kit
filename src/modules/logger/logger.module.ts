@@ -76,10 +76,7 @@ export class LoggerModule {
         genReqId: (req: IncomingMessage) => (req.headers['x-request-id'] as string)
           || crypto.randomUUID(),
 
-        // 自动记录 HTTP 请求完成日志，跳过健康检查
-        autoLogging: {
-          ignore: (req: IncomingMessage) => req.url?.startsWith('/api/v1/health') ?? false,
-        },
+        autoLogging: options.autoLogging,
 
         customAttributeKeys: {
           reqId: 'reqId',

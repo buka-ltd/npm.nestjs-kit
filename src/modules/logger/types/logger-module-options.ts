@@ -1,3 +1,5 @@
+import type { IncomingMessage } from 'http'
+
 /**
  * LoggerModule 配置
  *
@@ -14,4 +16,6 @@ export interface LoggerModuleOptions {
   level?: 'fatal' | 'error' | 'warn' | 'info' | 'debug' | 'trace'
   /** 开发模式——启用 pino-pretty 彩色输出 */
   pretty?: boolean
+  /** pino-http autoLogging 配置，用于跳过指定路由的成功日志（错误日志不受影响） */
+  autoLogging?: { ignore: (req: IncomingMessage) => boolean }
 }
