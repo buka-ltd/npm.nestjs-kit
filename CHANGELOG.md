@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.3.0](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.2.0...v4.3.0) (2026-05-24)
+
+
+### Features
+
+* add MatchUrn validator ([89196bd](https://github.com/buka-ltd/npm.nestjs-kit/commit/89196bd1d263feccf7cc9d0f8b8adad90d1d219f))
+
 ## [4.2.0](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.1.9...v4.2.0) (2026-05-24)
 
 
