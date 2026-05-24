@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.1.9](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.1.8...v4.1.9) (2026-05-24)
+
+
+### Bug Fixes
+
+* authLogging should export ([0f0bf53](https://github.com/buka-ltd/npm.nestjs-kit/commit/0f0bf53ff992b9fdf13e8f4e3641f5869e929623))
+
 ## [4.1.8](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.1.7...v4.1.8) (2026-05-23)
 
 
