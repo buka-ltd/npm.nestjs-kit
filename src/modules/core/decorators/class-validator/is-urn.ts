@@ -147,3 +147,43 @@ export function IsResourceIdUrn(validationOptions?: ValidationOptions) {
     })
   }
 }
+
+/**
+ * 验证字符串是否匹配指定的 URN 模式（支持通配符 `*` 和 `**`）。
+ *
+ * - `*` 匹配恰好一个段
+ * - `**` 匹配零个或多个尾部段
+ *
+ * @example
+ * ```typescript
+ * class CreateClientDTO {
+ *   @MatchesUrn('urn:buka:galaxy:client:*')
+ *   clientUrn: string
+ * }
+ * ```
+ */
+export function MatchesUrn(pattern: string, validationOptions?: ValidationOptions) {
+  return function (object: object, propertyName: string) {
+    registerDecorator({
+      name: 'matchesUrn',
+      target: object.constructor,
+      propertyName,
+      options: validationOptions,
+      validator: {
+        validate(value: any) {
+          if (typeof value !== 'string') return false
+          try {
+            const urn = Urn.parse(value)
+            const patternUrn = Urn.parse(pattern)
+            return patternUrn.contains(urn)
+          } catch {
+            return false
+          }
+        },
+        defaultMessage() {
+          return `$property must match URN pattern ${pattern}`
+        },
+      },
+    })
+  }
+}
