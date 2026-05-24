@@ -328,4 +328,4 @@ class ConfigDto {
 
 - [Model 装饰器体系](./models.md) — `@Model()`、`@Property()`、`@Composite()`、`@List()`、`@Dictionary()` 等
 - [类型转换工具](./converters.md) — `PickType`、`OmitType`、`PartialType`、`ResponseBodyType`、`@FilterQuery` 等
-- [URN 统一资源名称](./urn.md) — `Urn`、`NamespaceUrn`、`ResourceUrn`、`IdentifierUrn`、`@IsUrn()` 等
+- [URN 统一资源名称](./urn.md) — `Urn`、`DomainUrn`、`ResourceTypeUrn`、`ResourceIdUrn`、`@IsUrn()`、通配符 `*`/`**`、`contains()` 等

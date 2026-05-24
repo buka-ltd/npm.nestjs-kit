@@ -2,67 +2,49 @@
 
 ## 概述
 
-`Urn` 是公司级统一资源名称（Uniform Resource Name）工具类，用于在系统间以标准化格式标识任意资源。无需注册模块，直接从主入口导入即可使用。
+`Urn` 是 `urn:buka` 统一资源名称的解析与操作工具类，无需注册模块即可使用。
 
 ```typescript
-import {
-  Urn,
-  NamespaceUrn,
-  ResourceUrn,
-  IdentifierUrn,
-} from "@buka/nestjs-kit";
+import { Urn, DomainUrn, ResourceTypeUrn, ResourceIdUrn } from "@buka/nestjs-kit";
 ```
 
-## URN 格式
+## 格式
 
 ```
-urn:buka:<namespace>[:<resource>[:<identifier>]]
+urn:buka:<domain>:<resource-type>[:<resource-id>]
 ```
 
-| 层级         | 含义                          | 规则                                             |
-| ------------ | ----------------------------- | ------------------------------------------------ |
-| `buka`       | 组织前缀                      | 固定值                                           |
-| `namespace`  | 资源类型所有者（概念域/平台） | 小写 kebab-case，如 `galaxy`、`infra`            |
-| `resource`   | 资源类型                      | 小写 kebab-case，如 `principal`、`oauth2-client` |
-| `identifier` | 资源唯一标识                  | UUID、hex 或其他自定义格式                       |
+三段分别对应**概念域**（资源类型定义权归属）、**资源类型**（可多级，第一级推荐用于 `env`）、**资源ID**（可选）。
 
-### 三种粒度
+```typescript
+Urn.of("galaxy");                                    // 概念域级
+Urn.of("galaxy", "principal");                       // 资源类型级
+Urn.of("galaxy", "principal", "550e8400-e29b-...");  // 实例级
+```
 
-URN 支持三种粒度，`resource` 和 `identifier` 均为可选：
-
-| 粒度         | 类型            | 格式                            | 示例                                     | 用途                               |
-| ------------ | --------------- | ------------------------------- | ---------------------------------------- | ---------------------------------- |
-| namespace 级 | `NamespaceUrn`  | `urn:buka:<ns>`                 | `urn:buka:galaxy`                        | 标识平台/系统整体，如 JWT audience |
-| 资源类型级   | `ResourceUrn`   | `urn:buka:<ns>:<resource>`      | `urn:buka:galaxy:principal`              | 标识一类资源                       |
-| 实例级       | `IdentifierUrn` | `urn:buka:<ns>:<resource>:<id>` | `urn:buka:galaxy:principal:550e8400-...` | 标识具体资源实例，如 JWT subject   |
-
-### namespace 划分原则
-
-namespace 按**资源类型的定义权归属**划分，而非按部署单元。一个 namespace 可以有多个服务实现。
-
-例如，`principal` 和 `oauth2-client` 都由 Galaxy 平台定义，因此都属于 `galaxy` namespace，即使它们可能由不同的微服务管理。
+> 格式规则详见 [URN 规范](https://github.com/buka-lib/docs.specifications/tree/main/urn)。
 
 ## API
 
 ### Urn.of
 
-根据参数数量创建对应层级的 URN，返回类型在编译期自动窄化。构造函数为 `private`，`Urn.of` 是创建 URN 的主要入口。
+根据参数数量创建对应层级的 URN，返回类型在编译期自动窄化。
 
 ```typescript
-static of(namespace: string): NamespaceUrn
-static of(namespace: string, resource: string): ResourceUrn
-static of(namespace: string, resource: string, identifier: string): IdentifierUrn
+static of(domain: string): DomainUrn
+static of(domain: string, resourceType: string): ResourceTypeUrn
+static of(domain: string, resourceType: string, resourceId: string): ResourceIdUrn
 ```
 
 ```typescript
-Urn.of("galaxy"); // → NamespaceUrn
-Urn.of("galaxy", "principal"); // → ResourceUrn
-Urn.of("galaxy", "principal", "550e8400-e29b-41d4-a716-..."); // → IdentifierUrn
+Urn.of("galaxy"); // → DomainUrn
+Urn.of("galaxy", "principal"); // → ResourceTypeUrn
+Urn.of("galaxy", "principal", "550e8400-e29b-41d4-a716-..."); // → ResourceIdUrn
 ```
 
 ### Urn.parse
 
-从 URN 字符串解析为 `Urn` 实例。格式不合法时抛出 `Error`。返回宽类型 `Urn`，可通过类型守卫进一步窄化。
+从字符串解析为 `Urn` 实例。支持通配符 `*`（匹配单个段）和 `**`（匹配尾部任意段）。
 
 ```typescript
 static parse(urn: string): Urn
@@ -70,77 +52,98 @@ static parse(urn: string): Urn
 
 ```typescript
 const urn = Urn.parse("urn:buka:galaxy:principal:abc-123");
-urn.namespace; // → 'galaxy'
-urn.resource; // → 'principal'
-urn.identifier; // → 'abc-123'
+urn.domain;       // → 'galaxy'
+urn.resourceType; // → 'principal'
+urn.resourceId;   // → 'abc-123'
 
-const nsUrn = Urn.parse("urn:buka:galaxy");
-nsUrn.namespace; // → 'galaxy'
-nsUrn.resource; // → undefined
-nsUrn.identifier; // → undefined
+Urn.parse("urn:buka:galaxy:*:*").contains(urn);  // true
 ```
-
-> 格式不合法时抛出 `Error: Invalid URN: <input>`。
 
 ### toString
 
 序列化为 URN 字符串。
 
 ```typescript
-toString(): string
-```
-
-```typescript
-Urn.of("galaxy", "principal", "abc-123").toString();
-// → 'urn:buka:galaxy:principal:abc-123'
+const urn = Urn.of("galaxy", "principal", "abc-123");
+urn.toString();  // → 'urn:buka:galaxy:principal:abc-123'
 ```
 
 ### is
 
-判断当前 URN 是否匹配指定条件。仅比较传入的参数，未传入的参数不参与比较。
+判断当前 URN 是否匹配指定条件。仅比较传入的参数，未传入的不参与比较。
 
 ```typescript
-is(namespace: string, resource?: string, identifier?: string): boolean
+is(domain: string, resourceType?: string, resourceId?: string): boolean
 ```
 
 ```typescript
 const urn = Urn.parse("urn:buka:galaxy:principal:abc-123");
 
-urn.is("galaxy"); // → true（仅匹配 namespace）
-urn.is("galaxy", "principal"); // → true
-urn.is("galaxy", "principal", "abc-123"); // → true
-urn.is("galaxy", "oauth2-client"); // → false
-urn.is("infra"); // → false
+urn.is("galaxy");                           // true
+urn.is("galaxy", "principal");              // true
+urn.is("galaxy", "principal", "abc-123");   // true
+urn.is("galaxy", "oauth2-client");          // false
 ```
 
-### withResource
+### contains
 
-从 `NamespaceUrn` 衍生出 `ResourceUrn`。当前 URN 已有 `resource` 时抛出 `Error`。
-
-```typescript
-withResource(resource: string): ResourceUrn  // 仅 NamespaceUrn 可调用
-```
+判断当前 URN **是否包含**另一个 URN。含通配符时作为集合模式使用。
 
 ```typescript
-const ns = Urn.of("galaxy"); // NamespaceUrn
-const resource = ns.withResource("principal"); // ResourceUrn
-
-resource.withResource("other"); // ❌ 编译错误：ResourceUrn 上此方法为 never
-```
-
-### withIdentifier
-
-从 `ResourceUrn` 衍生出 `IdentifierUrn`。当前 URN 无 `resource` 或已有 `identifier` 时抛出 `Error`。
-
-```typescript
-withIdentifier(identifier: string): IdentifierUrn  // 仅 ResourceUrn 可调用
+contains(other: Urn): boolean
 ```
 
 ```typescript
-const resource = Urn.of("galaxy", "principal");
-const instance = resource.withIdentifier("550e8400-..."); // IdentifierUrn
+const pattern = Urn.parse("urn:buka:galaxy:*:*");
+pattern.contains(Urn.parse("urn:buka:galaxy:principal:123"));  // true
+pattern.contains(Urn.parse("urn:buka:galaxy:org:456"));        // true
+pattern.contains(Urn.parse("urn:buka:infra:org:456"));         // false
 
-Urn.of("galaxy").withIdentifier("id"); // ❌ 编译错误：NamespaceUrn 上此方法为 never
+const tail = Urn.parse("urn:buka:galaxy:principal:**");
+tail.contains(Urn.parse("urn:buka:galaxy:principal"));          // true
+tail.contains(Urn.parse("urn:buka:galaxy:principal:123"));      // true
+
+// 具体 URN 仅包含自身
+const concrete = Urn.parse("urn:buka:galaxy:principal:123");
+concrete.contains(Urn.parse("urn:buka:galaxy:principal:123"));  // true
+concrete.contains(Urn.parse("urn:buka:galaxy:principal:456"));  // false
+```
+
+### withResourceType
+
+从概念域级 URN 衍生出资源类型级 URN。
+
+```typescript
+withResourceType(resourceType: string): ResourceTypeUrn
+```
+
+```typescript
+Urn.of("galaxy").withResourceType("principal"); // → ResourceTypeUrn
+```
+
+### withResourceId
+
+从资源类型级 URN 衍生出实例级 URN。
+
+```typescript
+withResourceId(resourceId: string): ResourceIdUrn
+```
+
+```typescript
+Urn.of("galaxy", "principal").withResourceId("550e8400-..."); // → ResourceIdUrn
+```
+
+### resourceTypeSegments
+
+返回 `resourceType` 按 `:` 拆分后的层级数组。
+
+```typescript
+get resourceTypeSegments(): string[]
+```
+
+```typescript
+Urn.parse("urn:buka:galaxy:principal:v1:table").resourceTypeSegments;
+// → ['principal', 'v1', 'table']
 ```
 
 ### 类型守卫
@@ -148,20 +151,20 @@ Urn.of("galaxy").withIdentifier("id"); // ❌ 编译错误：NamespaceUrn 上此
 用于 `Urn.parse()` 返回的宽类型 `Urn` 的层级窄化：
 
 ```typescript
-isNamespaceUrn(): this is NamespaceUrn
-isResourceUrn(): this is ResourceUrn
-isIdentifierUrn(): this is IdentifierUrn
+isDomainUrn(): this is DomainUrn
+isResourceTypeUrn(): this is ResourceTypeUrn
+isResourceIdUrn(): this is ResourceIdUrn
 ```
 
 ```typescript
 const urn = Urn.parse(token.sub);
 
-if (urn.isResourceUrn()) {
-  urn.withIdentifier("some-id"); // ✅ 窄化后合法
+if (urn.isResourceIdUrn()) {
+  urn.resourceId;  // ✅ string，而非 string | undefined
 }
 
-if (urn.isIdentifierUrn()) {
-  const id = urn.identifier; // ✅ 类型为 string（非 string | undefined）
+if (urn.isResourceTypeUrn()) {
+  urn.withResourceId("id");  // ✅ 窄化后合法
 }
 ```
 
@@ -169,46 +172,37 @@ if (urn.isIdentifierUrn()) {
 
 ### JWT subject / audience
 
-将 URN 用于 JWT 的 `sub` 和 `aud` 字段，使 token 自带主体类型信息：
-
 ```typescript
-// 签发 token
-const accessToken = await sessionService.signAccessToken({
+// 签发
+await sessionService.signAccessToken({
   subject: Urn.of("galaxy", "principal", principal.id).toString(),
-  claims: {
-    aud: Urn.of("galaxy").toString(),
-  },
+  claims: { aud: Urn.of("galaxy").toString() },
 });
 
-// 消费 token —— 从 sub 中提取 principal ID
+// 消费
 const subjectUrn = Urn.parse(payload.sub);
-if (subjectUrn.isIdentifierUrn() && subjectUrn.is("galaxy", "principal")) {
-  const principalId = subjectUrn.identifier; // string，无需可选链
+if (subjectUrn.isResourceIdUrn() && subjectUrn.is("galaxy", "principal")) {
+  const principalId = subjectUrn.resourceId;
 }
 ```
 
 ### 资源类型判断
 
-在不引入额外字段的情况下，通过 URN 判断资源类型并执行分支逻辑：
-
 ```typescript
 const urn = Urn.parse(session.subject);
 
 if (urn.is("galaxy", "principal")) {
-  // 处理 Principal 类型的 subject
+  // 处理 Principal 类型
 } else if (urn.is("galaxy", "oauth2-client")) {
-  // 处理 OAuth2 Client 类型的 subject
+  // 处理 OAuth2 Client 类型
 }
 ```
 
-### 派生方法逐层构建
-
-当需要在运行时动态组装 URN 时，可通过派生方法链式构建：
+### 衍生复用
 
 ```typescript
-const principalType = Urn.of("galaxy").withResource("principal"); // ResourceUrn，可复用
+const principalType = Urn.of("galaxy").withResourceType("principal");
 
-// 为不同 ID 生成实例级 URN
-const urn1 = principalType.withIdentifier(id1);
-const urn2 = principalType.withIdentifier(id2);
+const urn1 = principalType.withResourceId(id1);
+const urn2 = principalType.withResourceId(id2);
 ```

@@ -3,9 +3,9 @@ import { Urn } from '../../models/urn.js'
 
 
 export const IS_URN = 'isUrn'
-export const IS_NAMESPACE_URN = 'isNamespaceUrn'
-export const IS_RESOURCE_URN = 'isResourceUrn'
-export const IS_IDENTIFIER_URN = 'isIdentifierUrn'
+export const IS_DOMAIN_URN = 'isDomainUrn'
+export const IS_RESOURCE_TYPE_URN = 'isResourceTypeUrn'
+export const IS_RESOURCE_ID_URN = 'isResourceIdUrn'
 
 /**
  * 验证字符串是否为合法的 URN（任意层级）。
@@ -36,7 +36,7 @@ export function IsUrn(validationOptions?: ValidationOptions) {
           }
         },
         defaultMessage() {
-          return '$property must be a valid URN (urn:buka:<namespace>[:<resource>[:<identifier>]])'
+          return '$property must be a valid URN (urn:buka:<domain>[:<resource-type>[:<resource-id>]])'
         },
       },
     })
@@ -44,20 +44,20 @@ export function IsUrn(validationOptions?: ValidationOptions) {
 }
 
 /**
- * 验证字符串是否为 namespace 级 URN（仅含 namespace，无 resource 和 identifier）。
+ * 验证字符串是否为概念域级 URN（仅含 domain，无 resourceType 和 resourceId）。
  *
  * @example
  * ```typescript
  * class TokenPayloadDTO {
- *   @IsNamespaceUrn()
+ *   @IsDomainUrn()
  *   aud: string
  * }
  * ```
  */
-export function IsNamespaceUrn(validationOptions?: ValidationOptions) {
+export function IsDomainUrn(validationOptions?: ValidationOptions) {
   return function (object: object, propertyName: string) {
     registerDecorator({
-      name: IS_NAMESPACE_URN,
+      name: IS_DOMAIN_URN,
       target: object.constructor,
       propertyName,
       options: validationOptions,
@@ -65,13 +65,13 @@ export function IsNamespaceUrn(validationOptions?: ValidationOptions) {
         validate(value: any) {
           if (typeof value !== 'string') return false
           try {
-            return Urn.parse(value).isNamespaceUrn()
+            return Urn.parse(value).isDomainUrn()
           } catch {
             return false
           }
         },
         defaultMessage() {
-          return '$property must be a namespace-level URN (urn:buka:<namespace>)'
+          return '$property must be a domain-level URN (urn:buka:<domain>)'
         },
       },
     })
@@ -79,20 +79,20 @@ export function IsNamespaceUrn(validationOptions?: ValidationOptions) {
 }
 
 /**
- * 验证字符串是否为资源类型级 URN（含 namespace 和 resource，无 identifier）。
+ * 验证字符串是否为资源类型级 URN（含 domain 和 resourceType，无 resourceId）。
  *
  * @example
  * ```typescript
  * class ResourceDTO {
- *   @IsResourceUrn()
+ *   @IsResourceTypeUrn()
  *   resourceType: string
  * }
  * ```
  */
-export function IsResourceUrn(validationOptions?: ValidationOptions) {
+export function IsResourceTypeUrn(validationOptions?: ValidationOptions) {
   return function (object: object, propertyName: string) {
     registerDecorator({
-      name: IS_RESOURCE_URN,
+      name: IS_RESOURCE_TYPE_URN,
       target: object.constructor,
       propertyName,
       options: validationOptions,
@@ -100,13 +100,13 @@ export function IsResourceUrn(validationOptions?: ValidationOptions) {
         validate(value: any) {
           if (typeof value !== 'string') return false
           try {
-            return Urn.parse(value).isResourceUrn()
+            return Urn.parse(value).isResourceTypeUrn()
           } catch {
             return false
           }
         },
         defaultMessage() {
-          return '$property must be a resource-level URN (urn:buka:<namespace>:<resource>)'
+          return '$property must be a resource-type-level URN (urn:buka:<domain>:<resource-type>)'
         },
       },
     })
@@ -114,20 +114,20 @@ export function IsResourceUrn(validationOptions?: ValidationOptions) {
 }
 
 /**
- * 验证字符串是否为实例级 URN（含完整三段：namespace、resource 和 identifier）。
+ * 验证字符串是否为实例级 URN（含完整三段：domain、resourceType 和 resourceId）。
  *
  * @example
  * ```typescript
  * class TokenPayloadDTO {
- *   @IsIdentifierUrn()
+ *   @IsResourceIdUrn()
  *   sub: string
  * }
  * ```
  */
-export function IsIdentifierUrn(validationOptions?: ValidationOptions) {
+export function IsResourceIdUrn(validationOptions?: ValidationOptions) {
   return function (object: object, propertyName: string) {
     registerDecorator({
-      name: IS_IDENTIFIER_URN,
+      name: IS_RESOURCE_ID_URN,
       target: object.constructor,
       propertyName,
       options: validationOptions,
@@ -135,13 +135,13 @@ export function IsIdentifierUrn(validationOptions?: ValidationOptions) {
         validate(value: any) {
           if (typeof value !== 'string') return false
           try {
-            return Urn.parse(value).isIdentifierUrn()
+            return Urn.parse(value).isResourceIdUrn()
           } catch {
             return false
           }
         },
         defaultMessage() {
-          return '$property must be an identifier-level URN (urn:buka:<namespace>:<resource>:<identifier>)'
+          return '$property must be a resource-id-level URN (urn:buka:<domain>:<resource-type>:<resource-id>)'
         },
       },
     })
