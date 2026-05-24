@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.2.0](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.1.9...v4.2.0) (2026-05-24)
+
+
+### Features
+
+* urn支持通配符 ([31bc4e1](https://github.com/buka-ltd/npm.nestjs-kit/commit/31bc4e13045255eb99b8b719589af697046005d0))
+
 ## [4.1.9](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.1.8...v4.1.9) (2026-05-24)
 
 
