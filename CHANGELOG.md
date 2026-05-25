@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.3.1](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.3.0...v4.3.1) (2026-05-25)
+
+
+### Bug Fixes
+
+* 因 Transient 装饰器未注册 Proptery 导致无法执行正确的转换 ([6a23663](https://github.com/buka-ltd/npm.nestjs-kit/commit/6a2366359bf62164e67909b2387672f8b7282cd9))
+
 ## [4.3.0](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.2.0...v4.3.0) (2026-05-24)
 
 
