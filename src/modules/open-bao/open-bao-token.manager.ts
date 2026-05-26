@@ -196,13 +196,13 @@ export class OpenBaoTokenManager implements OnModuleInit, OnModuleDestroy {
       this.logger.log('Token renewed successfully')
       this.scheduleRenewal()
     } catch (renewError) {
-      this.logger.error('Failed to renew token, attempting re-authentication', renewError)
+      this.logger.error('Failed to renew token, attempting re-authentication', renewError instanceof Error ? renewError.stack : undefined)
 
       try {
         await this.authenticate()
         this.scheduleRenewal()
       } catch (authError) {
-        this.logger.error('Re-authentication also failed, will retry in 5s', authError)
+        this.logger.error('Re-authentication also failed, will retry in 5s', authError instanceof Error ? authError.stack : undefined)
         this.renewalTimer = setTimeout(() => {
           void this.renewToken()
         }, 5000)

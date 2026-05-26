@@ -69,18 +69,24 @@ export class ObjectStorageService implements OnModuleInit {
    * @param options - 可选配置，如是否自动添加前缀
    */
   async get(path: string, options?: ObjectStorageOptions): Promise<Readable> {
+    const key = this.buildPath(path, options)
     const command = new GetObjectCommand({
       Bucket: this.config.bucket,
-      Key: this.buildPath(path, options),
+      Key: key,
     })
 
-    const res = await this.client.send(command)
+    try {
+      const res = await this.client.send(command)
 
-    if (!res.Body) {
-      throw new Error('No body')
+      if (!res.Body) {
+        throw new Error('No body')
+      }
+
+      return Readable.fromWeb(res.Body.transformToWebStream() as any)
+    } catch (err) {
+      this.logger.error(`对象存储下载失败, bucket: ${this.config.bucket}, key: ${key}`, err instanceof Error ? err.stack : undefined)
+      throw err
     }
-
-    return Readable.fromWeb(res.Body.transformToWebStream() as any)
   }
 
   /**
@@ -103,36 +109,48 @@ export class ObjectStorageService implements OnModuleInit {
       },
     })
 
-    await upload.done()
-    return key
+    try {
+      await upload.done()
+      return key
+    } catch (err) {
+      this.logger.error(`对象存储上传失败, bucket: ${this.config.bucket}, key: ${key}`, err instanceof Error ? err.stack : undefined)
+      throw err
+    }
   }
 
   /**
    * 获取文件的元数据（metadata）。
    */
   async getMetadata(path: string, options?: ObjectStorageOptions): Promise<Record<string, string>> {
+    const key = this.buildPath(path, options)
     const command = new HeadObjectCommand({
       Bucket: this.config.bucket,
-      Key: this.buildPath(path, options),
+      Key: key,
     })
 
-    const res = await this.client.send(command)
+    try {
+      const res = await this.client.send(command)
 
-    if (!res.Metadata) {
-      throw new Error('No metadata')
+      if (!res.Metadata) {
+        throw new Error('No metadata')
+      }
+
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      return res.Metadata
+    } catch (err) {
+      this.logger.error(`对象存储获取元数据失败, bucket: ${this.config.bucket}, key: ${key}`, err instanceof Error ? err.stack : undefined)
+      throw err
     }
-
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return res.Metadata
   }
 
   /**
    * 检查文件是否存在。
    */
   async exists(path: string, options?: ObjectStorageOptions): Promise<boolean> {
+    const key = this.buildPath(path, options)
     const command = new HeadObjectCommand({
       Bucket: this.config.bucket,
-      Key: this.buildPath(path, options),
+      Key: key,
     })
 
     try {
@@ -140,6 +158,7 @@ export class ObjectStorageService implements OnModuleInit {
       return true
     } catch (err) {
       if (err instanceof Error && err.name === 'NotFound') return false
+      this.logger.error(`对象存储检查文件存在性失败, bucket: ${this.config.bucket}, key: ${key}`, err instanceof Error ? err.stack : undefined)
       throw err
     }
   }
@@ -148,12 +167,18 @@ export class ObjectStorageService implements OnModuleInit {
    * 删除指定路径的文件。
    */
   async remove(path: string, options?: ObjectStorageOptions): Promise<void> {
+    const key = this.buildPath(path, options)
     const command = new DeleteObjectCommand({
       Bucket: this.config.bucket,
-      Key: this.buildPath(path, options),
+      Key: key,
     })
 
-    await this.client.send(command)
+    try {
+      await this.client.send(command)
+    } catch (err) {
+      this.logger.error(`对象存储删除文件失败, bucket: ${this.config.bucket}, key: ${key}`, err instanceof Error ? err.stack : undefined)
+      throw err
+    }
   }
 
   /**
@@ -164,12 +189,18 @@ export class ObjectStorageService implements OnModuleInit {
    * @param options - 可选配置
    */
   async getSignedUrl(path: string, expiresInSecond: number, options?: ObjectStorageOptions): Promise<string> {
+    const key = this.buildPath(path, options)
     const command = new GetObjectCommand({
       Bucket: this.config.bucket,
-      Key: this.buildPath(path, options),
+      Key: key,
     })
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return await getSignedUrl(this.client, command, { expiresIn: expiresInSecond })
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      return await getSignedUrl(this.client, command, { expiresIn: expiresInSecond })
+    } catch (err) {
+      this.logger.error(`对象存储获取签名URL失败, bucket: ${this.config.bucket}, key: ${key}`, err instanceof Error ? err.stack : undefined)
+      throw err
+    }
   }
 }
