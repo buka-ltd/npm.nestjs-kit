@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.3.2](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.3.1...v4.3.2) (2026-05-26)
+
+
+### Performance Improvements
+
+* 对象存储模块添加错误日志 ([968aaab](https://github.com/buka-ltd/npm.nestjs-kit/commit/968aaab5542e3a1f952027f61ad17cafca8fd4ba))
+
 ## [4.3.1](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.3.0...v4.3.1) (2026-05-25)
 
 
