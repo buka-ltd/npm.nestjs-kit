@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.3.4](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.3.3...v4.3.4) (2026-05-27)
+
+
+### Performance Improvements
+
+* 修正 urn 支持最新规范 ([a4ba918](https://github.com/buka-ltd/npm.nestjs-kit/commit/a4ba918cc237ee720eda28b120ddd2ce489ae1fe))
+
 ## [4.3.3](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.3.2...v4.3.3) (2026-05-27)
 
 
