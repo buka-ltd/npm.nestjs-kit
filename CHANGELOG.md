@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.3.3](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.3.2...v4.3.3) (2026-05-27)
+
+
+### Bug Fixes
+
+* 修正Entity默认产生的swagger格式与findOne默认查询结果不一致的问题 ([03bf307](https://github.com/buka-ltd/npm.nestjs-kit/commit/03bf307882cdf0e451a36e5b970e0e86f9179e01))
+
 ## [4.3.2](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.3.1...v4.3.2) (2026-05-26)
 
 
