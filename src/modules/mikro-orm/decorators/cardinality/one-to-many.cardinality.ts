@@ -36,6 +36,7 @@ export function OneToMany<Target extends object, Owner extends object>(options: 
     List({
       type,
       optional: options.nullable,
+      lazy: options.eager !== true,
       association: {
         kind: '1:m',
         type,

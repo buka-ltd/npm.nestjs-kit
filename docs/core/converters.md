@@ -197,6 +197,8 @@ async findOne(@Param('id') id: string): Promise<UserResponseBody> {
 
 `ResponseBodyType` 生成的类内置了 `toJSON()` 方法，在 JSON 序列化时会根据 `@Model()` 元数据递归处理 `data` 属性。对于 MikroORM 实体，已 populate 的关联会完整序列化，未 populate 的关联仅返回主键，无需手动处理。
 
+> `lazy: true` 的属性（如 `OneToMany`、`ManyToMany` 集合）默认不注册 Swagger schema，因此不会出现在 Swagger schema 中。这确保了 API 类型与 `findOne()` 不加 populate 的运行时结果一致。如需在响应中包含 lazy 属性，请使用 [EntityDto](/mikro-orm#entitydto) 派生 DTO 并手动声明。详见 [懒加载属性](/core/models#懒加载属性lazy)。
+
 ---
 
 ### ListResponseBodyType
@@ -251,6 +253,8 @@ async findAll(): Promise<UserListResponseBody> {
 **自动序列化**
 
 `ListResponseBodyType` 生成的类内置了 `toJSON()` 方法，在 JSON 序列化时会根据 `@Model()` 元数据递归处理 `data` 数组中的每个元素。对于 MikroORM 实体，已 populate 的关联会完整序列化，未 populate 的关联仅返回主键，无需手动处理。
+
+> `lazy: true` 的属性（如 `OneToMany`、`ManyToMany` 集合）默认不注册 Swagger schema，因此不会出现在 Swagger schema 中。这确保了 API 类型与 `findOne()` 不加 populate 的运行时结果一致。如需在响应中包含 lazy 属性，请使用 [EntityDto](/mikro-orm#entitydto) 派生 DTO 并手动声明。详见 [懒加载属性](/core/models#懒加载属性lazy)。
 
 ---
 

@@ -1,4 +1,3 @@
-export * from './eager-type/index.js'
 export * from './filter-query-type/index.js'
 export * from './pick-type/index.js'
 export * from './omit-type/index.js'

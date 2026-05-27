@@ -44,6 +44,7 @@ export function ManyToMany<Target extends object, Owner extends object>(
     List({
       type,
       optional: resolvedOptions?.nullable,
+      lazy: resolvedOptions?.eager !== true,
       association: {
         kind: 'm:n',
         type,

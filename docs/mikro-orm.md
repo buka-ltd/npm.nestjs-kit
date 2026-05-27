@@ -286,6 +286,8 @@ export class AuthorEntity extends DiscreteEntity {
 }
 ```
 
+> `OneToMany` 默认 `lazy: true`，该集合**不会**出现在 Swagger 文档中。这与 MikroORM 默认不 populate 集合的行为一致——`findOne()` 的 `toJSON()` 结果不含未填充的 Collection。如需在响应中包含此集合，请使用 `EntityDto` 派生 DTO 并手动声明，同时显式 `populate`。详见 [EntityDto](/core/converters#entitydto) 和 [懒加载属性（lazy）](/core/models#懒加载属性lazy)。
+
 ### Cardinality.OneToOne — 一对一关系
 
 **场景示例**：一个用户有一份详细资料
@@ -314,8 +316,67 @@ export class BookEntity extends DiscreteEntity {
 }
 ```
 
+> `ManyToMany` 默认 `lazy: true`，该集合**不会**出现在 Swagger 文档中。这与 MikroORM 默认不 populate 集合的行为一致。如需包含，请使用 `EntityDto` 派生 DTO 并手动声明，或设置 `eager: true`。详见 [EntityDto](/core/converters#entitydto) 和 [懒加载属性（lazy）](/core/models#懒加载属性lazy)。
+
 > 所有关系装饰器都会自动添加 Swagger 文档和验证规则，无需手动配置。
 > 当关系设置了 `hidden: true` 时，仅应用 `@ApiHideProperty()` 而不会注册模型属性元数据。
+
+---
+
+## EntityDto
+
+从实体生成**无继承关系**的纯 DTO 类，用于安全派生响应类型。
+
+### 解决的问题
+
+直接 `extends` MikroORM 实体会引入 `Collection<Entity>` 类型。当你在派生 DTO 中重新声明同名字段（如 `comments: PrimaryKeyTypeClass[]`）时，TypeScript 会报类型冲突——父类的 `Collection<CommentEntity>` 与子类的 `PrimaryKeyTypeClass[]` 不兼容。
+
+`EntityDto` 返回的类**不继承**源实体，因此不存在此冲突。同时它自动排除 `lazy: true` 的属性，Swagger schema 与 `findOne()` 不加 populate 的结果一致。
+
+### 类型转换
+
+`EntityDtoShape<T>` 对实体类型做以下变换：
+
+| 实体类型 | DTO 类型 | 原因 |
+|---------|---------|------|
+| `Collection<Entity>` | 键被排除 | 默认 `lazy: true`，不在 Swagger 中 |
+| `Ref<Entity>` | `Ref<Entity>`（保留） | nestjs-kit 一等公民，序列化层自动处理 |
+| `Xxx & Opt` | `Xxx \| undefined` | 去除 MikroORM 标记 |
+
+### 示例
+
+```typescript
+import { EntityDto } from '@buka/nestjs-kit/mikro-orm'
+
+@Entity()
+class ArticleEntity extends DiscreteEntity {
+  @Column.Varchar({ length: 64, comment: '标题' })
+  title!: string
+
+  @Column.Text({ comment: '正文内容', lazy: true })
+  content?: string
+
+  @Cardinality.ManyToOne({ entity: () => AuthorEntity, ref: true })
+  author!: Ref<AuthorEntity>
+
+  @Cardinality.OneToMany({ entity: () => CommentEntity, mappedBy: 'article' })
+  comments = new Collection<CommentEntity>(this)
+}
+
+// 基本 DTO — 排除 content（标量 lazy）和 comments（集合 lazy）
+class ArticleBriefDto extends EntityDto(ArticleEntity) {}
+
+// 详情 DTO — 将 lazy 属性显式加回
+class ArticleDetailDto extends EntityDto(ArticleEntity) {
+  @Property({ schema: { description: '正文内容' } })
+  content?: string
+
+  @List({ type: () => PrimaryKeyType(CommentEntity) })
+  comments!: PrimaryKeyTypeClass[]
+}
+```
+
+> `EntityDto` 是推荐的实体→响应 DTO 派生方式。对于需要选取特定字段的场景，使用 `PickType`。
 
 ---
 

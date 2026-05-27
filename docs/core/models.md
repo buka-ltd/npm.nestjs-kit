@@ -118,6 +118,7 @@ class UserProfile {
 | --- | --- | --- | --- |
 | `type` | `() => Class<object>` | 是 | 返回嵌套对象的类（使用惰性函数避免循环引用） |
 | `optional` | `boolean` | 否 | 标记为可选，默认 `false` |
+| `lazy` | `boolean` | 否 | 标记为懒加载属性，默认 `false`。`lazy: true` 时不注册 Swagger schema，详见[懒加载属性](#懒加载属性lazy) |
 | `schema` | `ApiPropertyOptions` | 否 | Swagger 配置，默认使用 `{ type: () => options.type() }` |
 | `association` | `AssociationMetadata` | 否 | 关联元数据，用于描述 ORM 关系 |
 
@@ -153,6 +154,7 @@ class Order {
 | --- | --- | --- | --- |
 | `type` | `(() => Class<object>)` \| `ScalarClass` | 是 | 数组元素类型。标量传 `String` / `Number` / `Boolean`；对象传惰性函数 |
 | `optional` | `boolean` | 否 | 标记为可选，默认 `false` |
+| `lazy` | `boolean` | 否 | 标记为懒加载属性，默认 `false`。`lazy: true` 时不注册 Swagger schema，详见[懒加载属性](#懒加载属性lazy) |
 | `schema` | `ApiPropertyOptions` | 否 | Swagger 配置 |
 | `association` | `AssociationMetadata` | 否 | 关联元数据 |
 
@@ -266,6 +268,58 @@ interface AssociationMetadata {
 | `m:n` | 多对多 | `@ManyToMany()` | `@List()` |
 
 在业务层无需手动设置 `association`，它由 ORM 关系装饰器自动注入。查询关联信息时可通过 `ModelRegister.getProperty()` 获取。
+
+## 懒加载属性（lazy）
+
+`lazy` 选项用于标记那些**默认不会被加载**的属性。当 `lazy: true` 时，装饰器不会为该属性注册 Swagger schema（`@ApiProperty`），因此该属性**不会出现在 API 文档中**。
+
+### 设计意图
+
+Entity 的 Swagger schema 默认应与 `findOne()` **不加任何 populate** 的 `toJSON()` 结果保持一致。MikroORM 默认不加载 Collection 关系（OneToMany / ManyToMany），因此这些属性不应出现在默认的 API 类型中。
+
+### 哪些属性默认是 lazy 的
+
+`Cardinality.OneToMany` 和 `Cardinality.ManyToMany` 装饰器默认设置 `lazy: true`：
+
+```typescript
+@Entity()
+export class AuthorEntity extends DiscreteEntity {
+  @Cardinality.OneToMany(() => BookEntity, (book) => book.author)
+  books = new Collection<BookEntity>(this)  // lazy: true，不在 Swagger 中
+}
+```
+
+`Cardinality.ManyToOne` 和 `Cardinality.OneToOne` **不设置** `lazy: true`，因为未 populate 时它们序列化为 `{ id: "xxx" }` 主键引用，与默认查询结果一致。
+
+### 如何包含 lazy 属性
+
+需要在 API 响应中返回 lazy 属性时，使用 `EntityDto` 派生基本 DTO 后手动声明：
+
+```typescript
+// 基本 DTO（lazy 属性自动排除，无 Collection/Ref 类型冲突）
+export class AuthorBriefDto extends EntityDto(AuthorEntity) {}
+
+// 详情 DTO（手动添加 lazy 属性）
+export class AuthorDetailDto extends EntityDto(AuthorEntity) {
+  @List({ type: () => PrimaryKeyType(BookEntity) })
+  books!: PrimaryKeyTypeClass[]
+}
+```
+
+> 直接 `extends AuthorEntity` 会导致 `Collection<Book>` 与 `Book[]` 类型冲突。`EntityDto` 返回不继承实体的独立类，避免了此问题。
+
+同时在 Service 层显式 `populate: ['books']`，确保运行时数据与类型声明一致。
+
+### eager 选项
+
+在 `Cardinality.OneToMany` 或 `Cardinality.ManyToMany` 中设置 `eager: true` 会覆盖默认的 `lazy: true`，使该集合直接出现在 Swagger schema 中：
+
+```typescript
+@Cardinality.OneToMany({ entity: () => BookEntity, mappedBy: 'author', eager: true })
+books = new Collection<BookEntity>(this)  // 出现在 Swagger 中
+```
+
+> 不推荐使用 `eager: true`，因为每次查询都需要 populate 该集合。建议使用派生 DTO 方式按需包含。
 
 ## ModelRegister
 

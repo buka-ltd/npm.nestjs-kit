@@ -17,7 +17,8 @@ interface CompositeOptions {
   optional?: boolean
   /**
    * 标记该属性为懒加载。懒加载属性存在除 `undefined` 之外的第三种状态——"未加载"，
-   * 即该属性并非不存在，而是尚未被加载。可通过 `EagerType()` converter 从 DTO 中排除这些字段。
+   * 即该属性并非不存在，而是尚未被加载。懒加载属性默认不注册 Swagger schema，
+   * 因此不会出现在 API 文档中。如需包含，请在派生 DTO 中手动声明。
    *
    * 在 MikroORM 场景下，对应 `lazy: true` 的列，查询时不会默认 SELECT 该列，需显式 `populate` 才会加载。
    */
@@ -68,10 +69,12 @@ export function Composite(options: CompositeOptions): PropertyDecorator {
 
     Type(options.type)(target, propertyKey)
 
-    if (optional) {
-      ApiPropertyOptional(schema)(target, propertyKey)
-    } else {
-      ApiProperty(schema)(target, propertyKey)
+    if (!options.lazy) {
+      if (optional) {
+        ApiPropertyOptional(schema)(target, propertyKey)
+      } else {
+        ApiProperty(schema)(target, propertyKey)
+      }
     }
 
     ModelRegister.addProperty(target.constructor as Class<any>, propertyKey, {
