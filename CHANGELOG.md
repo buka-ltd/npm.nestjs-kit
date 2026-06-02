@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.3.5](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.3.4...v4.3.5) (2026-06-02)
+
+
+### Bug Fixes
+
+* 修复ManyToMany和OneToMany立刻获取type数据导致的循环引用报错问题 ([c2c44c1](https://github.com/buka-ltd/npm.nestjs-kit/commit/c2c44c1d3e5d7ac2110f480f303fc9123a73087e))
+
 ## [4.3.4](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.3.3...v4.3.4) (2026-05-27)
 
 
