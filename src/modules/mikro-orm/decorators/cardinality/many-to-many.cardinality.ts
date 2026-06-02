@@ -1,9 +1,9 @@
 import type { EntityName } from '@mikro-orm/core'
 import { ManyToMany as OrmManyToMany } from '@mikro-orm/decorators/legacy'
 import type { ManyToManyOptions } from '@mikro-orm/core'
-import { ApiHideProperty, getSchemaPath } from '@nestjs/swagger'
+import { ApiHideProperty } from '@nestjs/swagger'
 import { Type } from '@nestjs/common'
-import { resolveEntityType } from './_resolve-entity-class'
+import { resolveEntitySchemaType, resolveEntityType } from './_resolve-entity-class'
 import { List } from '~/modules/core'
 
 
@@ -51,10 +51,8 @@ export function ManyToMany<Target extends object, Owner extends object>(
       },
       schema: {
         description: resolvedOptions?.comment,
-        type: 'array',
-        items: {
-          $ref: getSchemaPath(type()),
-        },
+        type: resolveEntitySchemaType(entityRef),
+        isArray: true,
       },
     })(target, propertyKey)
   }

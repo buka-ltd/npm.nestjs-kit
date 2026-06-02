@@ -39,3 +39,21 @@ export function resolveEntityType<T>(
   if (!cls) return Object
   return eager ? cls : PrimaryKeyType(cls as any)
 }
+
+/**
+ * 为 Swagger schema 解析实体类引用。始终返回完整实体类（非 PrimaryKeyType），
+ * 保证 `$ref` 指向正确注册的 schema。
+ *
+ * 返回函数形式以支持延迟求值，避免装饰器执行时的循环引用问题。
+ */
+export function resolveEntitySchemaType<T>(
+  entityRef: (() => EntityName<T> | EntityName<T>[]) | undefined,
+): () => Type {
+  return () => {
+    if (!entityRef) return Object
+    const result = entityRef()
+    const entityName = Array.isArray(result) ? result[0] : result
+    if (!entityName) return Object
+    return resolveEntityClass(entityName) || Object
+  }
+}
