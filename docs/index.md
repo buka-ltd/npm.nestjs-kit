@@ -53,6 +53,7 @@ export class AppModule {}
 | `ObjectStorageModule`      | S3 兼容的对象存储客户端                                                         | [object-storage.md](./object-storage.md)           |
 | `LoggerModule`        | 统一日志方案，基于 nestjs-pino，Grafana/Loki 友好格式                          | [logger.md](./logger.md)                         |
 | **SwaggerPatcher**         | Swagger 文档后处理工具                                                          | [swagger-patcher.md](./swagger-patcher.md)         |
+| **Keq**                    | keq HTTP 请求中间件，自动处理响应错误                                          | [keq.md](./keq.md)                                 |
 
 ## 模块依赖关系
 
@@ -67,6 +68,7 @@ SaltedHashModule          (独立)
 ObjectStorageModule       (独立)
 MikroORM 工具集           (独立，需安装 @mikro-orm/core)
 SwaggerPatcher            (独立，需安装 @nestjs/swagger)
+Keq                       (独立，需安装 keq)
 Urn                       (Core 模块内置，无需单独注册)
 ```
 
