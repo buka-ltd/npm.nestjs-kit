@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.4.0](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.3.5...v4.4.0) (2026-06-03)
+
+
+### Features
+
+* add throwOnResponseError handle request exception ([847d3ba](https://github.com/buka-ltd/npm.nestjs-kit/commit/847d3bab337750eab915db975029e2e46fd40a37))
+
 ## [4.3.5](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.3.4...v4.3.5) (2026-06-02)
 
 
