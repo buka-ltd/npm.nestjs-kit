@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.4.1](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.4.0...v4.4.1) (2026-06-04)
+
+
+### Bug Fixes
+
+* 修复 EntityDto 导致swagger属性丢失的问题 ([b6b2f69](https://github.com/buka-ltd/npm.nestjs-kit/commit/b6b2f6902f3eb6ccd8bc4373b0c9b12a772b385d))
+
 ## [4.4.0](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.3.5...v4.4.0) (2026-06-03)
 
 
