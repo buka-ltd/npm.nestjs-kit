@@ -2,12 +2,23 @@
 // 避免 deep import 触发 ERR_PACKAGE_PATH_NOT_EXPORTED
 
 import { Type } from '@nestjs/common'
-import { DECORATORS } from '@nestjs/swagger'
 import { isFunction, isString } from './nestjs-common'
+
+/**
+ * 模拟 @nestjs/swagger 的 DECORATORS 常量。
+ *
+ * `@nestjs/swagger` 的类型声明（`index.d.ts`）未导出 `DECORATORS`，
+ * 仅在运行时可用。为避免 `ts(2305)` 错误，直接内联其常量值。
+ */
+export const DECORATORS = {
+  API_MODEL_PROPERTIES: 'swagger/apiModelProperties',
+  API_MODEL_PROPERTIES_ARRAY: 'swagger/apiModelPropertiesArray',
+} as const
 
 // 来自 @nestjs/swagger/dist/plugin/plugin-constants
 // @nestjs/swagger Plugin 在编译时注入的静态方法名
 export const METADATA_FACTORY_NAME = '_OPENAPI_METADATA_FACTORY'
+
 
 // 内联自 @nestjs/swagger/dist/interfaces/schema-object-metadata.interface
 export type SchemaObjectMetadata = {

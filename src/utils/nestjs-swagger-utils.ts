@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import * as R from 'ramda'
 import { Type } from '@nestjs/common'
-import { ApiProperty, DECORATORS } from '@nestjs/swagger'
+import { ApiProperty } from '@nestjs/swagger'
 import { isFunction } from './internals/nestjs-common'
 import type { SchemaObjectMetadata } from './internals/nestjs-swagger'
 import {
   METADATA_FACTORY_NAME,
+  DECORATORS,
   getModelProperties,
   clonePluginMetadataFactory,
   isBuiltInType,

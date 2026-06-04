@@ -2,6 +2,11 @@ import { Collection } from '@mikro-orm/core'
 import { Class } from 'type-fest'
 import { ModelRegister } from '~/modules/core/decorators'
 import { ExcludeOpt } from '~/modules/mikro-orm'
+import {
+  METADATA_FACTORY_NAME,
+  DECORATORS,
+} from '~/utils/internals/nestjs-swagger'
+import type { SchemaObjectMetadata } from '~/utils/internals/nestjs-swagger'
 
 
 /**
@@ -21,7 +26,7 @@ type IsCollection<T> = T extends Collection<any> ? true : false
  */
 export type EntityDtoShape<T> = {
   [K in keyof T as IsCollection<T[K]> extends true ? never : K]:
-    ExcludeOpt<T[K]>
+  ExcludeOpt<T[K]>
 }
 
 /**
@@ -56,6 +61,12 @@ export function EntityDto<T extends object>(classRef: Class<T>): Class<EntityDto
 
   class EntityDtoClass {}
 
+  /**
+   * 收集从源实体复制的 Swagger 属性元数据，
+   * 用于构建 `_OPENAPI_METADATA_FACTORY`。
+   */
+  const swaggerProps: Record<string, SchemaObjectMetadata> = {}
+
   for (const propertyKey of ModelRegister.getModelPropertyKeys(classRef)) {
     const metadata = ModelRegister.getProperty(classRef, propertyKey)
     if (metadata?.lazy) continue
@@ -69,6 +80,35 @@ export function EntityDto<T extends object>(classRef: Class<T>): Class<EntityDto
       if (Reflect.hasMetadata(metadataKey, EntityDtoClass.prototype, propertyKey)) continue
       Reflect.defineMetadata(metadataKey, value, EntityDtoClass.prototype, propertyKey)
     }
+
+    /**
+     * 收集已复制的 `@ApiProperty` 元数据，后续通过
+     * `_OPENAPI_METADATA_FACTORY` 暴露给 `@nestjs/swagger`，
+     * 使 applyMetadataFactory() 遍历原型链时能发现这些属性。
+     */
+    if (typeof propertyKey === 'string') {
+      const swaggerMeta: SchemaObjectMetadata | undefined = Reflect.getMetadata(
+        DECORATORS.API_MODEL_PROPERTIES,
+        EntityDtoClass.prototype,
+        propertyKey,
+      )
+      if (swaggerMeta) {
+        swaggerProps[propertyKey] = swaggerMeta
+      }
+    }
+  }
+
+  /**
+   * 设置 `_OPENAPI_METADATA_FACTORY` 静态方法。
+   *
+   * `@nestjs/swagger` 插件在编译时无法识别 `EntityDto`，
+   * 只对子类（如 `CourseBriefDto`）中直接声明的属性生成 factory。
+   * 当 `applyMetadataFactory()` 遍历原型链时，
+   * 它会在 `EntityDtoClass` 上找到此 factory，
+   * 并将源实体属性应用到子类的 prototype 上。
+   */
+  if (Object.keys(swaggerProps).length > 0) {
+    EntityDtoClass[METADATA_FACTORY_NAME] = () => swaggerProps
   }
 
   return EntityDtoClass as unknown as Class<EntityDtoShape<T>>
