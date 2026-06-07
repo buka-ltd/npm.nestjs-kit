@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.4.2](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.4.1...v4.4.2) (2026-06-07)
+
+
+### Bug Fixes
+
+* 修复 Column.Enum 不兼容 arrary 类型的问题 ([0b1e5e1](https://github.com/buka-ltd/npm.nestjs-kit/commit/0b1e5e1d6e5b94349aae4eeebc68c615719e252e))
+* 修复jsonb不支持schalar class的问题 ([281e61e](https://github.com/buka-ltd/npm.nestjs-kit/commit/281e61ef8124b4464f050b9cf335510715d3b213))
+
 ## [4.4.1](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.4.0...v4.4.1) (2026-06-04)
 
 
