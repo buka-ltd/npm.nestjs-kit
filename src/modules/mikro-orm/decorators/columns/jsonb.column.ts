@@ -2,14 +2,31 @@ import { Property as MikroOrmProperty } from '@mikro-orm/decorators/legacy'
 import type { PropertyOptions } from '@mikro-orm/core'
 import { ApiHideProperty, ApiPropertyOptions } from '@nestjs/swagger'
 import { Composite, Dictionary, List } from '~/modules/core/decorators'
+import { isScalarClass, type ScalarClass } from '~/modules/core/decorators/class-validator/is-scalar'
 import { Class } from 'type-fest'
 
 
-interface JsonbOptions<T extends object> extends Omit<PropertyOptions<T>, 'type' | 'columnType'> {
-  type: () => Class<object>
-  kind?: 'composite' | 'list' | 'dictionary'
+interface JsonbOptionsBase<T extends object> extends Omit<PropertyOptions<T>, 'type' | 'columnType'> {
   schema?: ApiPropertyOptions
 }
+
+/**
+ * kind = 'composite'（默认）时，type 必须是 class 引用，不能是标量类型。
+ */
+interface JsonbOptionsComposite<T extends object> extends JsonbOptionsBase<T> {
+  type: () => Class<object>
+  kind?: 'composite'
+}
+
+/**
+ * kind = 'list' | 'dictionary' 时，type 可以是 class 引用或标量类型（String / Number / Boolean）。
+ */
+interface JsonbOptionsListOrDict<T extends object> extends JsonbOptionsBase<T> {
+  type: (() => Class<object>) | ScalarClass
+  kind: 'list' | 'dictionary'
+}
+
+type JsonbOptions<T extends object> = JsonbOptionsComposite<T> | JsonbOptionsListOrDict<T>
 
 /**
  * JSONB 列装饰器，声明一个 JSONB 类型的数据库列。
@@ -66,7 +83,12 @@ export function Jsonb<T extends object>(options: JsonbOptions<T>): (target: T, p
         Dictionary(decoratorOptions)(target, propertyKey)
         break
       default:
-        Composite(decoratorOptions)(target, propertyKey)
+        if (isScalarClass(type)) {
+          throw new TypeError(
+            `Jsonb with kind='composite' requires a class reference (() => Class), but got scalar type: ${type.name}`,
+          )
+        }
+        Composite({ ...decoratorOptions, type })(target, propertyKey)
         break
     }
   }
