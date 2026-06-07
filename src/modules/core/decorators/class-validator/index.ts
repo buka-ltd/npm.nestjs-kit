@@ -1,5 +1,6 @@
 export * from './has-any-key'
 export * from './is-crockford-base32'
+export * from './is-enum-column'
 export * from './is-scalar'
 export * from './is-scalar-dictionary'
 export * from './is-urn'

@@ -1,9 +1,10 @@
 import type { AnyEntity } from '@mikro-orm/core'
 import { Enum as MikroOrmEnum } from '@mikro-orm/decorators/legacy'
 import type { EnumOptions } from '@mikro-orm/core'
-import { applyDecorators } from '@nestjs/common'
-import { Property } from '~/modules/core/decorators'
-import { SchemaObject } from '~/swagger-patcher/swagger-patcher'
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
+import { IsArray, IsDefined, IsOptional } from 'class-validator'
+import { IsEnumColumn, ModelRegister, Property } from '~/modules/core/decorators'
+import type { SchemaObject } from '~/swagger-patcher/swagger-patcher'
 
 
 interface ColumnEnumOptions extends Omit<EnumOptions<AnyEntity>, 'type' | 'columnType'> {
@@ -25,7 +26,7 @@ interface ColumnEnumOptions extends Omit<EnumOptions<AnyEntity>, 'type' | 'colum
  *
  * @Entity()
  * class User {
- *   @Enum({ items: () => Object.values(Status), enumName: 'Status', comment: '用户状态' })
+ *   @Enum({ items: () => Status, enumName: 'Status', comment: '用户状态' })
  *   status: Status
  * }
  * ```
@@ -34,22 +35,57 @@ export function Enum<T extends object>(options: ColumnEnumOptions): (target: T, 
   return (target, propertyKey) => {
     MikroOrmEnum(options)(target, propertyKey)
 
-    const items = options.items as ((() => (string | number)[]) | (string | number)[] | undefined)
-    const values = typeof items === 'function' ? items() : items
+    const items = options.items as ((() => (string | number)[]) | (string | number)[])
 
-    applyDecorators(
+    if (options.array) {
+      IsArray()(target, propertyKey)
+      IsEnumColumn(items, { each: true })(target, propertyKey)
+
+      if (options.nullable) {
+        IsOptional()(target, propertyKey)
+      } else {
+        IsDefined()(target, propertyKey)
+      }
+
+      if (!options.lazy) {
+        const schema = {
+          description: options.comment,
+          enum: items,
+          isArray: true,
+          enumName: options.enumName,
+          example: options.example,
+          examples: options.examples,
+          required: !options.nullable,
+        }
+
+        if (options.nullable) {
+          ApiPropertyOptional(schema)(target, propertyKey)
+        } else {
+          ApiProperty(schema)(target, propertyKey)
+        }
+      }
+
+      ModelRegister.addProperty(target.constructor as { new(...args: any[]): T }, propertyKey, {
+        kind: 'enum',
+        optional: options.nullable ?? false,
+        lazy: options.lazy ?? false,
+        items,
+        enumName: options.enumName,
+        array: options.array,
+      })
+    } else {
       Property({
         optional: options.nullable,
         lazy: options.lazy,
         schema: {
           description: options.comment,
-          enum: values,
+          enum: items,
           enumName: options.enumName,
           example: options.example,
           examples: options.examples,
           required: !options.nullable,
         },
-      }),
-    )(target, propertyKey)
+      })(target, propertyKey)
+    }
   }
 }

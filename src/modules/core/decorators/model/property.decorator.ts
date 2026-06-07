@@ -36,7 +36,13 @@ export interface EnumPropertyMetadata extends PropertyMetadataBase {
   kind: 'enum'
   type?: () => object
   values?: (string | number)[]
+  /**
+   * MikroORM `@Enum()` 列装饰器传入的原始 `items` 参数。
+   * 保持原始格式（数组或惰性函数），不立即求值以避免循环引用。
+   */
+  items?: (() => (string | number)[]) | (string | number)[]
   enumName?: string
+  array?: boolean
 }
 
 export type PropertyMetadata
