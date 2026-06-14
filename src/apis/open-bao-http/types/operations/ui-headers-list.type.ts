@@ -14,7 +14,7 @@ export interface UiHeadersListResponseBodies {
 export interface UiHeadersListRequestBodies {}
 
 export type UiHeadersListRequestQuery = {
-  list: 'true'
+  list: ('true')
 }
 
 export type UiHeadersListRouteParameters = {}

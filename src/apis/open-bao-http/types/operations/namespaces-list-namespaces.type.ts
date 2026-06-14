@@ -14,7 +14,7 @@ export interface NamespacesListNamespacesResponseBodies {
 export interface NamespacesListNamespacesRequestBodies {}
 
 export type NamespacesListNamespacesRequestQuery = {
-  list: 'true'
+  list: ('true')
 }
 
 export type NamespacesListNamespacesRouteParameters = {}

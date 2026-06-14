@@ -13,7 +13,7 @@ export interface EntityListByIdResponseBodies {
 export interface EntityListByIdRequestBodies {}
 
 export type EntityListByIdRequestQuery = {
-  list: 'true'
+  list: ('true')
 }
 
 export type EntityListByIdRouteParameters = {}

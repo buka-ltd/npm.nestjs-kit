@@ -14,7 +14,7 @@ export interface PoliciesListPasswordPoliciesResponseBodies {
 export interface PoliciesListPasswordPoliciesRequestBodies {}
 
 export type PoliciesListPasswordPoliciesRequestQuery = {
-  list: 'true'
+  list: ('true')
 }
 
 export type PoliciesListPasswordPoliciesRouteParameters = {}

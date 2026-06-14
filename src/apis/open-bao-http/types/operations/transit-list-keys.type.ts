@@ -13,7 +13,7 @@ export interface TransitListKeysResponseBodies {
 export interface TransitListKeysRequestBodies {}
 
 export type TransitListKeysRequestQuery = {
-  list: 'true'
+  list: ('true')
 }
 
 export type TransitListKeysRouteParameters = {}

@@ -14,7 +14,7 @@ export interface PluginsCatalogListPluginsWithTypeResponseBodies {
 export interface PluginsCatalogListPluginsWithTypeRequestBodies {}
 
 export type PluginsCatalogListPluginsWithTypeRequestQuery = {
-  list: 'true'
+  list: ('true')
 }
 
 export type PluginsCatalogListPluginsWithTypeRouteParameters = {}

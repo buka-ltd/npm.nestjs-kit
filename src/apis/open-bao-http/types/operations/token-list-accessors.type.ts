@@ -13,7 +13,7 @@ export interface TokenListAccessorsResponseBodies {
 export interface TokenListAccessorsRequestBodies {}
 
 export type TokenListAccessorsRequestQuery = {
-  list: 'true'
+  list: ('true')
 }
 
 export type TokenListAccessorsRouteParameters = {}

@@ -13,7 +13,7 @@ export interface PersonaListByIdResponseBodies {
 export interface PersonaListByIdRequestBodies {}
 
 export type PersonaListByIdRequestQuery = {
-  list: 'true'
+  list: ('true')
 }
 
 export type PersonaListByIdRouteParameters = {}

@@ -13,7 +13,7 @@ export interface AliasListByIdResponseBodies {
 export interface AliasListByIdRequestBodies {}
 
 export type AliasListByIdRequestQuery = {
-  list: 'true'
+  list: ('true')
 }
 
 export type AliasListByIdRouteParameters = {}

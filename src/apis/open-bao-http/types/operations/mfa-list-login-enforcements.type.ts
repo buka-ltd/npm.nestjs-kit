@@ -13,7 +13,7 @@ export interface MfaListLoginEnforcementsResponseBodies {
 export interface MfaListLoginEnforcementsRequestBodies {}
 
 export type MfaListLoginEnforcementsRequestQuery = {
-  list: 'true'
+  list: ('true')
 }
 
 export type MfaListLoginEnforcementsRouteParameters = {}

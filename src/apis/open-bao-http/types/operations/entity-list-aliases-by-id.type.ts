@@ -13,7 +13,7 @@ export interface EntityListAliasesByIdResponseBodies {
 export interface EntityListAliasesByIdRequestBodies {}
 
 export type EntityListAliasesByIdRequestQuery = {
-  list: 'true'
+  list: ('true')
 }
 
 export type EntityListAliasesByIdRouteParameters = {}

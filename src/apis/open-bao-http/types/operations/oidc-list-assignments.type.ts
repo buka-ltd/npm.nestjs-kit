@@ -13,7 +13,7 @@ export interface OidcListAssignmentsResponseBodies {
 export interface OidcListAssignmentsRequestBodies {}
 
 export type OidcListAssignmentsRequestQuery = {
-  list: 'true'
+  list: ('true')
 }
 
 export type OidcListAssignmentsRouteParameters = {}

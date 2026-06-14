@@ -13,7 +13,7 @@ export interface SystemListPoliciesDetailedAclNameResponseBodies {
 export interface SystemListPoliciesDetailedAclNameRequestBodies {}
 
 export type SystemListPoliciesDetailedAclNameRequestQuery = {
-  list: 'true'
+  list: ('true')
 }
 
 export type SystemListPoliciesDetailedAclNameRouteParameters = {}

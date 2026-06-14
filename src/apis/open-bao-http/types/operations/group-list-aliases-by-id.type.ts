@@ -13,7 +13,7 @@ export interface GroupListAliasesByIdResponseBodies {
 export interface GroupListAliasesByIdRequestBodies {}
 
 export type GroupListAliasesByIdRequestQuery = {
-  list: 'true'
+  list: ('true')
 }
 
 export type GroupListAliasesByIdRouteParameters = {}

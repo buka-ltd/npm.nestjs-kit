@@ -14,7 +14,7 @@ export interface RateLimitQuotasListResponseBodies {
 export interface RateLimitQuotasListRequestBodies {}
 
 export type RateLimitQuotasListRequestQuery = {
-  list: 'true'
+  list: ('true')
 }
 
 export type RateLimitQuotasListRouteParameters = {}

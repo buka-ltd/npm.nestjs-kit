@@ -6,7 +6,6 @@ import { NestjsTranslator } from '@keq-request/cli/translators'
 
 export default defineConfig({
   outdir: 'src/apis',
-  clean: true,
   rendering: {
     fileNamingStyle: FileNamingStyle.kebabCase,
   },

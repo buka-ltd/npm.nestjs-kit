@@ -14,7 +14,7 @@ export interface LeasesLookUpWithPrefixResponseBodies {
 export interface LeasesLookUpWithPrefixRequestBodies {}
 
 export type LeasesLookUpWithPrefixRequestQuery = {
-  list: 'true'
+  list: ('true')
 }
 
 export type LeasesLookUpWithPrefixRouteParameters = {}

@@ -13,7 +13,7 @@ export interface OidcListScopesResponseBodies {
 export interface OidcListScopesRequestBodies {}
 
 export type OidcListScopesRequestQuery = {
-  list: 'true'
+  list: ('true')
 }
 
 export type OidcListScopesRouteParameters = {}

@@ -15,12 +15,6 @@ export interface OpenBaoHttpModuleOptions extends KeqModuleOptions {
    * @default false
    */
   isGlobal?: boolean
-
-  /**
-   * Provide a custom KeqRequest instance for isolation.
-   * If not provided, will use the global KeqRequest injected by KeqModule.
-   */
-  request?: KeqRequest
 }
 
 const KEQ_REQUEST_TOKEN = Symbol('OpenBaoHttpKeqRequest')
@@ -35,11 +29,13 @@ const { ConfigurableModuleClass, MODULE_OPTIONS_TOKEN } = new ConfigurableModule
 const REQUEST_PROVIDER: Provider = {
   provide: KEQ_REQUEST_TOKEN,
   useFactory: (options: OpenBaoHttpModuleOptions, globalRequest?: KeqRequest) => {
-    const request = options.request ?? globalRequest
-
-    if (!request) {
-      throw new Error('OpenBaoHttpModule requires a KeqRequest instance. Either provide one via module options { request: new KeqRequest() } or import KeqModule globally.')
+    if (!options.isolate && !globalRequest) {
+      console.warn('OpenBaoHttpModule: No global KeqRequest found, creating an isolated instance. Import KeqModule globally or set { isolate: true } to suppress this warning.')
     }
+
+    const request = (!options.isolate && globalRequest)
+      ? globalRequest.fork()
+      : new KeqRequest()
 
     if (options.middlewares) {
       for (const middleware of options.middlewares) {
@@ -68,7 +64,8 @@ const CLIENT_PROVIDER: Provider = {
  *
  * **Option 1: Use the global `KeqModule` (recommended)**
  *
- * Import `KeqModule` globally, then register this module:
+ * Import `KeqModule` globally, then register this module.
+ * The module will fork from the global KeqRequest and inherit its middlewares.
  *
  * ```typescript
  * // app.module.ts
@@ -76,12 +73,10 @@ const CLIENT_PROVIDER: Provider = {
  *
  * @Module({
  *   imports: [
- *     KeqModule.register({
- *       middlewares: [],
- *     }),
+ *     KeqModule,
  *     OpenBaoHttpModule.register({
  *       isGlobal: true, // optional, default false
- *       middlewares: [],
+ *       middlewares: [], // module-level middlewares
  *     }),
  *   ],
  * })
@@ -94,8 +89,7 @@ const CLIENT_PROVIDER: Provider = {
  * @Module({
  *   imports: [
  *     OpenBaoHttpModule.register({
- *       request: new KeqRequest(),
- *       middlewares: [],
+ *       isolate: true, // no inherited middlewares
  *     }),
  *   ],
  * })
@@ -115,6 +109,8 @@ const CLIENT_PROVIDER: Provider = {
   providers: [REQUEST_PROVIDER, CLIENT_PROVIDER],
   exports: [OpenBaoHttpClient],
 })
-export class OpenBaoHttpModule extends ConfigurableModuleClass {}
+export class OpenBaoHttpModule extends ConfigurableModuleClass {
+  static readonly KEQ_REQUEST = KEQ_REQUEST_TOKEN
+}
 
 /* @anchor:file:end */

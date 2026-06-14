@@ -13,7 +13,7 @@ export interface MfaListOktaMethodsResponseBodies {
 export interface MfaListOktaMethodsRequestBodies {}
 
 export type MfaListOktaMethodsRequestQuery = {
-  list: 'true'
+  list: ('true')
 }
 
 export type MfaListOktaMethodsRouteParameters = {}

@@ -13,7 +13,7 @@ export interface MfaListPingIdMethodsResponseBodies {
 export interface MfaListPingIdMethodsRequestBodies {}
 
 export type MfaListPingIdMethodsRequestQuery = {
-  list: 'true'
+  list: ('true')
 }
 
 export type MfaListPingIdMethodsRouteParameters = {}

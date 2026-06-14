@@ -13,7 +13,7 @@ export interface GroupListByNameResponseBodies {
 export interface GroupListByNameRequestBodies {}
 
 export type GroupListByNameRequestQuery = {
-  list: 'true'
+  list: ('true')
 }
 
 export type GroupListByNameRouteParameters = {}

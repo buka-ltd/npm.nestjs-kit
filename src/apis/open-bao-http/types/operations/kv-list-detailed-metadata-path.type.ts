@@ -13,7 +13,7 @@ export interface KvListDetailedMetadataPathResponseBodies {
 export interface KvListDetailedMetadataPathRequestBodies {}
 
 export type KvListDetailedMetadataPathRequestQuery = {
-  list: 'true'
+  list: ('true')
 }
 
 export type KvListDetailedMetadataPathRouteParameters = {}

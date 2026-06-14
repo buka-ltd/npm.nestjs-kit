@@ -14,7 +14,7 @@ export interface VersionHistoryResponseBodies {
 export interface VersionHistoryRequestBodies {}
 
 export type VersionHistoryRequestQuery = {
-  list: 'true'
+  list: ('true')
 }
 
 export type VersionHistoryRouteParameters = {}

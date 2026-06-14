@@ -13,7 +13,7 @@ export interface TokenListRolesResponseBodies {
 export interface TokenListRolesRequestBodies {}
 
 export type TokenListRolesRequestQuery = {
-  list: 'true'
+  list: ('true')
 }
 
 export type TokenListRolesRouteParameters = {}

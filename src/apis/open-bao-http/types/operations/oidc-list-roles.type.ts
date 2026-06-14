@@ -13,7 +13,7 @@ export interface OidcListRolesResponseBodies {
 export interface OidcListRolesRequestBodies {}
 
 export type OidcListRolesRequestQuery = {
-  list: 'true'
+  list: ('true')
 }
 
 export type OidcListRolesRouteParameters = {}

@@ -1,0 +1,36 @@
+[deny]
+
+# ===== Internal API (7) + Internal UI (4) — 共 11 个操作 =====
+*       openBaoHttp:/sys/internal/**
+# ===== pprof — Go 运行时性能分析端点 (11 个操作) =====
+*       openBaoHttp:/sys/pprof
+*       openBaoHttp:/sys/pprof/**
+DELETE  openBaoHttp:/sys/generate-root
+DELETE  openBaoHttp:/sys/policy/{name}
+
+# ===== 废弃的 Policy API 路径 — "2" 变体 (3 个操作) =====
+# 旧路径 /sys/policy/{name} → 新路径 /sys/policies/acl/{name}
+GET     openBaoHttp:/sys/policy/{name}
+
+# ===== Version History (1 个操作) =====
+GET     openBaoHttp:/sys/version-history
+
+# ===== 废弃的 Wrapping GET 变体 (1 个操作) =====
+GET     openBaoHttp:/sys/wrapping/lookup
+
+# ===== 废弃的 OIDC POST 变体 (1 个操作) =====
+POST    openBaoHttp:/identity/oidc/provider/{name}/userinfo
+
+# ===== 废弃的 Root Token 生成 — "_2" 变体 (2 个操作) =====
+# 旧路径 /sys/generate-root → 新路径 /sys/generate-root/attempt
+POST    openBaoHttp:/sys/generate-root
+POST    openBaoHttp:/sys/policy/{name}
+
+# ===== 废弃的 Lease API 路径 — "2" 变体 (6 个操作) =====
+# 旧路径 /sys/renew*, /sys/revoke* → 新路径 /sys/leases/*
+POST    openBaoHttp:/sys/renew
+POST    openBaoHttp:/sys/renew/{url_lease_id}
+POST    openBaoHttp:/sys/revoke
+POST    openBaoHttp:/sys/revoke-force/{prefix}
+POST    openBaoHttp:/sys/revoke-prefix/{prefix}
+POST    openBaoHttp:/sys/revoke/{url_lease_id}

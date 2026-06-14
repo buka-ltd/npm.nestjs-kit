@@ -14,7 +14,7 @@ export interface PoliciesListAclPoliciesResponseBodies {
 export interface PoliciesListAclPoliciesRequestBodies {}
 
 export type PoliciesListAclPoliciesRequestQuery = {
-  list: 'true'
+  list: ('true')
 }
 
 export type PoliciesListAclPoliciesRouteParameters = {}

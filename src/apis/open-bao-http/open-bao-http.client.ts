@@ -6,6 +6,13 @@
 
 import { Injectable, Logger } from '@nestjs/common'
 import { Keq, KeqRequest } from 'keq'
+import type { KubernetesReadAuthConfigurationOperation, KubernetesReadAuthConfigurationResponseBodies, KubernetesReadAuthConfigurationRequestParameters } from './types/operations/kubernetes-read-auth-configuration.type'
+import type { KubernetesConfigureAuthOperation, KubernetesConfigureAuthResponseBodies, KubernetesConfigureAuthRequestParameters } from './types/operations/kubernetes-configure-auth.type'
+import type { KubernetesLoginOperation, KubernetesLoginResponseBodies, KubernetesLoginRequestParameters } from './types/operations/kubernetes-login.type'
+import type { KubernetesListAuthRolesOperation, KubernetesListAuthRolesResponseBodies, KubernetesListAuthRolesRequestParameters } from './types/operations/kubernetes-list-auth-roles.type'
+import type { KubernetesReadAuthRoleOperation, KubernetesReadAuthRoleResponseBodies, KubernetesReadAuthRoleRequestParameters } from './types/operations/kubernetes-read-auth-role.type'
+import type { KubernetesWriteAuthRoleOperation, KubernetesWriteAuthRoleResponseBodies, KubernetesWriteAuthRoleRequestParameters } from './types/operations/kubernetes-write-auth-role.type'
+import type { KubernetesDeleteAuthRoleOperation, KubernetesDeleteAuthRoleResponseBodies, KubernetesDeleteAuthRoleRequestParameters } from './types/operations/kubernetes-delete-auth-role.type'
 import type { TokenListAccessorsOperation, TokenListAccessorsResponseBodies, TokenListAccessorsRequestParameters } from './types/operations/token-list-accessors.type'
 import type { TokenCreateOperation, TokenCreateResponseBodies, TokenCreateRequestParameters } from './types/operations/token-create.type'
 import type { TokenCreateOrphanOperation, TokenCreateOrphanResponseBodies, TokenCreateOrphanRequestParameters } from './types/operations/token-create-orphan.type'
@@ -127,7 +134,6 @@ import type { OidcProviderAuthorizeOperation, OidcProviderAuthorizeResponseBodie
 import type { OidcProviderAuthorizeWithParametersOperation, OidcProviderAuthorizeWithParametersResponseBodies, OidcProviderAuthorizeWithParametersRequestParameters } from './types/operations/oidc-provider-authorize-with-parameters.type'
 import type { OidcProviderTokenOperation, OidcProviderTokenResponseBodies, OidcProviderTokenRequestParameters } from './types/operations/oidc-provider-token.type'
 import type { OidcProviderUserInfoOperation, OidcProviderUserInfoResponseBodies, OidcProviderUserInfoRequestParameters } from './types/operations/oidc-provider-user-info.type'
-import type { OidcProviderUserInfo2Operation, OidcProviderUserInfo2ResponseBodies, OidcProviderUserInfo2RequestParameters } from './types/operations/oidc-provider-user-info2.type'
 import type { OidcListRolesOperation, OidcListRolesResponseBodies, OidcListRolesRequestParameters } from './types/operations/oidc-list-roles.type'
 import type { OidcReadRoleOperation, OidcReadRoleResponseBodies, OidcReadRoleRequestParameters } from './types/operations/oidc-read-role.type'
 import type { OidcWriteRoleOperation, OidcWriteRoleResponseBodies, OidcWriteRoleRequestParameters } from './types/operations/oidc-write-role.type'
@@ -183,8 +189,6 @@ import type { UiHeadersConfigureOperation, UiHeadersConfigureResponseBodies, UiH
 import type { UiHeadersDeleteConfigurationOperation, UiHeadersDeleteConfigurationResponseBodies, UiHeadersDeleteConfigurationRequestParameters } from './types/operations/ui-headers-delete-configuration.type'
 import type { DecodeOperation, DecodeResponseBodies, DecodeRequestParameters } from './types/operations/decode.type'
 import type { RootTokenGenerationReadProgress2Operation, RootTokenGenerationReadProgress2ResponseBodies, RootTokenGenerationReadProgress2RequestParameters } from './types/operations/root-token-generation-read-progress2.type'
-import type { RootTokenGenerationInitialize_2Operation, RootTokenGenerationInitialize_2ResponseBodies, RootTokenGenerationInitialize_2RequestParameters } from './types/operations/root-token-generation-initialize-2.type'
-import type { RootTokenGenerationCancel_2Operation, RootTokenGenerationCancel_2ResponseBodies, RootTokenGenerationCancel_2RequestParameters } from './types/operations/root-token-generation-cancel-2.type'
 import type { RootTokenGenerationReadProgressOperation, RootTokenGenerationReadProgressResponseBodies, RootTokenGenerationReadProgressRequestParameters } from './types/operations/root-token-generation-read-progress.type'
 import type { RootTokenGenerationInitializeOperation, RootTokenGenerationInitializeResponseBodies, RootTokenGenerationInitializeRequestParameters } from './types/operations/root-token-generation-initialize.type'
 import type { RootTokenGenerationCancelOperation, RootTokenGenerationCancelResponseBodies, RootTokenGenerationCancelRequestParameters } from './types/operations/root-token-generation-cancel.type'
@@ -195,17 +199,6 @@ import type { CollectHostInformationOperation, CollectHostInformationResponseBod
 import type { CollectInFlightRequestInformationOperation, CollectInFlightRequestInformationResponseBodies, CollectInFlightRequestInformationRequestParameters } from './types/operations/collect-in-flight-request-information.type'
 import type { ReadInitializationStatusOperation, ReadInitializationStatusResponseBodies, ReadInitializationStatusRequestParameters } from './types/operations/read-initialization-status.type'
 import type { InitializeSystemOperation, InitializeSystemResponseBodies, InitializeSystemRequestParameters } from './types/operations/initialize-system.type'
-import type { InternalCountEntitiesOperation, InternalCountEntitiesResponseBodies, InternalCountEntitiesRequestParameters } from './types/operations/internal-count-entities.type'
-import type { InternalCountRequestsOperation, InternalCountRequestsResponseBodies, InternalCountRequestsRequestParameters } from './types/operations/internal-count-requests.type'
-import type { InternalCountTokensOperation, InternalCountTokensResponseBodies, InternalCountTokensRequestParameters } from './types/operations/internal-count-tokens.type'
-import type { InternalInspectRequestOperation, InternalInspectRequestResponseBodies, InternalInspectRequestRequestParameters } from './types/operations/internal-inspect-request.type'
-import type { InternalInspectRouterOperation, InternalInspectRouterResponseBodies, InternalInspectRouterRequestParameters } from './types/operations/internal-inspect-router.type'
-import type { InternalGenerateOpenApiDocumentOperation, InternalGenerateOpenApiDocumentResponseBodies, InternalGenerateOpenApiDocumentRequestParameters } from './types/operations/internal-generate-open-api-document.type'
-import type { InternalGenerateOpenApiDocumentWithParametersOperation, InternalGenerateOpenApiDocumentWithParametersResponseBodies, InternalGenerateOpenApiDocumentWithParametersRequestParameters } from './types/operations/internal-generate-open-api-document-with-parameters.type'
-import type { InternalUiListEnabledVisibleMountsOperation, InternalUiListEnabledVisibleMountsResponseBodies, InternalUiListEnabledVisibleMountsRequestParameters } from './types/operations/internal-ui-list-enabled-visible-mounts.type'
-import type { InternalUiReadMountInformationOperation, InternalUiReadMountInformationResponseBodies, InternalUiReadMountInformationRequestParameters } from './types/operations/internal-ui-read-mount-information.type'
-import type { InternalUiListNamespacesOperation, InternalUiListNamespacesResponseBodies, InternalUiListNamespacesRequestParameters } from './types/operations/internal-ui-list-namespaces.type'
-import type { InternalUiReadResultantAclOperation, InternalUiReadResultantAclResponseBodies, InternalUiReadResultantAclRequestParameters } from './types/operations/internal-ui-read-resultant-acl.type'
 import type { EncryptionKeyStatusOperation, EncryptionKeyStatusResponseBodies, EncryptionKeyStatusRequestParameters } from './types/operations/encryption-key-status.type'
 import type { LeaderStatusOperation, LeaderStatusResponseBodies, LeaderStatusRequestParameters } from './types/operations/leader-status.type'
 import type { LeasesListOperation, LeasesListResponseBodies, LeasesListRequestParameters } from './types/operations/leases-list.type'
@@ -266,20 +259,6 @@ import type { PoliciesWritePasswordPolicyOperation, PoliciesWritePasswordPolicyR
 import type { PoliciesDeletePasswordPolicyOperation, PoliciesDeletePasswordPolicyResponseBodies, PoliciesDeletePasswordPolicyRequestParameters } from './types/operations/policies-delete-password-policy.type'
 import type { PoliciesGeneratePasswordFromPasswordPolicyOperation, PoliciesGeneratePasswordFromPasswordPolicyResponseBodies, PoliciesGeneratePasswordFromPasswordPolicyRequestParameters } from './types/operations/policies-generate-password-from-password-policy.type'
 import type { PoliciesListOperation, PoliciesListResponseBodies, PoliciesListRequestParameters } from './types/operations/policies-list.type'
-import type { PoliciesReadAclPolicy2Operation, PoliciesReadAclPolicy2ResponseBodies, PoliciesReadAclPolicy2RequestParameters } from './types/operations/policies-read-acl-policy2.type'
-import type { PoliciesWriteAclPolicy2Operation, PoliciesWriteAclPolicy2ResponseBodies, PoliciesWriteAclPolicy2RequestParameters } from './types/operations/policies-write-acl-policy2.type'
-import type { PoliciesDeleteAclPolicy2Operation, PoliciesDeleteAclPolicy2ResponseBodies, PoliciesDeleteAclPolicy2RequestParameters } from './types/operations/policies-delete-acl-policy2.type'
-import type { PprofIndexOperation, PprofIndexResponseBodies, PprofIndexRequestParameters } from './types/operations/pprof-index.type'
-import type { PprofMemoryAllocationsOperation, PprofMemoryAllocationsResponseBodies, PprofMemoryAllocationsRequestParameters } from './types/operations/pprof-memory-allocations.type'
-import type { PprofBlockingOperation, PprofBlockingResponseBodies, PprofBlockingRequestParameters } from './types/operations/pprof-blocking.type'
-import type { PprofCommandLineOperation, PprofCommandLineResponseBodies, PprofCommandLineRequestParameters } from './types/operations/pprof-command-line.type'
-import type { PprofGoroutinesOperation, PprofGoroutinesResponseBodies, PprofGoroutinesRequestParameters } from './types/operations/pprof-goroutines.type'
-import type { PprofMemoryAllocationsLiveOperation, PprofMemoryAllocationsLiveResponseBodies, PprofMemoryAllocationsLiveRequestParameters } from './types/operations/pprof-memory-allocations-live.type'
-import type { PprofMutexesOperation, PprofMutexesResponseBodies, PprofMutexesRequestParameters } from './types/operations/pprof-mutexes.type'
-import type { PprofCpuProfileOperation, PprofCpuProfileResponseBodies, PprofCpuProfileRequestParameters } from './types/operations/pprof-cpu-profile.type'
-import type { PprofSymbolsOperation, PprofSymbolsResponseBodies, PprofSymbolsRequestParameters } from './types/operations/pprof-symbols.type'
-import type { PprofThreadCreationsOperation, PprofThreadCreationsResponseBodies, PprofThreadCreationsRequestParameters } from './types/operations/pprof-thread-creations.type'
-import type { PprofExecutionTraceOperation, PprofExecutionTraceResponseBodies, PprofExecutionTraceRequestParameters } from './types/operations/pprof-execution-trace.type'
 import type { RateLimitQuotasReadConfigurationOperation, RateLimitQuotasReadConfigurationResponseBodies, RateLimitQuotasReadConfigurationRequestParameters } from './types/operations/rate-limit-quotas-read-configuration.type'
 import type { RateLimitQuotasConfigureOperation, RateLimitQuotasConfigureResponseBodies, RateLimitQuotasConfigureRequestParameters } from './types/operations/rate-limit-quotas-configure.type'
 import type { RateLimitQuotasListOperation, RateLimitQuotasListResponseBodies, RateLimitQuotasListRequestParameters } from './types/operations/rate-limit-quotas-list.type'
@@ -299,12 +278,6 @@ import type { RekeyVerificationUpdateOperation, RekeyVerificationUpdateResponseB
 import type { RekeyVerificationCancelOperation, RekeyVerificationCancelResponseBodies, RekeyVerificationCancelRequestParameters } from './types/operations/rekey-verification-cancel.type'
 import type { RemountOperation, RemountResponseBodies, RemountRequestParameters } from './types/operations/remount.type'
 import type { RemountStatusOperation, RemountStatusResponseBodies, RemountStatusRequestParameters } from './types/operations/remount-status.type'
-import type { LeasesRenewLease2Operation, LeasesRenewLease2ResponseBodies, LeasesRenewLease2RequestParameters } from './types/operations/leases-renew-lease2.type'
-import type { LeasesRenewLeaseWithId2Operation, LeasesRenewLeaseWithId2ResponseBodies, LeasesRenewLeaseWithId2RequestParameters } from './types/operations/leases-renew-lease-with-id2.type'
-import type { LeasesRevokeLease2Operation, LeasesRevokeLease2ResponseBodies, LeasesRevokeLease2RequestParameters } from './types/operations/leases-revoke-lease2.type'
-import type { LeasesForceRevokeLeaseWithPrefix2Operation, LeasesForceRevokeLeaseWithPrefix2ResponseBodies, LeasesForceRevokeLeaseWithPrefix2RequestParameters } from './types/operations/leases-force-revoke-lease-with-prefix2.type'
-import type { LeasesRevokeLeaseWithPrefix2Operation, LeasesRevokeLeaseWithPrefix2ResponseBodies, LeasesRevokeLeaseWithPrefix2RequestParameters } from './types/operations/leases-revoke-lease-with-prefix2.type'
-import type { LeasesRevokeLeaseWithId2Operation, LeasesRevokeLeaseWithId2ResponseBodies, LeasesRevokeLeaseWithId2RequestParameters } from './types/operations/leases-revoke-lease-with-id2.type'
 import type { EncryptionKeyRotateOperation, EncryptionKeyRotateResponseBodies, EncryptionKeyRotateRequestParameters } from './types/operations/encryption-key-rotate.type'
 import type { EncryptionKeyReadRotationConfigurationOperation, EncryptionKeyReadRotationConfigurationResponseBodies, EncryptionKeyReadRotationConfigurationRequestParameters } from './types/operations/encryption-key-read-rotation-configuration.type'
 import type { EncryptionKeyConfigureRotationConfigurationOperation, EncryptionKeyConfigureRotationConfigurationResponseBodies, EncryptionKeyConfigureRotationConfigurationRequestParameters } from './types/operations/encryption-key-configure-rotation-configuration.type'
@@ -340,8 +313,6 @@ import type { GenerateRandomWithSourceOperation, GenerateRandomWithSourceRespons
 import type { GenerateRandomWithSourceAndBytesOperation, GenerateRandomWithSourceAndBytesResponseBodies, GenerateRandomWithSourceAndBytesRequestParameters } from './types/operations/generate-random-with-source-and-bytes.type'
 import type { GenerateRandomWithBytesOperation, GenerateRandomWithBytesResponseBodies, GenerateRandomWithBytesRequestParameters } from './types/operations/generate-random-with-bytes.type'
 import type { UnsealOperation, UnsealResponseBodies, UnsealRequestParameters } from './types/operations/unseal.type'
-import type { VersionHistoryOperation, VersionHistoryResponseBodies, VersionHistoryRequestParameters } from './types/operations/version-history.type'
-import type { ReadWrappingProperties2Operation, ReadWrappingProperties2ResponseBodies, ReadWrappingProperties2RequestParameters } from './types/operations/read-wrapping-properties2.type'
 import type { ReadWrappingPropertiesOperation, ReadWrappingPropertiesResponseBodies, ReadWrappingPropertiesRequestParameters } from './types/operations/read-wrapping-properties.type'
 import type { RewrapOperation, RewrapResponseBodies, RewrapRequestParameters } from './types/operations/rewrap.type'
 import type { UnwrapOperation, UnwrapResponseBodies, UnwrapRequestParameters } from './types/operations/unwrap.type'
@@ -400,16 +371,185 @@ export class OpenBaoHttpClient {
   ) {}
 
 
+  kubernetesReadAuthConfiguration<STATUS extends keyof KubernetesReadAuthConfigurationResponseBodies, CONTENT_TYPE extends never = never>(args?: KubernetesReadAuthConfigurationRequestParameters): Keq<KubernetesReadAuthConfigurationOperation<STATUS, CONTENT_TYPE>> {
+    const req = this.request.get<KubernetesReadAuthConfigurationResponseBodies[STATUS]>('/auth/kubernetes001/config')
+
+
+    /* @anchor:query:start */
+    /* @anchor:query:end */
+
+    /* @anchor:headers:start */
+    /* @anchor:headers:end */
+
+    /* @anchor:path-parameters:start */
+    /* @anchor:path-parameters:end */
+
+    /* @anchor:body:start */
+    /* @anchor:body:end */
+
+    return req
+  }
+
+
+  kubernetesConfigureAuth<STATUS extends keyof KubernetesConfigureAuthResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: KubernetesConfigureAuthRequestParameters): Keq<KubernetesConfigureAuthOperation<STATUS, CONTENT_TYPE>> {
+    const req = this.request.post<KubernetesConfigureAuthResponseBodies[STATUS]>('/auth/kubernetes001/config')
+
+    req.type('application/json')
+
+
+    /* @anchor:query:start */
+    /* @anchor:query:end */
+
+    /* @anchor:headers:start */
+    /* @anchor:headers:end */
+
+    /* @anchor:path-parameters:start */
+    /* @anchor:path-parameters:end */
+
+    /* @anchor:body:start */
+    if (args && 'disable_iss_validation' in args) req.send({ disable_iss_validation: args['disable_iss_validation'] })
+    if (args && 'disable_local_ca_jwt' in args) req.send({ disable_local_ca_jwt: args['disable_local_ca_jwt'] })
+    if (args && 'issuer' in args) req.send({ issuer: args['issuer'] })
+    if (args && 'kubernetes_ca_cert' in args) req.send({ kubernetes_ca_cert: args['kubernetes_ca_cert'] })
+    if (args && 'kubernetes_host' in args) req.send({ kubernetes_host: args['kubernetes_host'] })
+    if (args && 'pem_keys' in args) req.send({ pem_keys: args['pem_keys'] })
+    if (args && 'token_reviewer_jwt' in args) req.send({ token_reviewer_jwt: args['token_reviewer_jwt'] })
+    /* @anchor:body:end */
+
+    return req
+  }
+
+
+  kubernetesLogin<STATUS extends keyof KubernetesLoginResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: KubernetesLoginRequestParameters): Keq<KubernetesLoginOperation<STATUS, CONTENT_TYPE>> {
+    const req = this.request.post<KubernetesLoginResponseBodies[STATUS]>('/auth/kubernetes001/login')
+
+    req.type('application/json')
+
+
+    /* @anchor:query:start */
+    /* @anchor:query:end */
+
+    /* @anchor:headers:start */
+    /* @anchor:headers:end */
+
+    /* @anchor:path-parameters:start */
+    /* @anchor:path-parameters:end */
+
+    /* @anchor:body:start */
+    if (args && 'jwt' in args) req.send({ jwt: args['jwt'] })
+    if (args && 'role' in args) req.send({ role: args['role'] })
+    /* @anchor:body:end */
+
+    return req
+  }
+
+
+  kubernetesListAuthRoles<STATUS extends keyof KubernetesListAuthRolesResponseBodies, CONTENT_TYPE extends never = never>(args?: KubernetesListAuthRolesRequestParameters): Keq<KubernetesListAuthRolesOperation<STATUS, CONTENT_TYPE>> {
+    const req = this.request.get<KubernetesListAuthRolesResponseBodies[STATUS]>('/auth/kubernetes001/role')
+
+
+    /* @anchor:query:start */
+    if (args && 'list' in args) req.query('list', args['list'], { arrayFormat: 'repeat' })
+    /* @anchor:query:end */
+
+    /* @anchor:headers:start */
+    /* @anchor:headers:end */
+
+    /* @anchor:path-parameters:start */
+    /* @anchor:path-parameters:end */
+
+    /* @anchor:body:start */
+    /* @anchor:body:end */
+
+    return req
+  }
+
+
+  kubernetesReadAuthRole<STATUS extends keyof KubernetesReadAuthRoleResponseBodies, CONTENT_TYPE extends never = never>(args?: KubernetesReadAuthRoleRequestParameters): Keq<KubernetesReadAuthRoleOperation<STATUS, CONTENT_TYPE>> {
+    const req = this.request.get<KubernetesReadAuthRoleResponseBodies[STATUS]>('/auth/kubernetes001/role/{name}')
+
+
+    /* @anchor:query:start */
+    /* @anchor:query:end */
+
+    /* @anchor:headers:start */
+    /* @anchor:headers:end */
+
+    /* @anchor:path-parameters:start */
+    /* @anchor:path-parameters:end */
+
+    /* @anchor:body:start */
+    /* @anchor:body:end */
+
+    return req
+  }
+
+
+  kubernetesWriteAuthRole<STATUS extends keyof KubernetesWriteAuthRoleResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: KubernetesWriteAuthRoleRequestParameters): Keq<KubernetesWriteAuthRoleOperation<STATUS, CONTENT_TYPE>> {
+    const req = this.request.post<KubernetesWriteAuthRoleResponseBodies[STATUS]>('/auth/kubernetes001/role/{name}')
+
+    req.type('application/json')
+
+
+    /* @anchor:query:start */
+    /* @anchor:query:end */
+
+    /* @anchor:headers:start */
+    /* @anchor:headers:end */
+
+    /* @anchor:path-parameters:start */
+    /* @anchor:path-parameters:end */
+
+    /* @anchor:body:start */
+    if (args && 'alias_name_source' in args) req.send({ alias_name_source: args['alias_name_source'] })
+    if (args && 'audience' in args) req.send({ audience: args['audience'] })
+    if (args && 'bound_cidrs' in args) req.send({ bound_cidrs: args['bound_cidrs'] })
+    if (args && 'bound_service_account_names' in args) req.send({ bound_service_account_names: args['bound_service_account_names'] })
+    if (args && 'bound_service_account_namespace_selector' in args) req.send({ bound_service_account_namespace_selector: args['bound_service_account_namespace_selector'] })
+    if (args && 'bound_service_account_namespaces' in args) req.send({ bound_service_account_namespaces: args['bound_service_account_namespaces'] })
+    if (args && 'max_ttl' in args) req.send({ max_ttl: args['max_ttl'] })
+    if (args && 'num_uses' in args) req.send({ num_uses: args['num_uses'] })
+    if (args && 'period' in args) req.send({ period: args['period'] })
+    if (args && 'policies' in args) req.send({ policies: args['policies'] })
+    if (args && 'token_bound_cidrs' in args) req.send({ token_bound_cidrs: args['token_bound_cidrs'] })
+    if (args && 'token_explicit_max_ttl' in args) req.send({ token_explicit_max_ttl: args['token_explicit_max_ttl'] })
+    if (args && 'token_max_ttl' in args) req.send({ token_max_ttl: args['token_max_ttl'] })
+    if (args && 'token_no_default_policy' in args) req.send({ token_no_default_policy: args['token_no_default_policy'] })
+    if (args && 'token_num_uses' in args) req.send({ token_num_uses: args['token_num_uses'] })
+    if (args && 'token_period' in args) req.send({ token_period: args['token_period'] })
+    if (args && 'token_policies' in args) req.send({ token_policies: args['token_policies'] })
+    if (args && 'token_strictly_bind_ip' in args) req.send({ token_strictly_bind_ip: args['token_strictly_bind_ip'] })
+    if (args && 'token_ttl' in args) req.send({ token_ttl: args['token_ttl'] })
+    if (args && 'token_type' in args) req.send({ token_type: args['token_type'] })
+    if (args && 'ttl' in args) req.send({ ttl: args['ttl'] })
+    /* @anchor:body:end */
+
+    return req
+  }
+
+
+  kubernetesDeleteAuthRole<STATUS extends keyof KubernetesDeleteAuthRoleResponseBodies, CONTENT_TYPE extends never = never>(args?: KubernetesDeleteAuthRoleRequestParameters): Keq<KubernetesDeleteAuthRoleOperation<STATUS, CONTENT_TYPE>> {
+    const req = this.request.delete<KubernetesDeleteAuthRoleResponseBodies[STATUS]>('/auth/kubernetes001/role/{name}')
+
+
+    /* @anchor:query:start */
+    /* @anchor:query:end */
+
+    /* @anchor:headers:start */
+    /* @anchor:headers:end */
+
+    /* @anchor:path-parameters:start */
+    /* @anchor:path-parameters:end */
+
+    /* @anchor:body:start */
+    /* @anchor:body:end */
+
+    return req
+  }
+
+
   tokenListAccessors<STATUS extends keyof TokenListAccessorsResponseBodies, CONTENT_TYPE extends never = never>(args?: TokenListAccessorsRequestParameters): Keq<TokenListAccessorsOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<TokenListAccessorsResponseBodies[STATUS]>('/auth/token/accessors')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/auth/token/accessors',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -431,14 +571,6 @@ export class OpenBaoHttpClient {
 
   tokenCreate<STATUS extends keyof TokenCreateResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: TokenCreateRequestParameters): Keq<TokenCreateOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<TokenCreateResponseBodies[STATUS]>('/auth/token/create')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/auth/token/create',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -475,14 +607,6 @@ export class OpenBaoHttpClient {
 
   tokenCreateOrphan<STATUS extends keyof TokenCreateOrphanResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: TokenCreateOrphanRequestParameters): Keq<TokenCreateOrphanOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<TokenCreateOrphanResponseBodies[STATUS]>('/auth/token/create-orphan')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/auth/token/create-orphan',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -519,14 +643,6 @@ export class OpenBaoHttpClient {
 
   tokenCreateAgainstRole<STATUS extends keyof TokenCreateAgainstRoleResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: TokenCreateAgainstRoleRequestParameters): Keq<TokenCreateAgainstRoleOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<TokenCreateAgainstRoleResponseBodies[STATUS]>('/auth/token/create/{role_name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/auth/token/create/{role_name}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -563,14 +679,6 @@ export class OpenBaoHttpClient {
 
   tokenLookUpGet<STATUS extends keyof TokenLookUpGetResponseBodies, CONTENT_TYPE extends never = never>(args?: TokenLookUpGetRequestParameters): Keq<TokenLookUpGetOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<TokenLookUpGetResponseBodies[STATUS]>('/auth/token/lookup')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/auth/token/lookup',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -591,14 +699,6 @@ export class OpenBaoHttpClient {
 
   tokenLookUpUpdate<STATUS extends keyof TokenLookUpUpdateResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: TokenLookUpUpdateRequestParameters): Keq<TokenLookUpUpdateOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<TokenLookUpUpdateResponseBodies[STATUS]>('/auth/token/lookup')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/auth/token/lookup',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -622,14 +722,6 @@ export class OpenBaoHttpClient {
 
   tokenLookUpByAccessor<STATUS extends keyof TokenLookUpByAccessorResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: TokenLookUpByAccessorRequestParameters): Keq<TokenLookUpByAccessorOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<TokenLookUpByAccessorResponseBodies[STATUS]>('/auth/token/lookup-accessor')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/auth/token/lookup-accessor',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -653,14 +745,6 @@ export class OpenBaoHttpClient {
 
   tokenLookUpSelfGet<STATUS extends keyof TokenLookUpSelfGetResponseBodies, CONTENT_TYPE extends never = never>(args?: TokenLookUpSelfGetRequestParameters): Keq<TokenLookUpSelfGetOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<TokenLookUpSelfGetResponseBodies[STATUS]>('/auth/token/lookup-self')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/auth/token/lookup-self',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -681,14 +765,6 @@ export class OpenBaoHttpClient {
 
   tokenLookUpSelfUpdate<STATUS extends keyof TokenLookUpSelfUpdateResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: TokenLookUpSelfUpdateRequestParameters): Keq<TokenLookUpSelfUpdateOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<TokenLookUpSelfUpdateResponseBodies[STATUS]>('/auth/token/lookup-self')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/auth/token/lookup-self',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -712,14 +788,6 @@ export class OpenBaoHttpClient {
 
   tokenRenew<STATUS extends keyof TokenRenewResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: TokenRenewRequestParameters): Keq<TokenRenewOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<TokenRenewResponseBodies[STATUS]>('/auth/token/renew')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/auth/token/renew',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -744,14 +812,6 @@ export class OpenBaoHttpClient {
 
   tokenRenewAccessor<STATUS extends keyof TokenRenewAccessorResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: TokenRenewAccessorRequestParameters): Keq<TokenRenewAccessorOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<TokenRenewAccessorResponseBodies[STATUS]>('/auth/token/renew-accessor')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/auth/token/renew-accessor',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -776,14 +836,6 @@ export class OpenBaoHttpClient {
 
   tokenRenewSelf<STATUS extends keyof TokenRenewSelfResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: TokenRenewSelfRequestParameters): Keq<TokenRenewSelfOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<TokenRenewSelfResponseBodies[STATUS]>('/auth/token/renew-self')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/auth/token/renew-self',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -808,14 +860,6 @@ export class OpenBaoHttpClient {
 
   tokenRevoke<STATUS extends keyof TokenRevokeResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: TokenRevokeRequestParameters): Keq<TokenRevokeOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<TokenRevokeResponseBodies[STATUS]>('/auth/token/revoke')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/auth/token/revoke',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -839,14 +883,6 @@ export class OpenBaoHttpClient {
 
   tokenRevokeAccessor<STATUS extends keyof TokenRevokeAccessorResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: TokenRevokeAccessorRequestParameters): Keq<TokenRevokeAccessorOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<TokenRevokeAccessorResponseBodies[STATUS]>('/auth/token/revoke-accessor')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/auth/token/revoke-accessor',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -870,14 +906,6 @@ export class OpenBaoHttpClient {
 
   tokenRevokeOrphan<STATUS extends keyof TokenRevokeOrphanResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: TokenRevokeOrphanRequestParameters): Keq<TokenRevokeOrphanOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<TokenRevokeOrphanResponseBodies[STATUS]>('/auth/token/revoke-orphan')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/auth/token/revoke-orphan',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -901,14 +929,6 @@ export class OpenBaoHttpClient {
 
   tokenRevokeSelf<STATUS extends keyof TokenRevokeSelfResponseBodies, CONTENT_TYPE extends never = never>(args?: TokenRevokeSelfRequestParameters): Keq<TokenRevokeSelfOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<TokenRevokeSelfResponseBodies[STATUS]>('/auth/token/revoke-self')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/auth/token/revoke-self',
-          method: 'post',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -929,14 +949,6 @@ export class OpenBaoHttpClient {
 
   tokenListRoles<STATUS extends keyof TokenListRolesResponseBodies, CONTENT_TYPE extends never = never>(args?: TokenListRolesRequestParameters): Keq<TokenListRolesOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<TokenListRolesResponseBodies[STATUS]>('/auth/token/roles')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/auth/token/roles',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -958,14 +970,6 @@ export class OpenBaoHttpClient {
 
   tokenReadRole<STATUS extends keyof TokenReadRoleResponseBodies, CONTENT_TYPE extends never = never>(args?: TokenReadRoleRequestParameters): Keq<TokenReadRoleOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<TokenReadRoleResponseBodies[STATUS]>('/auth/token/roles/{role_name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/auth/token/roles/{role_name}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -986,14 +990,6 @@ export class OpenBaoHttpClient {
 
   tokenWriteRole<STATUS extends keyof TokenWriteRoleResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: TokenWriteRoleRequestParameters): Keq<TokenWriteRoleOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<TokenWriteRoleResponseBodies[STATUS]>('/auth/token/roles/{role_name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/auth/token/roles/{role_name}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -1033,14 +1029,6 @@ export class OpenBaoHttpClient {
 
   tokenDeleteRole<STATUS extends keyof TokenDeleteRoleResponseBodies, CONTENT_TYPE extends never = never>(args?: TokenDeleteRoleRequestParameters): Keq<TokenDeleteRoleOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<TokenDeleteRoleResponseBodies[STATUS]>('/auth/token/roles/{role_name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/auth/token/roles/{role_name}',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -1061,14 +1049,6 @@ export class OpenBaoHttpClient {
 
   tokenTidy<STATUS extends keyof TokenTidyResponseBodies, CONTENT_TYPE extends never = never>(args?: TokenTidyRequestParameters): Keq<TokenTidyOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<TokenTidyResponseBodies[STATUS]>('/auth/token/tidy')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/auth/token/tidy',
-          method: 'post',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -1089,14 +1069,6 @@ export class OpenBaoHttpClient {
 
   userpassLogin<STATUS extends keyof UserpassLoginResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: UserpassLoginRequestParameters): Keq<UserpassLoginOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<UserpassLoginResponseBodies[STATUS]>('/auth/userpass/login/{username}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/auth/userpass/login/{username}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -1120,14 +1092,6 @@ export class OpenBaoHttpClient {
 
   userpassListUsers<STATUS extends keyof UserpassListUsersResponseBodies, CONTENT_TYPE extends never = never>(args?: UserpassListUsersRequestParameters): Keq<UserpassListUsersOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<UserpassListUsersResponseBodies[STATUS]>('/auth/userpass/users')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/auth/userpass/users',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -1149,14 +1113,6 @@ export class OpenBaoHttpClient {
 
   userpassReadUser<STATUS extends keyof UserpassReadUserResponseBodies, CONTENT_TYPE extends never = never>(args?: UserpassReadUserRequestParameters): Keq<UserpassReadUserOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<UserpassReadUserResponseBodies[STATUS]>('/auth/userpass/users/{username}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/auth/userpass/users/{username}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -1177,14 +1133,6 @@ export class OpenBaoHttpClient {
 
   userpassWriteUser<STATUS extends keyof UserpassWriteUserResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: UserpassWriteUserRequestParameters): Keq<UserpassWriteUserOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<UserpassWriteUserResponseBodies[STATUS]>('/auth/userpass/users/{username}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/auth/userpass/users/{username}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -1222,14 +1170,6 @@ export class OpenBaoHttpClient {
 
   userpassDeleteUser<STATUS extends keyof UserpassDeleteUserResponseBodies, CONTENT_TYPE extends never = never>(args?: UserpassDeleteUserRequestParameters): Keq<UserpassDeleteUserOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<UserpassDeleteUserResponseBodies[STATUS]>('/auth/userpass/users/{username}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/auth/userpass/users/{username}',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -1250,14 +1190,6 @@ export class OpenBaoHttpClient {
 
   userpassResetPassword<STATUS extends keyof UserpassResetPasswordResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: UserpassResetPasswordRequestParameters): Keq<UserpassResetPasswordOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<UserpassResetPasswordResponseBodies[STATUS]>('/auth/userpass/users/{username}/password')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/auth/userpass/users/{username}/password',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -1281,14 +1213,6 @@ export class OpenBaoHttpClient {
 
   userpassUpdatePolicies<STATUS extends keyof UserpassUpdatePoliciesResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: UserpassUpdatePoliciesRequestParameters): Keq<UserpassUpdatePoliciesOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<UserpassUpdatePoliciesResponseBodies[STATUS]>('/auth/userpass/users/{username}/policies')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/auth/userpass/users/{username}/policies',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -1316,14 +1240,6 @@ export class OpenBaoHttpClient {
    */
   cubbyholeRead<STATUS extends keyof CubbyholeReadResponseBodies, CONTENT_TYPE extends never = never>(args?: CubbyholeReadRequestParameters): Keq<CubbyholeReadOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<CubbyholeReadResponseBodies[STATUS]>('/cubbyhole/{path}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/cubbyhole/{path}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -1348,14 +1264,6 @@ export class OpenBaoHttpClient {
    */
   cubbyholeWrite<STATUS extends keyof CubbyholeWriteResponseBodies, CONTENT_TYPE extends never = never>(args?: CubbyholeWriteRequestParameters): Keq<CubbyholeWriteOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<CubbyholeWriteResponseBodies[STATUS]>('/cubbyhole/{path}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/cubbyhole/{path}',
-          method: 'post',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -1379,14 +1287,6 @@ export class OpenBaoHttpClient {
    */
   cubbyholeDelete<STATUS extends keyof CubbyholeDeleteResponseBodies, CONTENT_TYPE extends never = never>(args?: CubbyholeDeleteRequestParameters): Keq<CubbyholeDeleteOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<CubbyholeDeleteResponseBodies[STATUS]>('/cubbyhole/{path}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/cubbyhole/{path}',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -1407,14 +1307,6 @@ export class OpenBaoHttpClient {
 
   aliasCreate<STATUS extends keyof AliasCreateResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: AliasCreateRequestParameters): Keq<AliasCreateOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<AliasCreateResponseBodies[STATUS]>('/identity/alias')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/alias',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -1442,14 +1334,6 @@ export class OpenBaoHttpClient {
 
   aliasListById<STATUS extends keyof AliasListByIdResponseBodies, CONTENT_TYPE extends never = never>(args?: AliasListByIdRequestParameters): Keq<AliasListByIdOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<AliasListByIdResponseBodies[STATUS]>('/identity/alias/id')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/alias/id',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -1471,14 +1355,6 @@ export class OpenBaoHttpClient {
 
   aliasReadById<STATUS extends keyof AliasReadByIdResponseBodies, CONTENT_TYPE extends never = never>(args?: AliasReadByIdRequestParameters): Keq<AliasReadByIdOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<AliasReadByIdResponseBodies[STATUS]>('/identity/alias/id/{id}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/alias/id/{id}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -1499,14 +1375,6 @@ export class OpenBaoHttpClient {
 
   aliasUpdateById<STATUS extends keyof AliasUpdateByIdResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: AliasUpdateByIdRequestParameters): Keq<AliasUpdateByIdOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<AliasUpdateByIdResponseBodies[STATUS]>('/identity/alias/id/{id}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/alias/id/{id}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -1533,14 +1401,6 @@ export class OpenBaoHttpClient {
 
   aliasDeleteById<STATUS extends keyof AliasDeleteByIdResponseBodies, CONTENT_TYPE extends never = never>(args?: AliasDeleteByIdRequestParameters): Keq<AliasDeleteByIdOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<AliasDeleteByIdResponseBodies[STATUS]>('/identity/alias/id/{id}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/alias/id/{id}',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -1561,14 +1421,6 @@ export class OpenBaoHttpClient {
 
   entityCreate<STATUS extends keyof EntityCreateResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: EntityCreateRequestParameters): Keq<EntityCreateOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<EntityCreateResponseBodies[STATUS]>('/identity/entity')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/entity',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -1596,14 +1448,6 @@ export class OpenBaoHttpClient {
 
   entityCreateAlias<STATUS extends keyof EntityCreateAliasResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: EntityCreateAliasRequestParameters): Keq<EntityCreateAliasOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<EntityCreateAliasResponseBodies[STATUS]>('/identity/entity-alias')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/entity-alias',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -1632,14 +1476,6 @@ export class OpenBaoHttpClient {
 
   entityListAliasesById<STATUS extends keyof EntityListAliasesByIdResponseBodies, CONTENT_TYPE extends never = never>(args?: EntityListAliasesByIdRequestParameters): Keq<EntityListAliasesByIdOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<EntityListAliasesByIdResponseBodies[STATUS]>('/identity/entity-alias/id')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/entity-alias/id',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -1661,14 +1497,6 @@ export class OpenBaoHttpClient {
 
   entityReadAliasById<STATUS extends keyof EntityReadAliasByIdResponseBodies, CONTENT_TYPE extends never = never>(args?: EntityReadAliasByIdRequestParameters): Keq<EntityReadAliasByIdOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<EntityReadAliasByIdResponseBodies[STATUS]>('/identity/entity-alias/id/{id}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/entity-alias/id/{id}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -1689,14 +1517,6 @@ export class OpenBaoHttpClient {
 
   entityUpdateAliasById<STATUS extends keyof EntityUpdateAliasByIdResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: EntityUpdateAliasByIdRequestParameters): Keq<EntityUpdateAliasByIdOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<EntityUpdateAliasByIdResponseBodies[STATUS]>('/identity/entity-alias/id/{id}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/entity-alias/id/{id}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -1724,14 +1544,6 @@ export class OpenBaoHttpClient {
 
   entityDeleteAliasById<STATUS extends keyof EntityDeleteAliasByIdResponseBodies, CONTENT_TYPE extends never = never>(args?: EntityDeleteAliasByIdRequestParameters): Keq<EntityDeleteAliasByIdOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<EntityDeleteAliasByIdResponseBodies[STATUS]>('/identity/entity-alias/id/{id}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/entity-alias/id/{id}',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -1752,14 +1564,6 @@ export class OpenBaoHttpClient {
 
   entityBatchDelete<STATUS extends keyof EntityBatchDeleteResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: EntityBatchDeleteRequestParameters): Keq<EntityBatchDeleteOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<EntityBatchDeleteResponseBodies[STATUS]>('/identity/entity/batch-delete')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/entity/batch-delete',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -1783,14 +1587,6 @@ export class OpenBaoHttpClient {
 
   entityListById<STATUS extends keyof EntityListByIdResponseBodies, CONTENT_TYPE extends never = never>(args?: EntityListByIdRequestParameters): Keq<EntityListByIdOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<EntityListByIdResponseBodies[STATUS]>('/identity/entity/id')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/entity/id',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -1812,14 +1608,6 @@ export class OpenBaoHttpClient {
 
   entityReadById<STATUS extends keyof EntityReadByIdResponseBodies, CONTENT_TYPE extends never = never>(args?: EntityReadByIdRequestParameters): Keq<EntityReadByIdOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<EntityReadByIdResponseBodies[STATUS]>('/identity/entity/id/{id}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/entity/id/{id}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -1840,14 +1628,6 @@ export class OpenBaoHttpClient {
 
   entityUpdateById<STATUS extends keyof EntityUpdateByIdResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: EntityUpdateByIdRequestParameters): Keq<EntityUpdateByIdOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<EntityUpdateByIdResponseBodies[STATUS]>('/identity/entity/id/{id}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/entity/id/{id}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -1874,14 +1654,6 @@ export class OpenBaoHttpClient {
 
   entityDeleteById<STATUS extends keyof EntityDeleteByIdResponseBodies, CONTENT_TYPE extends never = never>(args?: EntityDeleteByIdRequestParameters): Keq<EntityDeleteByIdOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<EntityDeleteByIdResponseBodies[STATUS]>('/identity/entity/id/{id}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/entity/id/{id}',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -1902,14 +1674,6 @@ export class OpenBaoHttpClient {
 
   entityMerge<STATUS extends keyof EntityMergeResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: EntityMergeRequestParameters): Keq<EntityMergeOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<EntityMergeResponseBodies[STATUS]>('/identity/entity/merge')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/entity/merge',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -1936,14 +1700,6 @@ export class OpenBaoHttpClient {
 
   entityListByName<STATUS extends keyof EntityListByNameResponseBodies, CONTENT_TYPE extends never = never>(args?: EntityListByNameRequestParameters): Keq<EntityListByNameOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<EntityListByNameResponseBodies[STATUS]>('/identity/entity/name')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/entity/name',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -1965,14 +1721,6 @@ export class OpenBaoHttpClient {
 
   entityReadByName<STATUS extends keyof EntityReadByNameResponseBodies, CONTENT_TYPE extends never = never>(args?: EntityReadByNameRequestParameters): Keq<EntityReadByNameOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<EntityReadByNameResponseBodies[STATUS]>('/identity/entity/name/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/entity/name/{name}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -1993,14 +1741,6 @@ export class OpenBaoHttpClient {
 
   entityUpdateByName<STATUS extends keyof EntityUpdateByNameResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: EntityUpdateByNameRequestParameters): Keq<EntityUpdateByNameOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<EntityUpdateByNameResponseBodies[STATUS]>('/identity/entity/name/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/entity/name/{name}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -2027,14 +1767,6 @@ export class OpenBaoHttpClient {
 
   entityDeleteByName<STATUS extends keyof EntityDeleteByNameResponseBodies, CONTENT_TYPE extends never = never>(args?: EntityDeleteByNameRequestParameters): Keq<EntityDeleteByNameOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<EntityDeleteByNameResponseBodies[STATUS]>('/identity/entity/name/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/entity/name/{name}',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -2055,14 +1787,6 @@ export class OpenBaoHttpClient {
 
   groupCreate<STATUS extends keyof GroupCreateResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: GroupCreateRequestParameters): Keq<GroupCreateOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<GroupCreateResponseBodies[STATUS]>('/identity/group')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/group',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -2092,14 +1816,6 @@ export class OpenBaoHttpClient {
 
   groupCreateAlias<STATUS extends keyof GroupCreateAliasResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: GroupCreateAliasRequestParameters): Keq<GroupCreateAliasOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<GroupCreateAliasResponseBodies[STATUS]>('/identity/group-alias')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/group-alias',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -2126,14 +1842,6 @@ export class OpenBaoHttpClient {
 
   groupListAliasesById<STATUS extends keyof GroupListAliasesByIdResponseBodies, CONTENT_TYPE extends never = never>(args?: GroupListAliasesByIdRequestParameters): Keq<GroupListAliasesByIdOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<GroupListAliasesByIdResponseBodies[STATUS]>('/identity/group-alias/id')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/group-alias/id',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -2155,14 +1863,6 @@ export class OpenBaoHttpClient {
 
   groupReadAliasById<STATUS extends keyof GroupReadAliasByIdResponseBodies, CONTENT_TYPE extends never = never>(args?: GroupReadAliasByIdRequestParameters): Keq<GroupReadAliasByIdOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<GroupReadAliasByIdResponseBodies[STATUS]>('/identity/group-alias/id/{id}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/group-alias/id/{id}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -2183,14 +1883,6 @@ export class OpenBaoHttpClient {
 
   groupUpdateAliasById<STATUS extends keyof GroupUpdateAliasByIdResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: GroupUpdateAliasByIdRequestParameters): Keq<GroupUpdateAliasByIdOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<GroupUpdateAliasByIdResponseBodies[STATUS]>('/identity/group-alias/id/{id}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/group-alias/id/{id}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -2216,14 +1908,6 @@ export class OpenBaoHttpClient {
 
   groupDeleteAliasById<STATUS extends keyof GroupDeleteAliasByIdResponseBodies, CONTENT_TYPE extends never = never>(args?: GroupDeleteAliasByIdRequestParameters): Keq<GroupDeleteAliasByIdOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<GroupDeleteAliasByIdResponseBodies[STATUS]>('/identity/group-alias/id/{id}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/group-alias/id/{id}',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -2244,14 +1928,6 @@ export class OpenBaoHttpClient {
 
   groupListById<STATUS extends keyof GroupListByIdResponseBodies, CONTENT_TYPE extends never = never>(args?: GroupListByIdRequestParameters): Keq<GroupListByIdOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<GroupListByIdResponseBodies[STATUS]>('/identity/group/id')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/group/id',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -2273,14 +1949,6 @@ export class OpenBaoHttpClient {
 
   groupReadById<STATUS extends keyof GroupReadByIdResponseBodies, CONTENT_TYPE extends never = never>(args?: GroupReadByIdRequestParameters): Keq<GroupReadByIdOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<GroupReadByIdResponseBodies[STATUS]>('/identity/group/id/{id}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/group/id/{id}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -2301,14 +1969,6 @@ export class OpenBaoHttpClient {
 
   groupUpdateById<STATUS extends keyof GroupUpdateByIdResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: GroupUpdateByIdRequestParameters): Keq<GroupUpdateByIdOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<GroupUpdateByIdResponseBodies[STATUS]>('/identity/group/id/{id}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/group/id/{id}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -2337,14 +1997,6 @@ export class OpenBaoHttpClient {
 
   groupDeleteById<STATUS extends keyof GroupDeleteByIdResponseBodies, CONTENT_TYPE extends never = never>(args?: GroupDeleteByIdRequestParameters): Keq<GroupDeleteByIdOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<GroupDeleteByIdResponseBodies[STATUS]>('/identity/group/id/{id}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/group/id/{id}',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -2365,14 +2017,6 @@ export class OpenBaoHttpClient {
 
   groupListByName<STATUS extends keyof GroupListByNameResponseBodies, CONTENT_TYPE extends never = never>(args?: GroupListByNameRequestParameters): Keq<GroupListByNameOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<GroupListByNameResponseBodies[STATUS]>('/identity/group/name')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/group/name',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -2394,14 +2038,6 @@ export class OpenBaoHttpClient {
 
   groupReadByName<STATUS extends keyof GroupReadByNameResponseBodies, CONTENT_TYPE extends never = never>(args?: GroupReadByNameRequestParameters): Keq<GroupReadByNameOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<GroupReadByNameResponseBodies[STATUS]>('/identity/group/name/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/group/name/{name}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -2422,14 +2058,6 @@ export class OpenBaoHttpClient {
 
   groupUpdateByName<STATUS extends keyof GroupUpdateByNameResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: GroupUpdateByNameRequestParameters): Keq<GroupUpdateByNameOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<GroupUpdateByNameResponseBodies[STATUS]>('/identity/group/name/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/group/name/{name}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -2458,14 +2086,6 @@ export class OpenBaoHttpClient {
 
   groupDeleteByName<STATUS extends keyof GroupDeleteByNameResponseBodies, CONTENT_TYPE extends never = never>(args?: GroupDeleteByNameRequestParameters): Keq<GroupDeleteByNameOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<GroupDeleteByNameResponseBodies[STATUS]>('/identity/group/name/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/group/name/{name}',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -2486,14 +2106,6 @@ export class OpenBaoHttpClient {
 
   entityLookUp<STATUS extends keyof EntityLookUpResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: EntityLookUpRequestParameters): Keq<EntityLookUpOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<EntityLookUpResponseBodies[STATUS]>('/identity/lookup/entity')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/lookup/entity',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -2521,14 +2133,6 @@ export class OpenBaoHttpClient {
 
   groupLookUp<STATUS extends keyof GroupLookUpResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: GroupLookUpRequestParameters): Keq<GroupLookUpOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<GroupLookUpResponseBodies[STATUS]>('/identity/lookup/group')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/lookup/group',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -2559,14 +2163,6 @@ export class OpenBaoHttpClient {
    */
   mfaListLoginEnforcements<STATUS extends keyof MfaListLoginEnforcementsResponseBodies, CONTENT_TYPE extends never = never>(args?: MfaListLoginEnforcementsRequestParameters): Keq<MfaListLoginEnforcementsOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<MfaListLoginEnforcementsResponseBodies[STATUS]>('/identity/mfa/login-enforcement')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/mfa/login-enforcement',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -2591,14 +2187,6 @@ export class OpenBaoHttpClient {
    */
   mfaReadLoginEnforcement<STATUS extends keyof MfaReadLoginEnforcementResponseBodies, CONTENT_TYPE extends never = never>(args?: MfaReadLoginEnforcementRequestParameters): Keq<MfaReadLoginEnforcementOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<MfaReadLoginEnforcementResponseBodies[STATUS]>('/identity/mfa/login-enforcement/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/mfa/login-enforcement/{name}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -2622,14 +2210,6 @@ export class OpenBaoHttpClient {
    */
   mfaWriteLoginEnforcement<STATUS extends keyof MfaWriteLoginEnforcementResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: MfaWriteLoginEnforcementRequestParameters): Keq<MfaWriteLoginEnforcementOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<MfaWriteLoginEnforcementResponseBodies[STATUS]>('/identity/mfa/login-enforcement/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/mfa/login-enforcement/{name}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -2660,14 +2240,6 @@ export class OpenBaoHttpClient {
    */
   mfaDeleteLoginEnforcement<STATUS extends keyof MfaDeleteLoginEnforcementResponseBodies, CONTENT_TYPE extends never = never>(args?: MfaDeleteLoginEnforcementRequestParameters): Keq<MfaDeleteLoginEnforcementOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<MfaDeleteLoginEnforcementResponseBodies[STATUS]>('/identity/mfa/login-enforcement/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/mfa/login-enforcement/{name}',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -2691,14 +2263,6 @@ export class OpenBaoHttpClient {
    */
   mfaListMethods<STATUS extends keyof MfaListMethodsResponseBodies, CONTENT_TYPE extends never = never>(args?: MfaListMethodsRequestParameters): Keq<MfaListMethodsOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<MfaListMethodsResponseBodies[STATUS]>('/identity/mfa/method')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/mfa/method',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -2723,14 +2287,6 @@ export class OpenBaoHttpClient {
    */
   mfaListDuoMethods<STATUS extends keyof MfaListDuoMethodsResponseBodies, CONTENT_TYPE extends never = never>(args?: MfaListDuoMethodsRequestParameters): Keq<MfaListDuoMethodsOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<MfaListDuoMethodsResponseBodies[STATUS]>('/identity/mfa/method/duo')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/mfa/method/duo',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -2755,14 +2311,6 @@ export class OpenBaoHttpClient {
    */
   mfaReadDuoMethodConfiguration<STATUS extends keyof MfaReadDuoMethodConfigurationResponseBodies, CONTENT_TYPE extends never = never>(args?: MfaReadDuoMethodConfigurationRequestParameters): Keq<MfaReadDuoMethodConfigurationOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<MfaReadDuoMethodConfigurationResponseBodies[STATUS]>('/identity/mfa/method/duo/{method_id}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/mfa/method/duo/{method_id}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -2786,14 +2334,6 @@ export class OpenBaoHttpClient {
    */
   mfaConfigureDuoMethod<STATUS extends keyof MfaConfigureDuoMethodResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: MfaConfigureDuoMethodRequestParameters): Keq<MfaConfigureDuoMethodOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<MfaConfigureDuoMethodResponseBodies[STATUS]>('/identity/mfa/method/duo/{method_id}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/mfa/method/duo/{method_id}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -2826,14 +2366,6 @@ export class OpenBaoHttpClient {
    */
   mfaDeleteDuoMethod<STATUS extends keyof MfaDeleteDuoMethodResponseBodies, CONTENT_TYPE extends never = never>(args?: MfaDeleteDuoMethodRequestParameters): Keq<MfaDeleteDuoMethodOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<MfaDeleteDuoMethodResponseBodies[STATUS]>('/identity/mfa/method/duo/{method_id}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/mfa/method/duo/{method_id}',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -2857,14 +2389,6 @@ export class OpenBaoHttpClient {
    */
   mfaListOktaMethods<STATUS extends keyof MfaListOktaMethodsResponseBodies, CONTENT_TYPE extends never = never>(args?: MfaListOktaMethodsRequestParameters): Keq<MfaListOktaMethodsOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<MfaListOktaMethodsResponseBodies[STATUS]>('/identity/mfa/method/okta')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/mfa/method/okta',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -2889,14 +2413,6 @@ export class OpenBaoHttpClient {
    */
   mfaReadOktaMethodConfiguration<STATUS extends keyof MfaReadOktaMethodConfigurationResponseBodies, CONTENT_TYPE extends never = never>(args?: MfaReadOktaMethodConfigurationRequestParameters): Keq<MfaReadOktaMethodConfigurationOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<MfaReadOktaMethodConfigurationResponseBodies[STATUS]>('/identity/mfa/method/okta/{method_id}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/mfa/method/okta/{method_id}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -2920,14 +2436,6 @@ export class OpenBaoHttpClient {
    */
   mfaConfigureOktaMethod<STATUS extends keyof MfaConfigureOktaMethodResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: MfaConfigureOktaMethodRequestParameters): Keq<MfaConfigureOktaMethodOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<MfaConfigureOktaMethodResponseBodies[STATUS]>('/identity/mfa/method/okta/{method_id}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/mfa/method/okta/{method_id}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -2960,14 +2468,6 @@ export class OpenBaoHttpClient {
    */
   mfaDeleteOktaMethod<STATUS extends keyof MfaDeleteOktaMethodResponseBodies, CONTENT_TYPE extends never = never>(args?: MfaDeleteOktaMethodRequestParameters): Keq<MfaDeleteOktaMethodOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<MfaDeleteOktaMethodResponseBodies[STATUS]>('/identity/mfa/method/okta/{method_id}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/mfa/method/okta/{method_id}',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -2991,14 +2491,6 @@ export class OpenBaoHttpClient {
    */
   mfaListPingIdMethods<STATUS extends keyof MfaListPingIdMethodsResponseBodies, CONTENT_TYPE extends never = never>(args?: MfaListPingIdMethodsRequestParameters): Keq<MfaListPingIdMethodsOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<MfaListPingIdMethodsResponseBodies[STATUS]>('/identity/mfa/method/pingid')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/mfa/method/pingid',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -3023,14 +2515,6 @@ export class OpenBaoHttpClient {
    */
   mfaReadPingIdMethodConfiguration<STATUS extends keyof MfaReadPingIdMethodConfigurationResponseBodies, CONTENT_TYPE extends never = never>(args?: MfaReadPingIdMethodConfigurationRequestParameters): Keq<MfaReadPingIdMethodConfigurationOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<MfaReadPingIdMethodConfigurationResponseBodies[STATUS]>('/identity/mfa/method/pingid/{method_id}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/mfa/method/pingid/{method_id}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -3054,14 +2538,6 @@ export class OpenBaoHttpClient {
    */
   mfaConfigurePingIdMethod<STATUS extends keyof MfaConfigurePingIdMethodResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: MfaConfigurePingIdMethodRequestParameters): Keq<MfaConfigurePingIdMethodOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<MfaConfigurePingIdMethodResponseBodies[STATUS]>('/identity/mfa/method/pingid/{method_id}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/mfa/method/pingid/{method_id}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -3090,14 +2566,6 @@ export class OpenBaoHttpClient {
    */
   mfaDeletePingIdMethod<STATUS extends keyof MfaDeletePingIdMethodResponseBodies, CONTENT_TYPE extends never = never>(args?: MfaDeletePingIdMethodRequestParameters): Keq<MfaDeletePingIdMethodOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<MfaDeletePingIdMethodResponseBodies[STATUS]>('/identity/mfa/method/pingid/{method_id}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/mfa/method/pingid/{method_id}',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -3121,14 +2589,6 @@ export class OpenBaoHttpClient {
    */
   mfaListTotpMethods<STATUS extends keyof MfaListTotpMethodsResponseBodies, CONTENT_TYPE extends never = never>(args?: MfaListTotpMethodsRequestParameters): Keq<MfaListTotpMethodsOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<MfaListTotpMethodsResponseBodies[STATUS]>('/identity/mfa/method/totp')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/mfa/method/totp',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -3153,14 +2613,6 @@ export class OpenBaoHttpClient {
    */
   mfaAdminDestroyTotpSecret<STATUS extends keyof MfaAdminDestroyTotpSecretResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: MfaAdminDestroyTotpSecretRequestParameters): Keq<MfaAdminDestroyTotpSecretOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<MfaAdminDestroyTotpSecretResponseBodies[STATUS]>('/identity/mfa/method/totp/admin-destroy')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/mfa/method/totp/admin-destroy',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -3188,14 +2640,6 @@ export class OpenBaoHttpClient {
    */
   mfaAdminGenerateTotpSecret<STATUS extends keyof MfaAdminGenerateTotpSecretResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: MfaAdminGenerateTotpSecretRequestParameters): Keq<MfaAdminGenerateTotpSecretOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<MfaAdminGenerateTotpSecretResponseBodies[STATUS]>('/identity/mfa/method/totp/admin-generate')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/mfa/method/totp/admin-generate',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -3223,14 +2667,6 @@ export class OpenBaoHttpClient {
    */
   mfaGenerateTotpSecret<STATUS extends keyof MfaGenerateTotpSecretResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: MfaGenerateTotpSecretRequestParameters): Keq<MfaGenerateTotpSecretOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<MfaGenerateTotpSecretResponseBodies[STATUS]>('/identity/mfa/method/totp/generate')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/mfa/method/totp/generate',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -3257,14 +2693,6 @@ export class OpenBaoHttpClient {
    */
   mfaReadTotpMethodConfiguration<STATUS extends keyof MfaReadTotpMethodConfigurationResponseBodies, CONTENT_TYPE extends never = never>(args?: MfaReadTotpMethodConfigurationRequestParameters): Keq<MfaReadTotpMethodConfigurationOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<MfaReadTotpMethodConfigurationResponseBodies[STATUS]>('/identity/mfa/method/totp/{method_id}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/mfa/method/totp/{method_id}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -3288,14 +2716,6 @@ export class OpenBaoHttpClient {
    */
   mfaConfigureTotpMethod<STATUS extends keyof MfaConfigureTotpMethodResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: MfaConfigureTotpMethodRequestParameters): Keq<MfaConfigureTotpMethodOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<MfaConfigureTotpMethodResponseBodies[STATUS]>('/identity/mfa/method/totp/{method_id}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/mfa/method/totp/{method_id}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -3330,14 +2750,6 @@ export class OpenBaoHttpClient {
    */
   mfaDeleteTotpMethod<STATUS extends keyof MfaDeleteTotpMethodResponseBodies, CONTENT_TYPE extends never = never>(args?: MfaDeleteTotpMethodRequestParameters): Keq<MfaDeleteTotpMethodOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<MfaDeleteTotpMethodResponseBodies[STATUS]>('/identity/mfa/method/totp/{method_id}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/mfa/method/totp/{method_id}',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -3361,14 +2773,6 @@ export class OpenBaoHttpClient {
    */
   mfaReadMethodConfiguration<STATUS extends keyof MfaReadMethodConfigurationResponseBodies, CONTENT_TYPE extends never = never>(args?: MfaReadMethodConfigurationRequestParameters): Keq<MfaReadMethodConfigurationOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<MfaReadMethodConfigurationResponseBodies[STATUS]>('/identity/mfa/method/{method_id}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/mfa/method/{method_id}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -3389,14 +2793,6 @@ export class OpenBaoHttpClient {
 
   oidcReadPublicKeys<STATUS extends keyof OidcReadPublicKeysResponseBodies, CONTENT_TYPE extends never = never>(args?: OidcReadPublicKeysRequestParameters): Keq<OidcReadPublicKeysOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<OidcReadPublicKeysResponseBodies[STATUS]>('/identity/oidc/.well-known/keys')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/oidc/.well-known/keys',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -3417,14 +2813,6 @@ export class OpenBaoHttpClient {
 
   oidcReadOpenIdConfiguration<STATUS extends keyof OidcReadOpenIdConfigurationResponseBodies, CONTENT_TYPE extends never = never>(args?: OidcReadOpenIdConfigurationRequestParameters): Keq<OidcReadOpenIdConfigurationOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<OidcReadOpenIdConfigurationResponseBodies[STATUS]>('/identity/oidc/.well-known/openid-configuration')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/oidc/.well-known/openid-configuration',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -3445,14 +2833,6 @@ export class OpenBaoHttpClient {
 
   oidcListAssignments<STATUS extends keyof OidcListAssignmentsResponseBodies, CONTENT_TYPE extends never = never>(args?: OidcListAssignmentsRequestParameters): Keq<OidcListAssignmentsOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<OidcListAssignmentsResponseBodies[STATUS]>('/identity/oidc/assignment')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/oidc/assignment',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -3474,14 +2854,6 @@ export class OpenBaoHttpClient {
 
   oidcReadAssignment<STATUS extends keyof OidcReadAssignmentResponseBodies, CONTENT_TYPE extends never = never>(args?: OidcReadAssignmentRequestParameters): Keq<OidcReadAssignmentOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<OidcReadAssignmentResponseBodies[STATUS]>('/identity/oidc/assignment/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/oidc/assignment/{name}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -3502,14 +2874,6 @@ export class OpenBaoHttpClient {
 
   oidcWriteAssignment<STATUS extends keyof OidcWriteAssignmentResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: OidcWriteAssignmentRequestParameters): Keq<OidcWriteAssignmentOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<OidcWriteAssignmentResponseBodies[STATUS]>('/identity/oidc/assignment/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/oidc/assignment/{name}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -3534,14 +2898,6 @@ export class OpenBaoHttpClient {
 
   oidcDeleteAssignment<STATUS extends keyof OidcDeleteAssignmentResponseBodies, CONTENT_TYPE extends never = never>(args?: OidcDeleteAssignmentRequestParameters): Keq<OidcDeleteAssignmentOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<OidcDeleteAssignmentResponseBodies[STATUS]>('/identity/oidc/assignment/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/oidc/assignment/{name}',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -3562,14 +2918,6 @@ export class OpenBaoHttpClient {
 
   oidcListClients<STATUS extends keyof OidcListClientsResponseBodies, CONTENT_TYPE extends never = never>(args?: OidcListClientsRequestParameters): Keq<OidcListClientsOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<OidcListClientsResponseBodies[STATUS]>('/identity/oidc/client')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/oidc/client',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -3591,14 +2939,6 @@ export class OpenBaoHttpClient {
 
   oidcReadClient<STATUS extends keyof OidcReadClientResponseBodies, CONTENT_TYPE extends never = never>(args?: OidcReadClientRequestParameters): Keq<OidcReadClientOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<OidcReadClientResponseBodies[STATUS]>('/identity/oidc/client/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/oidc/client/{name}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -3619,14 +2959,6 @@ export class OpenBaoHttpClient {
 
   oidcWriteClient<STATUS extends keyof OidcWriteClientResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: OidcWriteClientRequestParameters): Keq<OidcWriteClientOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<OidcWriteClientResponseBodies[STATUS]>('/identity/oidc/client/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/oidc/client/{name}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -3657,14 +2989,6 @@ export class OpenBaoHttpClient {
 
   oidcDeleteClient<STATUS extends keyof OidcDeleteClientResponseBodies, CONTENT_TYPE extends never = never>(args?: OidcDeleteClientRequestParameters): Keq<OidcDeleteClientOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<OidcDeleteClientResponseBodies[STATUS]>('/identity/oidc/client/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/oidc/client/{name}',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -3685,14 +3009,6 @@ export class OpenBaoHttpClient {
 
   oidcReadConfiguration<STATUS extends keyof OidcReadConfigurationResponseBodies, CONTENT_TYPE extends never = never>(args?: OidcReadConfigurationRequestParameters): Keq<OidcReadConfigurationOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<OidcReadConfigurationResponseBodies[STATUS]>('/identity/oidc/config')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/oidc/config',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -3713,14 +3029,6 @@ export class OpenBaoHttpClient {
 
   oidcConfigure<STATUS extends keyof OidcConfigureResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: OidcConfigureRequestParameters): Keq<OidcConfigureOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<OidcConfigureResponseBodies[STATUS]>('/identity/oidc/config')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/oidc/config',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -3744,14 +3052,6 @@ export class OpenBaoHttpClient {
 
   oidcIntrospect<STATUS extends keyof OidcIntrospectResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: OidcIntrospectRequestParameters): Keq<OidcIntrospectOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<OidcIntrospectResponseBodies[STATUS]>('/identity/oidc/introspect')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/oidc/introspect',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -3776,14 +3076,6 @@ export class OpenBaoHttpClient {
 
   oidcListKeys<STATUS extends keyof OidcListKeysResponseBodies, CONTENT_TYPE extends never = never>(args?: OidcListKeysRequestParameters): Keq<OidcListKeysOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<OidcListKeysResponseBodies[STATUS]>('/identity/oidc/key')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/oidc/key',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -3805,14 +3097,6 @@ export class OpenBaoHttpClient {
 
   oidcReadKey<STATUS extends keyof OidcReadKeyResponseBodies, CONTENT_TYPE extends never = never>(args?: OidcReadKeyRequestParameters): Keq<OidcReadKeyOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<OidcReadKeyResponseBodies[STATUS]>('/identity/oidc/key/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/oidc/key/{name}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -3833,14 +3117,6 @@ export class OpenBaoHttpClient {
 
   oidcWriteKey<STATUS extends keyof OidcWriteKeyResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: OidcWriteKeyRequestParameters): Keq<OidcWriteKeyOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<OidcWriteKeyResponseBodies[STATUS]>('/identity/oidc/key/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/oidc/key/{name}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -3867,14 +3143,6 @@ export class OpenBaoHttpClient {
 
   oidcDeleteKey<STATUS extends keyof OidcDeleteKeyResponseBodies, CONTENT_TYPE extends never = never>(args?: OidcDeleteKeyRequestParameters): Keq<OidcDeleteKeyOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<OidcDeleteKeyResponseBodies[STATUS]>('/identity/oidc/key/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/oidc/key/{name}',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -3895,14 +3163,6 @@ export class OpenBaoHttpClient {
 
   oidcRotateKey<STATUS extends keyof OidcRotateKeyResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: OidcRotateKeyRequestParameters): Keq<OidcRotateKeyOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<OidcRotateKeyResponseBodies[STATUS]>('/identity/oidc/key/{name}/rotate')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/oidc/key/{name}/rotate',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -3926,14 +3186,6 @@ export class OpenBaoHttpClient {
 
   oidcListProviders<STATUS extends keyof OidcListProvidersResponseBodies, CONTENT_TYPE extends never = never>(args?: OidcListProvidersRequestParameters): Keq<OidcListProvidersOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<OidcListProvidersResponseBodies[STATUS]>('/identity/oidc/provider')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/oidc/provider',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -3955,14 +3207,6 @@ export class OpenBaoHttpClient {
 
   oidcReadProvider<STATUS extends keyof OidcReadProviderResponseBodies, CONTENT_TYPE extends never = never>(args?: OidcReadProviderRequestParameters): Keq<OidcReadProviderOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<OidcReadProviderResponseBodies[STATUS]>('/identity/oidc/provider/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/oidc/provider/{name}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -3983,14 +3227,6 @@ export class OpenBaoHttpClient {
 
   oidcWriteProvider<STATUS extends keyof OidcWriteProviderResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: OidcWriteProviderRequestParameters): Keq<OidcWriteProviderOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<OidcWriteProviderResponseBodies[STATUS]>('/identity/oidc/provider/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/oidc/provider/{name}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -4016,14 +3252,6 @@ export class OpenBaoHttpClient {
 
   oidcDeleteProvider<STATUS extends keyof OidcDeleteProviderResponseBodies, CONTENT_TYPE extends never = never>(args?: OidcDeleteProviderRequestParameters): Keq<OidcDeleteProviderOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<OidcDeleteProviderResponseBodies[STATUS]>('/identity/oidc/provider/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/oidc/provider/{name}',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -4044,14 +3272,6 @@ export class OpenBaoHttpClient {
 
   oidcReadProviderPublicKeys<STATUS extends keyof OidcReadProviderPublicKeysResponseBodies, CONTENT_TYPE extends never = never>(args?: OidcReadProviderPublicKeysRequestParameters): Keq<OidcReadProviderPublicKeysOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<OidcReadProviderPublicKeysResponseBodies[STATUS]>('/identity/oidc/provider/{name}/.well-known/keys')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/oidc/provider/{name}/.well-known/keys',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -4072,14 +3292,6 @@ export class OpenBaoHttpClient {
 
   oidcReadProviderOpenIdConfiguration<STATUS extends keyof OidcReadProviderOpenIdConfigurationResponseBodies, CONTENT_TYPE extends never = never>(args?: OidcReadProviderOpenIdConfigurationRequestParameters): Keq<OidcReadProviderOpenIdConfigurationOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<OidcReadProviderOpenIdConfigurationResponseBodies[STATUS]>('/identity/oidc/provider/{name}/.well-known/openid-configuration')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/oidc/provider/{name}/.well-known/openid-configuration',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -4100,14 +3312,6 @@ export class OpenBaoHttpClient {
 
   oidcProviderAuthorize<STATUS extends keyof OidcProviderAuthorizeResponseBodies, CONTENT_TYPE extends never = never>(args?: OidcProviderAuthorizeRequestParameters): Keq<OidcProviderAuthorizeOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<OidcProviderAuthorizeResponseBodies[STATUS]>('/identity/oidc/provider/{name}/authorize')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/oidc/provider/{name}/authorize',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -4128,14 +3332,6 @@ export class OpenBaoHttpClient {
 
   oidcProviderAuthorizeWithParameters<STATUS extends keyof OidcProviderAuthorizeWithParametersResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: OidcProviderAuthorizeWithParametersRequestParameters): Keq<OidcProviderAuthorizeWithParametersOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<OidcProviderAuthorizeWithParametersResponseBodies[STATUS]>('/identity/oidc/provider/{name}/authorize')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/oidc/provider/{name}/authorize',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -4167,14 +3363,6 @@ export class OpenBaoHttpClient {
 
   oidcProviderToken<STATUS extends keyof OidcProviderTokenResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: OidcProviderTokenRequestParameters): Keq<OidcProviderTokenOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<OidcProviderTokenResponseBodies[STATUS]>('/identity/oidc/provider/{name}/token')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/oidc/provider/{name}/token',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -4204,42 +3392,6 @@ export class OpenBaoHttpClient {
 
   oidcProviderUserInfo<STATUS extends keyof OidcProviderUserInfoResponseBodies, CONTENT_TYPE extends never = never>(args?: OidcProviderUserInfoRequestParameters): Keq<OidcProviderUserInfoOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<OidcProviderUserInfoResponseBodies[STATUS]>('/identity/oidc/provider/{name}/userinfo')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/oidc/provider/{name}/userinfo',
-          method: 'get',
-        },
-      )
-
-
-    /* @anchor:query:start */
-    /* @anchor:query:end */
-
-    /* @anchor:headers:start */
-    /* @anchor:headers:end */
-
-    /* @anchor:path-parameters:start */
-    /* @anchor:path-parameters:end */
-
-    /* @anchor:body:start */
-    /* @anchor:body:end */
-
-    return req
-  }
-
-
-  oidcProviderUserInfo2<STATUS extends keyof OidcProviderUserInfo2ResponseBodies, CONTENT_TYPE extends never = never>(args?: OidcProviderUserInfo2RequestParameters): Keq<OidcProviderUserInfo2Operation<STATUS, CONTENT_TYPE>> {
-    const req = this.request.post<OidcProviderUserInfo2ResponseBodies[STATUS]>('/identity/oidc/provider/{name}/userinfo')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/oidc/provider/{name}/userinfo',
-          method: 'post',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -4260,14 +3412,6 @@ export class OpenBaoHttpClient {
 
   oidcListRoles<STATUS extends keyof OidcListRolesResponseBodies, CONTENT_TYPE extends never = never>(args?: OidcListRolesRequestParameters): Keq<OidcListRolesOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<OidcListRolesResponseBodies[STATUS]>('/identity/oidc/role')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/oidc/role',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -4289,14 +3433,6 @@ export class OpenBaoHttpClient {
 
   oidcReadRole<STATUS extends keyof OidcReadRoleResponseBodies, CONTENT_TYPE extends never = never>(args?: OidcReadRoleRequestParameters): Keq<OidcReadRoleOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<OidcReadRoleResponseBodies[STATUS]>('/identity/oidc/role/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/oidc/role/{name}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -4317,14 +3453,6 @@ export class OpenBaoHttpClient {
 
   oidcWriteRole<STATUS extends keyof OidcWriteRoleResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: OidcWriteRoleRequestParameters): Keq<OidcWriteRoleOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<OidcWriteRoleResponseBodies[STATUS]>('/identity/oidc/role/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/oidc/role/{name}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -4351,14 +3479,6 @@ export class OpenBaoHttpClient {
 
   oidcDeleteRole<STATUS extends keyof OidcDeleteRoleResponseBodies, CONTENT_TYPE extends never = never>(args?: OidcDeleteRoleRequestParameters): Keq<OidcDeleteRoleOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<OidcDeleteRoleResponseBodies[STATUS]>('/identity/oidc/role/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/oidc/role/{name}',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -4379,14 +3499,6 @@ export class OpenBaoHttpClient {
 
   oidcListScopes<STATUS extends keyof OidcListScopesResponseBodies, CONTENT_TYPE extends never = never>(args?: OidcListScopesRequestParameters): Keq<OidcListScopesOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<OidcListScopesResponseBodies[STATUS]>('/identity/oidc/scope')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/oidc/scope',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -4408,14 +3520,6 @@ export class OpenBaoHttpClient {
 
   oidcReadScope<STATUS extends keyof OidcReadScopeResponseBodies, CONTENT_TYPE extends never = never>(args?: OidcReadScopeRequestParameters): Keq<OidcReadScopeOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<OidcReadScopeResponseBodies[STATUS]>('/identity/oidc/scope/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/oidc/scope/{name}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -4436,14 +3540,6 @@ export class OpenBaoHttpClient {
 
   oidcWriteScope<STATUS extends keyof OidcWriteScopeResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: OidcWriteScopeRequestParameters): Keq<OidcWriteScopeOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<OidcWriteScopeResponseBodies[STATUS]>('/identity/oidc/scope/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/oidc/scope/{name}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -4468,14 +3564,6 @@ export class OpenBaoHttpClient {
 
   oidcDeleteScope<STATUS extends keyof OidcDeleteScopeResponseBodies, CONTENT_TYPE extends never = never>(args?: OidcDeleteScopeRequestParameters): Keq<OidcDeleteScopeOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<OidcDeleteScopeResponseBodies[STATUS]>('/identity/oidc/scope/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/oidc/scope/{name}',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -4496,14 +3584,6 @@ export class OpenBaoHttpClient {
 
   oidcGenerateToken<STATUS extends keyof OidcGenerateTokenResponseBodies, CONTENT_TYPE extends never = never>(args?: OidcGenerateTokenRequestParameters): Keq<OidcGenerateTokenOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<OidcGenerateTokenResponseBodies[STATUS]>('/identity/oidc/token/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/oidc/token/{name}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -4524,14 +3604,6 @@ export class OpenBaoHttpClient {
 
   personaCreate<STATUS extends keyof PersonaCreateResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: PersonaCreateRequestParameters): Keq<PersonaCreateOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<PersonaCreateResponseBodies[STATUS]>('/identity/persona')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/persona',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -4559,14 +3631,6 @@ export class OpenBaoHttpClient {
 
   personaListById<STATUS extends keyof PersonaListByIdResponseBodies, CONTENT_TYPE extends never = never>(args?: PersonaListByIdRequestParameters): Keq<PersonaListByIdOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<PersonaListByIdResponseBodies[STATUS]>('/identity/persona/id')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/persona/id',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -4588,14 +3652,6 @@ export class OpenBaoHttpClient {
 
   personaReadById<STATUS extends keyof PersonaReadByIdResponseBodies, CONTENT_TYPE extends never = never>(args?: PersonaReadByIdRequestParameters): Keq<PersonaReadByIdOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<PersonaReadByIdResponseBodies[STATUS]>('/identity/persona/id/{id}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/persona/id/{id}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -4616,14 +3672,6 @@ export class OpenBaoHttpClient {
 
   personaUpdateById<STATUS extends keyof PersonaUpdateByIdResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: PersonaUpdateByIdRequestParameters): Keq<PersonaUpdateByIdOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<PersonaUpdateByIdResponseBodies[STATUS]>('/identity/persona/id/{id}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/persona/id/{id}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -4650,14 +3698,6 @@ export class OpenBaoHttpClient {
 
   personaDeleteById<STATUS extends keyof PersonaDeleteByIdResponseBodies, CONTENT_TYPE extends never = never>(args?: PersonaDeleteByIdRequestParameters): Keq<PersonaDeleteByIdOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<PersonaDeleteByIdResponseBodies[STATUS]>('/identity/persona/id/{id}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/identity/persona/id/{id}',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -4681,14 +3721,6 @@ export class OpenBaoHttpClient {
    */
   kvReadConfig<STATUS extends keyof KvReadConfigResponseBodies, CONTENT_TYPE extends never = never>(args?: KvReadConfigRequestParameters): Keq<KvReadConfigOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<KvReadConfigResponseBodies[STATUS]>('/kv/config')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/kv/config',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -4712,14 +3744,6 @@ export class OpenBaoHttpClient {
    */
   kvWriteConfig<STATUS extends keyof KvWriteConfigResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: KvWriteConfigRequestParameters): Keq<KvWriteConfigOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<KvWriteConfigResponseBodies[STATUS]>('/kv/config')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/kv/config',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -4746,14 +3770,6 @@ export class OpenBaoHttpClient {
 
   kvReadDataPath<STATUS extends keyof KvReadDataPathResponseBodies, CONTENT_TYPE extends never = never>(args?: KvReadDataPathRequestParameters): Keq<KvReadDataPathOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<KvReadDataPathResponseBodies[STATUS]>('/kv/data/{path}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/kv/data/{path}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -4774,14 +3790,6 @@ export class OpenBaoHttpClient {
 
   kvWriteDataPath<STATUS extends keyof KvWriteDataPathResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: KvWriteDataPathRequestParameters): Keq<KvWriteDataPathOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<KvWriteDataPathResponseBodies[STATUS]>('/kv/data/{path}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/kv/data/{path}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -4807,14 +3815,6 @@ export class OpenBaoHttpClient {
 
   kvDeleteDataPath<STATUS extends keyof KvDeleteDataPathResponseBodies, CONTENT_TYPE extends never = never>(args?: KvDeleteDataPathRequestParameters): Keq<KvDeleteDataPathOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<KvDeleteDataPathResponseBodies[STATUS]>('/kv/data/{path}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/kv/data/{path}',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -4835,14 +3835,6 @@ export class OpenBaoHttpClient {
 
   kvWriteDeletePath<STATUS extends keyof KvWriteDeletePathResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: KvWriteDeletePathRequestParameters): Keq<KvWriteDeletePathOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<KvWriteDeletePathResponseBodies[STATUS]>('/kv/delete/{path}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/kv/delete/{path}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -4866,14 +3858,6 @@ export class OpenBaoHttpClient {
 
   kvWriteDestroyPath<STATUS extends keyof KvWriteDestroyPathResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: KvWriteDestroyPathRequestParameters): Keq<KvWriteDestroyPathOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<KvWriteDestroyPathResponseBodies[STATUS]>('/kv/destroy/{path}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/kv/destroy/{path}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -4897,14 +3881,6 @@ export class OpenBaoHttpClient {
 
   kvListDetailedMetadataPath<STATUS extends keyof KvListDetailedMetadataPathResponseBodies, CONTENT_TYPE extends never = never>(args?: KvListDetailedMetadataPathRequestParameters): Keq<KvListDetailedMetadataPathOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<KvListDetailedMetadataPathResponseBodies[STATUS]>('/kv/detailed-metadata/{path}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/kv/detailed-metadata/{path}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -4926,14 +3902,6 @@ export class OpenBaoHttpClient {
 
   kvReadMetadataPath<STATUS extends keyof KvReadMetadataPathResponseBodies, CONTENT_TYPE extends never = never>(args?: KvReadMetadataPathRequestParameters): Keq<KvReadMetadataPathOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<KvReadMetadataPathResponseBodies[STATUS]>('/kv/metadata/{path}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/kv/metadata/{path}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -4955,14 +3923,6 @@ export class OpenBaoHttpClient {
 
   kvWriteMetadataPath<STATUS extends keyof KvWriteMetadataPathResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: KvWriteMetadataPathRequestParameters): Keq<KvWriteMetadataPathOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<KvWriteMetadataPathResponseBodies[STATUS]>('/kv/metadata/{path}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/kv/metadata/{path}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -4993,14 +3953,6 @@ export class OpenBaoHttpClient {
 
   kvDeleteMetadataPath<STATUS extends keyof KvDeleteMetadataPathResponseBodies, CONTENT_TYPE extends never = never>(args?: KvDeleteMetadataPathRequestParameters): Keq<KvDeleteMetadataPathOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<KvDeleteMetadataPathResponseBodies[STATUS]>('/kv/metadata/{path}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/kv/metadata/{path}',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -5021,14 +3973,6 @@ export class OpenBaoHttpClient {
 
   kvReadSubkeysPath<STATUS extends keyof KvReadSubkeysPathResponseBodies, CONTENT_TYPE extends never = never>(args?: KvReadSubkeysPathRequestParameters): Keq<KvReadSubkeysPathOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<KvReadSubkeysPathResponseBodies[STATUS]>('/kv/subkeys/{path}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/kv/subkeys/{path}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -5049,14 +3993,6 @@ export class OpenBaoHttpClient {
 
   kvWriteUndeletePath<STATUS extends keyof KvWriteUndeletePathResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: KvWriteUndeletePathRequestParameters): Keq<KvWriteUndeletePathOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<KvWriteUndeletePathResponseBodies[STATUS]>('/kv/undelete/{path}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/kv/undelete/{path}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -5083,14 +4019,6 @@ export class OpenBaoHttpClient {
    */
   auditingListEnabledDevices<STATUS extends keyof AuditingListEnabledDevicesResponseBodies, CONTENT_TYPE extends never = never>(args?: AuditingListEnabledDevicesRequestParameters): Keq<AuditingListEnabledDevicesOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<AuditingListEnabledDevicesResponseBodies[STATUS]>('/sys/audit')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/audit',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -5111,14 +4039,6 @@ export class OpenBaoHttpClient {
 
   auditingCalculateHash<STATUS extends keyof AuditingCalculateHashResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: AuditingCalculateHashRequestParameters): Keq<AuditingCalculateHashOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<AuditingCalculateHashResponseBodies[STATUS]>('/sys/audit-hash/{path}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/audit-hash/{path}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -5145,14 +4065,6 @@ export class OpenBaoHttpClient {
    */
   auditingEnableDevice<STATUS extends keyof AuditingEnableDeviceResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: AuditingEnableDeviceRequestParameters): Keq<AuditingEnableDeviceOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<AuditingEnableDeviceResponseBodies[STATUS]>('/sys/audit/{path}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/audit/{path}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -5182,14 +4094,6 @@ export class OpenBaoHttpClient {
    */
   auditingDisableDevice<STATUS extends keyof AuditingDisableDeviceResponseBodies, CONTENT_TYPE extends never = never>(args?: AuditingDisableDeviceRequestParameters): Keq<AuditingDisableDeviceOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<AuditingDisableDeviceResponseBodies[STATUS]>('/sys/audit/{path}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/audit/{path}',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -5210,14 +4114,6 @@ export class OpenBaoHttpClient {
 
   authListEnabledMethods<STATUS extends keyof AuthListEnabledMethodsResponseBodies, CONTENT_TYPE extends never = never>(args?: AuthListEnabledMethodsRequestParameters): Keq<AuthListEnabledMethodsOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<AuthListEnabledMethodsResponseBodies[STATUS]>('/sys/auth')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/auth',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -5241,14 +4137,6 @@ export class OpenBaoHttpClient {
    */
   authReadConfiguration<STATUS extends keyof AuthReadConfigurationResponseBodies, CONTENT_TYPE extends never = never>(args?: AuthReadConfigurationRequestParameters): Keq<AuthReadConfigurationOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<AuthReadConfigurationResponseBodies[STATUS]>('/sys/auth/{path}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/auth/{path}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -5275,14 +4163,6 @@ export class OpenBaoHttpClient {
    */
   authEnableMethod<STATUS extends keyof AuthEnableMethodResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: AuthEnableMethodRequestParameters): Keq<AuthEnableMethodOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<AuthEnableMethodResponseBodies[STATUS]>('/sys/auth/{path}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/auth/{path}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -5317,14 +4197,6 @@ export class OpenBaoHttpClient {
    */
   authDisableMethod<STATUS extends keyof AuthDisableMethodResponseBodies, CONTENT_TYPE extends never = never>(args?: AuthDisableMethodRequestParameters): Keq<AuthDisableMethodOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<AuthDisableMethodResponseBodies[STATUS]>('/sys/auth/{path}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/auth/{path}',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -5349,14 +4221,6 @@ export class OpenBaoHttpClient {
    */
   authReadTuningInformation<STATUS extends keyof AuthReadTuningInformationResponseBodies, CONTENT_TYPE extends never = never>(args?: AuthReadTuningInformationRequestParameters): Keq<AuthReadTuningInformationOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<AuthReadTuningInformationResponseBodies[STATUS]>('/sys/auth/{path}/tune')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/auth/{path}/tune',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -5381,14 +4245,6 @@ export class OpenBaoHttpClient {
    */
   authTuneConfigurationParameters<STATUS extends keyof AuthTuneConfigurationParametersResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: AuthTuneConfigurationParametersRequestParameters): Keq<AuthTuneConfigurationParametersOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<AuthTuneConfigurationParametersResponseBodies[STATUS]>('/sys/auth/{path}/tune')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/auth/{path}/tune',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -5423,14 +4279,6 @@ export class OpenBaoHttpClient {
 
   queryTokenCapabilities<STATUS extends keyof QueryTokenCapabilitiesResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: QueryTokenCapabilitiesRequestParameters): Keq<QueryTokenCapabilitiesOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<QueryTokenCapabilitiesResponseBodies[STATUS]>('/sys/capabilities')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/capabilities',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -5456,14 +4304,6 @@ export class OpenBaoHttpClient {
 
   queryTokenAccessorCapabilities<STATUS extends keyof QueryTokenAccessorCapabilitiesResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: QueryTokenAccessorCapabilitiesRequestParameters): Keq<QueryTokenAccessorCapabilitiesOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<QueryTokenAccessorCapabilitiesResponseBodies[STATUS]>('/sys/capabilities-accessor')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/capabilities-accessor',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -5489,14 +4329,6 @@ export class OpenBaoHttpClient {
 
   queryTokenSelfCapabilities<STATUS extends keyof QueryTokenSelfCapabilitiesResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: QueryTokenSelfCapabilitiesRequestParameters): Keq<QueryTokenSelfCapabilitiesOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<QueryTokenSelfCapabilitiesResponseBodies[STATUS]>('/sys/capabilities-self')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/capabilities-self',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -5525,14 +4357,6 @@ export class OpenBaoHttpClient {
    */
   auditingListRequestHeaders<STATUS extends keyof AuditingListRequestHeadersResponseBodies, CONTENT_TYPE extends never = never>(args?: AuditingListRequestHeadersRequestParameters): Keq<AuditingListRequestHeadersOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<AuditingListRequestHeadersResponseBodies[STATUS]>('/sys/config/auditing/request-headers')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/config/auditing/request-headers',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -5556,14 +4380,6 @@ export class OpenBaoHttpClient {
    */
   auditingReadRequestHeaderInformation<STATUS extends keyof AuditingReadRequestHeaderInformationResponseBodies, CONTENT_TYPE extends never = never>(args?: AuditingReadRequestHeaderInformationRequestParameters): Keq<AuditingReadRequestHeaderInformationOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<AuditingReadRequestHeaderInformationResponseBodies[STATUS]>('/sys/config/auditing/request-headers/{header}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/config/auditing/request-headers/{header}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -5587,14 +4403,6 @@ export class OpenBaoHttpClient {
    */
   auditingEnableRequestHeader<STATUS extends keyof AuditingEnableRequestHeaderResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: AuditingEnableRequestHeaderRequestParameters): Keq<AuditingEnableRequestHeaderOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<AuditingEnableRequestHeaderResponseBodies[STATUS]>('/sys/config/auditing/request-headers/{header}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/config/auditing/request-headers/{header}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -5621,14 +4429,6 @@ export class OpenBaoHttpClient {
    */
   auditingDisableRequestHeader<STATUS extends keyof AuditingDisableRequestHeaderResponseBodies, CONTENT_TYPE extends never = never>(args?: AuditingDisableRequestHeaderRequestParameters): Keq<AuditingDisableRequestHeaderOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<AuditingDisableRequestHeaderResponseBodies[STATUS]>('/sys/config/auditing/request-headers/{header}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/config/auditing/request-headers/{header}',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -5652,14 +4452,6 @@ export class OpenBaoHttpClient {
    */
   corsReadConfiguration<STATUS extends keyof CorsReadConfigurationResponseBodies, CONTENT_TYPE extends never = never>(args?: CorsReadConfigurationRequestParameters): Keq<CorsReadConfigurationOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<CorsReadConfigurationResponseBodies[STATUS]>('/sys/config/cors')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/config/cors',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -5683,14 +4475,6 @@ export class OpenBaoHttpClient {
    */
   corsConfigure<STATUS extends keyof CorsConfigureResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: CorsConfigureRequestParameters): Keq<CorsConfigureOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<CorsConfigureResponseBodies[STATUS]>('/sys/config/cors')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/config/cors',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -5719,14 +4503,6 @@ export class OpenBaoHttpClient {
    */
   corsDeleteConfiguration<STATUS extends keyof CorsDeleteConfigurationResponseBodies, CONTENT_TYPE extends never = never>(args?: CorsDeleteConfigurationRequestParameters): Keq<CorsDeleteConfigurationOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<CorsDeleteConfigurationResponseBodies[STATUS]>('/sys/config/cors')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/config/cors',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -5750,14 +4526,6 @@ export class OpenBaoHttpClient {
    */
   reloadSubsystem<STATUS extends keyof ReloadSubsystemResponseBodies, CONTENT_TYPE extends never = never>(args?: ReloadSubsystemRequestParameters): Keq<ReloadSubsystemOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<ReloadSubsystemResponseBodies[STATUS]>('/sys/config/reload/{subsystem}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/config/reload/{subsystem}',
-          method: 'post',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -5782,14 +4550,6 @@ export class OpenBaoHttpClient {
    */
   readSanitizedConfigurationState<STATUS extends keyof ReadSanitizedConfigurationStateResponseBodies, CONTENT_TYPE extends never = never>(args?: ReadSanitizedConfigurationStateRequestParameters): Keq<ReadSanitizedConfigurationStateOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<ReadSanitizedConfigurationStateResponseBodies[STATUS]>('/sys/config/state/sanitized')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/config/state/sanitized',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -5813,14 +4573,6 @@ export class OpenBaoHttpClient {
    */
   uiHeadersList<STATUS extends keyof UiHeadersListResponseBodies, CONTENT_TYPE extends never = never>(args?: UiHeadersListRequestParameters): Keq<UiHeadersListOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<UiHeadersListResponseBodies[STATUS]>('/sys/config/ui/headers')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/config/ui/headers',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -5845,14 +4597,6 @@ export class OpenBaoHttpClient {
    */
   uiHeadersReadConfiguration<STATUS extends keyof UiHeadersReadConfigurationResponseBodies, CONTENT_TYPE extends never = never>(args?: UiHeadersReadConfigurationRequestParameters): Keq<UiHeadersReadConfigurationOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<UiHeadersReadConfigurationResponseBodies[STATUS]>('/sys/config/ui/headers/{header}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/config/ui/headers/{header}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -5876,14 +4620,6 @@ export class OpenBaoHttpClient {
    */
   uiHeadersConfigure<STATUS extends keyof UiHeadersConfigureResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: UiHeadersConfigureRequestParameters): Keq<UiHeadersConfigureOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<UiHeadersConfigureResponseBodies[STATUS]>('/sys/config/ui/headers/{header}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/config/ui/headers/{header}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -5911,14 +4647,6 @@ export class OpenBaoHttpClient {
    */
   uiHeadersDeleteConfiguration<STATUS extends keyof UiHeadersDeleteConfigurationResponseBodies, CONTENT_TYPE extends never = never>(args?: UiHeadersDeleteConfigurationRequestParameters): Keq<UiHeadersDeleteConfigurationOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<UiHeadersDeleteConfigurationResponseBodies[STATUS]>('/sys/config/ui/headers/{header}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/config/ui/headers/{header}',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -5942,14 +4670,6 @@ export class OpenBaoHttpClient {
    */
   decode<STATUS extends keyof DecodeResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: DecodeRequestParameters): Keq<DecodeOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<DecodeResponseBodies[STATUS]>('/sys/decode-token')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/decode-token',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -5977,80 +4697,6 @@ export class OpenBaoHttpClient {
    */
   rootTokenGenerationReadProgress2<STATUS extends keyof RootTokenGenerationReadProgress2ResponseBodies, CONTENT_TYPE extends never = never>(args?: RootTokenGenerationReadProgress2RequestParameters): Keq<RootTokenGenerationReadProgress2Operation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<RootTokenGenerationReadProgress2ResponseBodies[STATUS]>('/sys/generate-root')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/generate-root',
-          method: 'get',
-        },
-      )
-
-
-    /* @anchor:query:start */
-    /* @anchor:query:end */
-
-    /* @anchor:headers:start */
-    /* @anchor:headers:end */
-
-    /* @anchor:path-parameters:start */
-    /* @anchor:path-parameters:end */
-
-    /* @anchor:body:start */
-    /* @anchor:body:end */
-
-    return req
-  }
-
-  /**
-   * Initializes a new root generation attempt.
-   *
-   * @description Only a single root generation attempt can take place at a time. One (and only one) of otp or pgp_key are required.
-   */
-  rootTokenGenerationInitialize_2<STATUS extends keyof RootTokenGenerationInitialize_2ResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: RootTokenGenerationInitialize_2RequestParameters): Keq<RootTokenGenerationInitialize_2Operation<STATUS, CONTENT_TYPE>> {
-    const req = this.request.post<RootTokenGenerationInitialize_2ResponseBodies[STATUS]>('/sys/generate-root')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/generate-root',
-          method: 'post',
-        },
-      )
-
-    req.type('application/json')
-
-
-    /* @anchor:query:start */
-    /* @anchor:query:end */
-
-    /* @anchor:headers:start */
-    /* @anchor:headers:end */
-
-    /* @anchor:path-parameters:start */
-    /* @anchor:path-parameters:end */
-
-    /* @anchor:body:start */
-    if (args && 'pgp_key' in args) req.send({ pgp_key: args['pgp_key'] })
-    /* @anchor:body:end */
-
-    return req
-  }
-
-  /**
-   * Cancels any in-progress root generation attempt.
-   *
-   */
-  rootTokenGenerationCancel_2<STATUS extends keyof RootTokenGenerationCancel_2ResponseBodies, CONTENT_TYPE extends never = never>(args?: RootTokenGenerationCancel_2RequestParameters): Keq<RootTokenGenerationCancel_2Operation<STATUS, CONTENT_TYPE>> {
-    const req = this.request.delete<RootTokenGenerationCancel_2ResponseBodies[STATUS]>('/sys/generate-root')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/generate-root',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -6074,14 +4720,6 @@ export class OpenBaoHttpClient {
    */
   rootTokenGenerationReadProgress<STATUS extends keyof RootTokenGenerationReadProgressResponseBodies, CONTENT_TYPE extends never = never>(args?: RootTokenGenerationReadProgressRequestParameters): Keq<RootTokenGenerationReadProgressOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<RootTokenGenerationReadProgressResponseBodies[STATUS]>('/sys/generate-root/attempt')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/generate-root/attempt',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -6106,14 +4744,6 @@ export class OpenBaoHttpClient {
    */
   rootTokenGenerationInitialize<STATUS extends keyof RootTokenGenerationInitializeResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: RootTokenGenerationInitializeRequestParameters): Keq<RootTokenGenerationInitializeOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<RootTokenGenerationInitializeResponseBodies[STATUS]>('/sys/generate-root/attempt')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/generate-root/attempt',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -6140,14 +4770,6 @@ export class OpenBaoHttpClient {
    */
   rootTokenGenerationCancel<STATUS extends keyof RootTokenGenerationCancelResponseBodies, CONTENT_TYPE extends never = never>(args?: RootTokenGenerationCancelRequestParameters): Keq<RootTokenGenerationCancelOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<RootTokenGenerationCancelResponseBodies[STATUS]>('/sys/generate-root/attempt')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/generate-root/attempt',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -6172,14 +4794,6 @@ export class OpenBaoHttpClient {
    */
   rootTokenGenerationUpdate<STATUS extends keyof RootTokenGenerationUpdateResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: RootTokenGenerationUpdateRequestParameters): Keq<RootTokenGenerationUpdateOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<RootTokenGenerationUpdateResponseBodies[STATUS]>('/sys/generate-root/update')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/generate-root/update',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -6207,14 +4821,6 @@ export class OpenBaoHttpClient {
    */
   haStatus<STATUS extends keyof HaStatusResponseBodies, CONTENT_TYPE extends never = never>(args?: HaStatusRequestParameters): Keq<HaStatusOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<HaStatusResponseBodies[STATUS]>('/sys/ha-status')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/ha-status',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -6238,14 +4844,6 @@ export class OpenBaoHttpClient {
    */
   readHealthStatus<STATUS extends keyof ReadHealthStatusResponseBodies, CONTENT_TYPE extends never = never>(args?: ReadHealthStatusRequestParameters): Keq<ReadHealthStatusOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<ReadHealthStatusResponseBodies[STATUS]>('/sys/health')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/health',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -6272,14 +4870,6 @@ export class OpenBaoHttpClient {
    */
   collectHostInformation<STATUS extends keyof CollectHostInformationResponseBodies, CONTENT_TYPE extends never = never>(args?: CollectHostInformationRequestParameters): Keq<CollectHostInformationOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<CollectHostInformationResponseBodies[STATUS]>('/sys/host-info')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/host-info',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -6306,14 +4896,6 @@ export class OpenBaoHttpClient {
    */
   collectInFlightRequestInformation<STATUS extends keyof CollectInFlightRequestInformationResponseBodies, CONTENT_TYPE extends never = never>(args?: CollectInFlightRequestInformationRequestParameters): Keq<CollectInFlightRequestInformationOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<CollectInFlightRequestInformationResponseBodies[STATUS]>('/sys/in-flight-req')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/in-flight-req',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -6337,14 +4919,6 @@ export class OpenBaoHttpClient {
    */
   readInitializationStatus<STATUS extends keyof ReadInitializationStatusResponseBodies, CONTENT_TYPE extends never = never>(args?: ReadInitializationStatusRequestParameters): Keq<ReadInitializationStatusOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<ReadInitializationStatusResponseBodies[STATUS]>('/sys/init')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/init',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -6369,14 +4943,6 @@ export class OpenBaoHttpClient {
    */
   initializeSystem<STATUS extends keyof InitializeSystemResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: InitializeSystemRequestParameters): Keq<InitializeSystemOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<InitializeSystemResponseBodies[STATUS]>('/sys/init')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/init',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -6404,355 +4970,9 @@ export class OpenBaoHttpClient {
     return req
   }
 
-  /**
-   * Backwards compatibility is not guaranteed for this API
-   *
-   */
-  internalCountEntities<STATUS extends keyof InternalCountEntitiesResponseBodies, CONTENT_TYPE extends never = never>(args?: InternalCountEntitiesRequestParameters): Keq<InternalCountEntitiesOperation<STATUS, CONTENT_TYPE>> {
-    const req = this.request.get<InternalCountEntitiesResponseBodies[STATUS]>('/sys/internal/counters/entities')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/internal/counters/entities',
-          method: 'get',
-        },
-      )
-
-
-    /* @anchor:query:start */
-    /* @anchor:query:end */
-
-    /* @anchor:headers:start */
-    /* @anchor:headers:end */
-
-    /* @anchor:path-parameters:start */
-    /* @anchor:path-parameters:end */
-
-    /* @anchor:body:start */
-    /* @anchor:body:end */
-
-    return req
-  }
-
-  /**
-   * Backwards compatibility is not guaranteed for this API
-   *
-   */
-  internalCountRequests<STATUS extends keyof InternalCountRequestsResponseBodies, CONTENT_TYPE extends never = never>(args?: InternalCountRequestsRequestParameters): Keq<InternalCountRequestsOperation<STATUS, CONTENT_TYPE>> {
-    const req = this.request.get<InternalCountRequestsResponseBodies[STATUS]>('/sys/internal/counters/requests')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/internal/counters/requests',
-          method: 'get',
-        },
-      )
-
-
-    /* @anchor:query:start */
-    /* @anchor:query:end */
-
-    /* @anchor:headers:start */
-    /* @anchor:headers:end */
-
-    /* @anchor:path-parameters:start */
-    /* @anchor:path-parameters:end */
-
-    /* @anchor:body:start */
-    /* @anchor:body:end */
-
-    return req
-  }
-
-  /**
-   * Backwards compatibility is not guaranteed for this API
-   *
-   */
-  internalCountTokens<STATUS extends keyof InternalCountTokensResponseBodies, CONTENT_TYPE extends never = never>(args?: InternalCountTokensRequestParameters): Keq<InternalCountTokensOperation<STATUS, CONTENT_TYPE>> {
-    const req = this.request.get<InternalCountTokensResponseBodies[STATUS]>('/sys/internal/counters/tokens')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/internal/counters/tokens',
-          method: 'get',
-        },
-      )
-
-
-    /* @anchor:query:start */
-    /* @anchor:query:end */
-
-    /* @anchor:headers:start */
-    /* @anchor:headers:end */
-
-    /* @anchor:path-parameters:start */
-    /* @anchor:path-parameters:end */
-
-    /* @anchor:body:start */
-    /* @anchor:body:end */
-
-    return req
-  }
-
-  /**
-   * Expose all request information to the caller
-   *
-   */
-  internalInspectRequest<STATUS extends keyof InternalInspectRequestResponseBodies, CONTENT_TYPE extends never = never>(args?: InternalInspectRequestRequestParameters): Keq<InternalInspectRequestOperation<STATUS, CONTENT_TYPE>> {
-    const req = this.request.get<InternalInspectRequestResponseBodies[STATUS]>('/sys/internal/inspect/request')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/internal/inspect/request',
-          method: 'get',
-        },
-      )
-
-
-    /* @anchor:query:start */
-    /* @anchor:query:end */
-
-    /* @anchor:headers:start */
-    /* @anchor:headers:end */
-
-    /* @anchor:path-parameters:start */
-    /* @anchor:path-parameters:end */
-
-    /* @anchor:body:start */
-    /* @anchor:body:end */
-
-    return req
-  }
-
-  /**
-   * Expose the route entry and mount entry tables present in the router
-   *
-   */
-  internalInspectRouter<STATUS extends keyof InternalInspectRouterResponseBodies, CONTENT_TYPE extends never = never>(args?: InternalInspectRouterRequestParameters): Keq<InternalInspectRouterOperation<STATUS, CONTENT_TYPE>> {
-    const req = this.request.get<InternalInspectRouterResponseBodies[STATUS]>('/sys/internal/inspect/router/{tag}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/internal/inspect/router/{tag}',
-          method: 'get',
-        },
-      )
-
-
-    /* @anchor:query:start */
-    /* @anchor:query:end */
-
-    /* @anchor:headers:start */
-    /* @anchor:headers:end */
-
-    /* @anchor:path-parameters:start */
-    /* @anchor:path-parameters:end */
-
-    /* @anchor:body:start */
-    /* @anchor:body:end */
-
-    return req
-  }
-
-
-  internalGenerateOpenApiDocument<STATUS extends keyof InternalGenerateOpenApiDocumentResponseBodies, CONTENT_TYPE extends never = never>(args?: InternalGenerateOpenApiDocumentRequestParameters): Keq<InternalGenerateOpenApiDocumentOperation<STATUS, CONTENT_TYPE>> {
-    const req = this.request.get<InternalGenerateOpenApiDocumentResponseBodies[STATUS]>('/sys/internal/specs/openapi')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/internal/specs/openapi',
-          method: 'get',
-        },
-      )
-
-
-    /* @anchor:query:start */
-    /* @anchor:query:end */
-
-    /* @anchor:headers:start */
-    /* @anchor:headers:end */
-
-    /* @anchor:path-parameters:start */
-    /* @anchor:path-parameters:end */
-
-    /* @anchor:body:start */
-    /* @anchor:body:end */
-
-    return req
-  }
-
-
-  internalGenerateOpenApiDocumentWithParameters<STATUS extends keyof InternalGenerateOpenApiDocumentWithParametersResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: InternalGenerateOpenApiDocumentWithParametersRequestParameters): Keq<InternalGenerateOpenApiDocumentWithParametersOperation<STATUS, CONTENT_TYPE>> {
-    const req = this.request.post<InternalGenerateOpenApiDocumentWithParametersResponseBodies[STATUS]>('/sys/internal/specs/openapi')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/internal/specs/openapi',
-          method: 'post',
-        },
-      )
-
-    req.type('application/json')
-
-
-    /* @anchor:query:start */
-    /* @anchor:query:end */
-
-    /* @anchor:headers:start */
-    /* @anchor:headers:end */
-
-    /* @anchor:path-parameters:start */
-    /* @anchor:path-parameters:end */
-
-    /* @anchor:body:start */
-    if (args && 'context' in args) req.send({ context: args['context'] })
-    /* @anchor:body:end */
-
-    return req
-  }
-
-  /**
-   * Lists all enabled and visible auth and secrets mounts.
-   *
-   */
-  internalUiListEnabledVisibleMounts<STATUS extends keyof InternalUiListEnabledVisibleMountsResponseBodies, CONTENT_TYPE extends never = never>(args?: InternalUiListEnabledVisibleMountsRequestParameters): Keq<InternalUiListEnabledVisibleMountsOperation<STATUS, CONTENT_TYPE>> {
-    const req = this.request.get<InternalUiListEnabledVisibleMountsResponseBodies[STATUS]>('/sys/internal/ui/mounts')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/internal/ui/mounts',
-          method: 'get',
-        },
-      )
-
-
-    /* @anchor:query:start */
-    /* @anchor:query:end */
-
-    /* @anchor:headers:start */
-    /* @anchor:headers:end */
-
-    /* @anchor:path-parameters:start */
-    /* @anchor:path-parameters:end */
-
-    /* @anchor:body:start */
-    /* @anchor:body:end */
-
-    return req
-  }
-
-  /**
-   * Return information about the given mount.
-   *
-   */
-  internalUiReadMountInformation<STATUS extends keyof InternalUiReadMountInformationResponseBodies, CONTENT_TYPE extends never = never>(args?: InternalUiReadMountInformationRequestParameters): Keq<InternalUiReadMountInformationOperation<STATUS, CONTENT_TYPE>> {
-    const req = this.request.get<InternalUiReadMountInformationResponseBodies[STATUS]>('/sys/internal/ui/mounts/{path}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/internal/ui/mounts/{path}',
-          method: 'get',
-        },
-      )
-
-
-    /* @anchor:query:start */
-    /* @anchor:query:end */
-
-    /* @anchor:headers:start */
-    /* @anchor:headers:end */
-
-    /* @anchor:path-parameters:start */
-    /* @anchor:path-parameters:end */
-
-    /* @anchor:body:start */
-    /* @anchor:body:end */
-
-    return req
-  }
-
-  /**
-   * Backwards compatibility is not guaranteed for this API
-   *
-   */
-  internalUiListNamespaces<STATUS extends keyof InternalUiListNamespacesResponseBodies, CONTENT_TYPE extends never = never>(args?: InternalUiListNamespacesRequestParameters): Keq<InternalUiListNamespacesOperation<STATUS, CONTENT_TYPE>> {
-    const req = this.request.get<InternalUiListNamespacesResponseBodies[STATUS]>('/sys/internal/ui/namespaces')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/internal/ui/namespaces',
-          method: 'get',
-        },
-      )
-
-
-    /* @anchor:query:start */
-    /* @anchor:query:end */
-
-    /* @anchor:headers:start */
-    /* @anchor:headers:end */
-
-    /* @anchor:path-parameters:start */
-    /* @anchor:path-parameters:end */
-
-    /* @anchor:body:start */
-    /* @anchor:body:end */
-
-    return req
-  }
-
-  /**
-   * Backwards compatibility is not guaranteed for this API
-   *
-   */
-  internalUiReadResultantAcl<STATUS extends keyof InternalUiReadResultantAclResponseBodies, CONTENT_TYPE extends never = never>(args?: InternalUiReadResultantAclRequestParameters): Keq<InternalUiReadResultantAclOperation<STATUS, CONTENT_TYPE>> {
-    const req = this.request.get<InternalUiReadResultantAclResponseBodies[STATUS]>('/sys/internal/ui/resultant-acl')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/internal/ui/resultant-acl',
-          method: 'get',
-        },
-      )
-
-
-    /* @anchor:query:start */
-    /* @anchor:query:end */
-
-    /* @anchor:headers:start */
-    /* @anchor:headers:end */
-
-    /* @anchor:path-parameters:start */
-    /* @anchor:path-parameters:end */
-
-    /* @anchor:body:start */
-    /* @anchor:body:end */
-
-    return req
-  }
-
 
   encryptionKeyStatus<STATUS extends keyof EncryptionKeyStatusResponseBodies, CONTENT_TYPE extends never = never>(args?: EncryptionKeyStatusRequestParameters): Keq<EncryptionKeyStatusOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<EncryptionKeyStatusResponseBodies[STATUS]>('/sys/key-status')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/key-status',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -6776,14 +4996,6 @@ export class OpenBaoHttpClient {
    */
   leaderStatus<STATUS extends keyof LeaderStatusResponseBodies, CONTENT_TYPE extends never = never>(args?: LeaderStatusRequestParameters): Keq<LeaderStatusOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<LeaderStatusResponseBodies[STATUS]>('/sys/leader')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/leader',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -6804,14 +5016,6 @@ export class OpenBaoHttpClient {
 
   leasesList<STATUS extends keyof LeasesListResponseBodies, CONTENT_TYPE extends never = never>(args?: LeasesListRequestParameters): Keq<LeasesListOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<LeasesListResponseBodies[STATUS]>('/sys/leases')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/leases',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -6832,14 +5036,6 @@ export class OpenBaoHttpClient {
 
   leasesCount<STATUS extends keyof LeasesCountResponseBodies, CONTENT_TYPE extends never = never>(args?: LeasesCountRequestParameters): Keq<LeasesCountOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<LeasesCountResponseBodies[STATUS]>('/sys/leases/count')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/leases/count',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -6860,14 +5056,6 @@ export class OpenBaoHttpClient {
 
   leasesReadLease<STATUS extends keyof LeasesReadLeaseResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: LeasesReadLeaseRequestParameters): Keq<LeasesReadLeaseOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<LeasesReadLeaseResponseBodies[STATUS]>('/sys/leases/lookup')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/leases/lookup',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -6891,14 +5079,6 @@ export class OpenBaoHttpClient {
 
   leasesLookUp<STATUS extends keyof LeasesLookUpResponseBodies, CONTENT_TYPE extends never = never>(args?: LeasesLookUpRequestParameters): Keq<LeasesLookUpOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<LeasesLookUpResponseBodies[STATUS]>('/sys/leases/lookup/')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/leases/lookup/',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -6920,14 +5100,6 @@ export class OpenBaoHttpClient {
 
   leasesLookUpWithPrefix<STATUS extends keyof LeasesLookUpWithPrefixResponseBodies, CONTENT_TYPE extends never = never>(args?: LeasesLookUpWithPrefixRequestParameters): Keq<LeasesLookUpWithPrefixOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<LeasesLookUpWithPrefixResponseBodies[STATUS]>('/sys/leases/lookup/{prefix}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/leases/lookup/{prefix}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -6952,14 +5124,6 @@ export class OpenBaoHttpClient {
    */
   leasesRenewLease<STATUS extends keyof LeasesRenewLeaseResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: LeasesRenewLeaseRequestParameters): Keq<LeasesRenewLeaseOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<LeasesRenewLeaseResponseBodies[STATUS]>('/sys/leases/renew')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/leases/renew',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -6988,14 +5152,6 @@ export class OpenBaoHttpClient {
    */
   leasesRenewLeaseWithId<STATUS extends keyof LeasesRenewLeaseWithIdResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: LeasesRenewLeaseWithIdRequestParameters): Keq<LeasesRenewLeaseWithIdOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<LeasesRenewLeaseWithIdResponseBodies[STATUS]>('/sys/leases/renew/{url_lease_id}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/leases/renew/{url_lease_id}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -7023,14 +5179,6 @@ export class OpenBaoHttpClient {
    */
   leasesRevokeLease<STATUS extends keyof LeasesRevokeLeaseResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: LeasesRevokeLeaseRequestParameters): Keq<LeasesRevokeLeaseOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<LeasesRevokeLeaseResponseBodies[STATUS]>('/sys/leases/revoke')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/leases/revoke',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -7062,14 +5210,6 @@ export class OpenBaoHttpClient {
    */
   leasesForceRevokeLeaseWithPrefix<STATUS extends keyof LeasesForceRevokeLeaseWithPrefixResponseBodies, CONTENT_TYPE extends never = never>(args?: LeasesForceRevokeLeaseWithPrefixRequestParameters): Keq<LeasesForceRevokeLeaseWithPrefixOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<LeasesForceRevokeLeaseWithPrefixResponseBodies[STATUS]>('/sys/leases/revoke-force/{prefix}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/leases/revoke-force/{prefix}',
-          method: 'post',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -7093,14 +5233,6 @@ export class OpenBaoHttpClient {
    */
   leasesRevokeLeaseWithPrefix<STATUS extends keyof LeasesRevokeLeaseWithPrefixResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: LeasesRevokeLeaseWithPrefixRequestParameters): Keq<LeasesRevokeLeaseWithPrefixOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<LeasesRevokeLeaseWithPrefixResponseBodies[STATUS]>('/sys/leases/revoke-prefix/{prefix}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/leases/revoke-prefix/{prefix}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -7127,14 +5259,6 @@ export class OpenBaoHttpClient {
    */
   leasesRevokeLeaseWithId<STATUS extends keyof LeasesRevokeLeaseWithIdResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: LeasesRevokeLeaseWithIdRequestParameters): Keq<LeasesRevokeLeaseWithIdOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<LeasesRevokeLeaseWithIdResponseBodies[STATUS]>('/sys/leases/revoke/{url_lease_id}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/leases/revoke/{url_lease_id}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -7159,14 +5283,6 @@ export class OpenBaoHttpClient {
 
   leasesTidy<STATUS extends keyof LeasesTidyResponseBodies, CONTENT_TYPE extends never = never>(args?: LeasesTidyRequestParameters): Keq<LeasesTidyOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<LeasesTidyResponseBodies[STATUS]>('/sys/leases/tidy')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/leases/tidy',
-          method: 'post',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -7190,14 +5306,6 @@ export class OpenBaoHttpClient {
    */
   lockedUsersList<STATUS extends keyof LockedUsersListResponseBodies, CONTENT_TYPE extends never = never>(args?: LockedUsersListRequestParameters): Keq<LockedUsersListOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<LockedUsersListResponseBodies[STATUS]>('/sys/locked-users')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/locked-users',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -7221,14 +5329,6 @@ export class OpenBaoHttpClient {
    */
   lockedUsersUnlock<STATUS extends keyof LockedUsersUnlockResponseBodies, CONTENT_TYPE extends never = never>(args?: LockedUsersUnlockRequestParameters): Keq<LockedUsersUnlockOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<LockedUsersUnlockResponseBodies[STATUS]>('/sys/locked-users/{mount_accessor}/unlock/{alias_identifier}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/locked-users/{mount_accessor}/unlock/{alias_identifier}',
-          method: 'post',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -7252,14 +5352,6 @@ export class OpenBaoHttpClient {
    */
   loggersReadVerbosityLevel<STATUS extends keyof LoggersReadVerbosityLevelResponseBodies, CONTENT_TYPE extends never = never>(args?: LoggersReadVerbosityLevelRequestParameters): Keq<LoggersReadVerbosityLevelOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<LoggersReadVerbosityLevelResponseBodies[STATUS]>('/sys/loggers')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/loggers',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -7283,14 +5375,6 @@ export class OpenBaoHttpClient {
    */
   loggersUpdateVerbosityLevel<STATUS extends keyof LoggersUpdateVerbosityLevelResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: LoggersUpdateVerbosityLevelRequestParameters): Keq<LoggersUpdateVerbosityLevelOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<LoggersUpdateVerbosityLevelResponseBodies[STATUS]>('/sys/loggers')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/loggers',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -7317,14 +5401,6 @@ export class OpenBaoHttpClient {
    */
   loggersRevertVerbosityLevel<STATUS extends keyof LoggersRevertVerbosityLevelResponseBodies, CONTENT_TYPE extends never = never>(args?: LoggersRevertVerbosityLevelRequestParameters): Keq<LoggersRevertVerbosityLevelOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<LoggersRevertVerbosityLevelResponseBodies[STATUS]>('/sys/loggers')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/loggers',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -7348,14 +5424,6 @@ export class OpenBaoHttpClient {
    */
   loggersReadVerbosityLevelFor<STATUS extends keyof LoggersReadVerbosityLevelForResponseBodies, CONTENT_TYPE extends never = never>(args?: LoggersReadVerbosityLevelForRequestParameters): Keq<LoggersReadVerbosityLevelForOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<LoggersReadVerbosityLevelForResponseBodies[STATUS]>('/sys/loggers/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/loggers/{name}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -7379,14 +5447,6 @@ export class OpenBaoHttpClient {
    */
   loggersUpdateVerbosityLevelFor<STATUS extends keyof LoggersUpdateVerbosityLevelForResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: LoggersUpdateVerbosityLevelForRequestParameters): Keq<LoggersUpdateVerbosityLevelForOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<LoggersUpdateVerbosityLevelForResponseBodies[STATUS]>('/sys/loggers/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/loggers/{name}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -7413,14 +5473,6 @@ export class OpenBaoHttpClient {
    */
   loggersRevertVerbosityLevelFor<STATUS extends keyof LoggersRevertVerbosityLevelForResponseBodies, CONTENT_TYPE extends never = never>(args?: LoggersRevertVerbosityLevelForRequestParameters): Keq<LoggersRevertVerbosityLevelForOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<LoggersRevertVerbosityLevelForResponseBodies[STATUS]>('/sys/loggers/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/loggers/{name}',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -7441,14 +5493,6 @@ export class OpenBaoHttpClient {
 
   metrics<STATUS extends keyof MetricsResponseBodies, CONTENT_TYPE extends never = never>(args?: MetricsRequestParameters): Keq<MetricsOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<MetricsResponseBodies[STATUS]>('/sys/metrics')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/metrics',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -7472,14 +5516,6 @@ export class OpenBaoHttpClient {
    */
   mfaValidate<STATUS extends keyof MfaValidateResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: MfaValidateRequestParameters): Keq<MfaValidateOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<MfaValidateResponseBodies[STATUS]>('/sys/mfa/validate')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/mfa/validate',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -7504,14 +5540,6 @@ export class OpenBaoHttpClient {
 
   monitor<STATUS extends keyof MonitorResponseBodies, CONTENT_TYPE extends never = never>(args?: MonitorRequestParameters): Keq<MonitorOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<MonitorResponseBodies[STATUS]>('/sys/monitor')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/monitor',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -7532,14 +5560,6 @@ export class OpenBaoHttpClient {
 
   mountsListSecretsEngines<STATUS extends keyof MountsListSecretsEnginesResponseBodies, CONTENT_TYPE extends never = never>(args?: MountsListSecretsEnginesRequestParameters): Keq<MountsListSecretsEnginesOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<MountsListSecretsEnginesResponseBodies[STATUS]>('/sys/mounts')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/mounts',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -7563,14 +5583,6 @@ export class OpenBaoHttpClient {
    */
   mountsReadConfiguration<STATUS extends keyof MountsReadConfigurationResponseBodies, CONTENT_TYPE extends never = never>(args?: MountsReadConfigurationRequestParameters): Keq<MountsReadConfigurationOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<MountsReadConfigurationResponseBodies[STATUS]>('/sys/mounts/{path}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/mounts/{path}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -7594,14 +5606,6 @@ export class OpenBaoHttpClient {
    */
   mountsEnableSecretsEngine<STATUS extends keyof MountsEnableSecretsEngineResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: MountsEnableSecretsEngineRequestParameters): Keq<MountsEnableSecretsEngineOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<MountsEnableSecretsEngineResponseBodies[STATUS]>('/sys/mounts/{path}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/mounts/{path}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -7636,14 +5640,6 @@ export class OpenBaoHttpClient {
    */
   mountsDisableSecretsEngine<STATUS extends keyof MountsDisableSecretsEngineResponseBodies, CONTENT_TYPE extends never = never>(args?: MountsDisableSecretsEngineRequestParameters): Keq<MountsDisableSecretsEngineOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<MountsDisableSecretsEngineResponseBodies[STATUS]>('/sys/mounts/{path}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/mounts/{path}',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -7664,14 +5660,6 @@ export class OpenBaoHttpClient {
 
   mountsReadTuningInformation<STATUS extends keyof MountsReadTuningInformationResponseBodies, CONTENT_TYPE extends never = never>(args?: MountsReadTuningInformationRequestParameters): Keq<MountsReadTuningInformationOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<MountsReadTuningInformationResponseBodies[STATUS]>('/sys/mounts/{path}/tune')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/mounts/{path}/tune',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -7692,14 +5680,6 @@ export class OpenBaoHttpClient {
 
   mountsTuneConfigurationParameters<STATUS extends keyof MountsTuneConfigurationParametersResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: MountsTuneConfigurationParametersRequestParameters): Keq<MountsTuneConfigurationParametersOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<MountsTuneConfigurationParametersResponseBodies[STATUS]>('/sys/mounts/{path}/tune')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/mounts/{path}/tune',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -7738,14 +5718,6 @@ export class OpenBaoHttpClient {
    */
   namespacesListNamespaces<STATUS extends keyof NamespacesListNamespacesResponseBodies, CONTENT_TYPE extends never = never>(args?: NamespacesListNamespacesRequestParameters): Keq<NamespacesListNamespacesOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<NamespacesListNamespacesResponseBodies[STATUS]>('/sys/namespaces')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/namespaces',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -7770,14 +5742,6 @@ export class OpenBaoHttpClient {
    */
   namespacesWriteNamespacesApiLockLock<STATUS extends keyof NamespacesWriteNamespacesApiLockLockResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: NamespacesWriteNamespacesApiLockLockRequestParameters): Keq<NamespacesWriteNamespacesApiLockLockOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<NamespacesWriteNamespacesApiLockLockResponseBodies[STATUS]>('/sys/namespaces/api-lock/lock')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/namespaces/api-lock/lock',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -7804,14 +5768,6 @@ export class OpenBaoHttpClient {
    */
   namespacesWriteNamespacesApiLockLockPath<STATUS extends keyof NamespacesWriteNamespacesApiLockLockPathResponseBodies, CONTENT_TYPE extends never = never>(args?: NamespacesWriteNamespacesApiLockLockPathRequestParameters): Keq<NamespacesWriteNamespacesApiLockLockPathOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<NamespacesWriteNamespacesApiLockLockPathResponseBodies[STATUS]>('/sys/namespaces/api-lock/lock/{path}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/namespaces/api-lock/lock/{path}',
-          method: 'post',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -7835,14 +5791,6 @@ export class OpenBaoHttpClient {
    */
   namespacesWriteNamespacesApiLockUnlock<STATUS extends keyof NamespacesWriteNamespacesApiLockUnlockResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: NamespacesWriteNamespacesApiLockUnlockRequestParameters): Keq<NamespacesWriteNamespacesApiLockUnlockOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<NamespacesWriteNamespacesApiLockUnlockResponseBodies[STATUS]>('/sys/namespaces/api-lock/unlock')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/namespaces/api-lock/unlock',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -7870,14 +5818,6 @@ export class OpenBaoHttpClient {
    */
   namespacesWriteNamespacesApiLockUnlockPath<STATUS extends keyof NamespacesWriteNamespacesApiLockUnlockPathResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: NamespacesWriteNamespacesApiLockUnlockPathRequestParameters): Keq<NamespacesWriteNamespacesApiLockUnlockPathOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<NamespacesWriteNamespacesApiLockUnlockPathResponseBodies[STATUS]>('/sys/namespaces/api-lock/unlock/{path}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/namespaces/api-lock/unlock/{path}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -7904,14 +5844,6 @@ export class OpenBaoHttpClient {
    */
   namespacesReadNamespacesPath<STATUS extends keyof NamespacesReadNamespacesPathResponseBodies, CONTENT_TYPE extends never = never>(args?: NamespacesReadNamespacesPathRequestParameters): Keq<NamespacesReadNamespacesPathOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<NamespacesReadNamespacesPathResponseBodies[STATUS]>('/sys/namespaces/{path}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/namespaces/{path}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -7935,14 +5867,6 @@ export class OpenBaoHttpClient {
    */
   namespacesWriteNamespacesPath<STATUS extends keyof NamespacesWriteNamespacesPathResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: NamespacesWriteNamespacesPathRequestParameters): Keq<NamespacesWriteNamespacesPathOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<NamespacesWriteNamespacesPathResponseBodies[STATUS]>('/sys/namespaces/{path}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/namespaces/{path}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -7969,14 +5893,6 @@ export class OpenBaoHttpClient {
    */
   namespacesDeleteNamespacesPath<STATUS extends keyof NamespacesDeleteNamespacesPathResponseBodies, CONTENT_TYPE extends never = never>(args?: NamespacesDeleteNamespacesPathRequestParameters): Keq<NamespacesDeleteNamespacesPathOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<NamespacesDeleteNamespacesPathResponseBodies[STATUS]>('/sys/namespaces/{path}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/namespaces/{path}',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -7997,14 +5913,6 @@ export class OpenBaoHttpClient {
 
   pluginsCatalogListPlugins<STATUS extends keyof PluginsCatalogListPluginsResponseBodies, CONTENT_TYPE extends never = never>(args?: PluginsCatalogListPluginsRequestParameters): Keq<PluginsCatalogListPluginsOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<PluginsCatalogListPluginsResponseBodies[STATUS]>('/sys/plugins/catalog')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/plugins/catalog',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -8028,14 +5936,6 @@ export class OpenBaoHttpClient {
    */
   pluginsCatalogReadPluginConfiguration<STATUS extends keyof PluginsCatalogReadPluginConfigurationResponseBodies, CONTENT_TYPE extends never = never>(args?: PluginsCatalogReadPluginConfigurationRequestParameters): Keq<PluginsCatalogReadPluginConfigurationOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<PluginsCatalogReadPluginConfigurationResponseBodies[STATUS]>('/sys/plugins/catalog/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/plugins/catalog/{name}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -8059,14 +5959,6 @@ export class OpenBaoHttpClient {
    */
   pluginsCatalogRegisterPlugin<STATUS extends keyof PluginsCatalogRegisterPluginResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: PluginsCatalogRegisterPluginRequestParameters): Keq<PluginsCatalogRegisterPluginOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<PluginsCatalogRegisterPluginResponseBodies[STATUS]>('/sys/plugins/catalog/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/plugins/catalog/{name}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -8099,14 +5991,6 @@ export class OpenBaoHttpClient {
    */
   pluginsCatalogRemovePlugin<STATUS extends keyof PluginsCatalogRemovePluginResponseBodies, CONTENT_TYPE extends never = never>(args?: PluginsCatalogRemovePluginRequestParameters): Keq<PluginsCatalogRemovePluginOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<PluginsCatalogRemovePluginResponseBodies[STATUS]>('/sys/plugins/catalog/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/plugins/catalog/{name}',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -8130,14 +6014,6 @@ export class OpenBaoHttpClient {
    */
   pluginsCatalogListPluginsWithType<STATUS extends keyof PluginsCatalogListPluginsWithTypeResponseBodies, CONTENT_TYPE extends never = never>(args?: PluginsCatalogListPluginsWithTypeRequestParameters): Keq<PluginsCatalogListPluginsWithTypeOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<PluginsCatalogListPluginsWithTypeResponseBodies[STATUS]>('/sys/plugins/catalog/{type}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/plugins/catalog/{type}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -8162,14 +6038,6 @@ export class OpenBaoHttpClient {
    */
   pluginsCatalogReadPluginConfigurationWithType<STATUS extends keyof PluginsCatalogReadPluginConfigurationWithTypeResponseBodies, CONTENT_TYPE extends never = never>(args?: PluginsCatalogReadPluginConfigurationWithTypeRequestParameters): Keq<PluginsCatalogReadPluginConfigurationWithTypeOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<PluginsCatalogReadPluginConfigurationWithTypeResponseBodies[STATUS]>('/sys/plugins/catalog/{type}/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/plugins/catalog/{type}/{name}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -8193,14 +6061,6 @@ export class OpenBaoHttpClient {
    */
   pluginsCatalogRegisterPluginWithType<STATUS extends keyof PluginsCatalogRegisterPluginWithTypeResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: PluginsCatalogRegisterPluginWithTypeRequestParameters): Keq<PluginsCatalogRegisterPluginWithTypeOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<PluginsCatalogRegisterPluginWithTypeResponseBodies[STATUS]>('/sys/plugins/catalog/{type}/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/plugins/catalog/{type}/{name}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -8232,14 +6092,6 @@ export class OpenBaoHttpClient {
    */
   pluginsCatalogRemovePluginWithType<STATUS extends keyof PluginsCatalogRemovePluginWithTypeResponseBodies, CONTENT_TYPE extends never = never>(args?: PluginsCatalogRemovePluginWithTypeRequestParameters): Keq<PluginsCatalogRemovePluginWithTypeOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<PluginsCatalogRemovePluginWithTypeResponseBodies[STATUS]>('/sys/plugins/catalog/{type}/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/plugins/catalog/{type}/{name}',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -8264,14 +6116,6 @@ export class OpenBaoHttpClient {
    */
   pluginsReloadBackends<STATUS extends keyof PluginsReloadBackendsResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: PluginsReloadBackendsRequestParameters): Keq<PluginsReloadBackendsOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<PluginsReloadBackendsResponseBodies[STATUS]>('/sys/plugins/reload/backend')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/plugins/reload/backend',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -8297,14 +6141,6 @@ export class OpenBaoHttpClient {
 
   policiesListAclPolicies<STATUS extends keyof PoliciesListAclPoliciesResponseBodies, CONTENT_TYPE extends never = never>(args?: PoliciesListAclPoliciesRequestParameters): Keq<PoliciesListAclPoliciesOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<PoliciesListAclPoliciesResponseBodies[STATUS]>('/sys/policies/acl')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/policies/acl',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -8329,14 +6165,6 @@ export class OpenBaoHttpClient {
    */
   policiesReadAclPolicy<STATUS extends keyof PoliciesReadAclPolicyResponseBodies, CONTENT_TYPE extends never = never>(args?: PoliciesReadAclPolicyRequestParameters): Keq<PoliciesReadAclPolicyOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<PoliciesReadAclPolicyResponseBodies[STATUS]>('/sys/policies/acl/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/policies/acl/{name}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -8361,14 +6189,6 @@ export class OpenBaoHttpClient {
    */
   policiesWriteAclPolicy<STATUS extends keyof PoliciesWriteAclPolicyResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: PoliciesWriteAclPolicyRequestParameters): Keq<PoliciesWriteAclPolicyOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<PoliciesWriteAclPolicyResponseBodies[STATUS]>('/sys/policies/acl/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/policies/acl/{name}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -8399,14 +6219,6 @@ export class OpenBaoHttpClient {
    */
   policiesDeleteAclPolicy<STATUS extends keyof PoliciesDeleteAclPolicyResponseBodies, CONTENT_TYPE extends never = never>(args?: PoliciesDeleteAclPolicyRequestParameters): Keq<PoliciesDeleteAclPolicyOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<PoliciesDeleteAclPolicyResponseBodies[STATUS]>('/sys/policies/acl/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/policies/acl/{name}',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -8430,14 +6242,6 @@ export class OpenBaoHttpClient {
    */
   systemListPoliciesDetailedAcl<STATUS extends keyof SystemListPoliciesDetailedAclResponseBodies, CONTENT_TYPE extends never = never>(args?: SystemListPoliciesDetailedAclRequestParameters): Keq<SystemListPoliciesDetailedAclOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<SystemListPoliciesDetailedAclResponseBodies[STATUS]>('/sys/policies/detailed/acl')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/policies/detailed/acl',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -8462,14 +6266,6 @@ export class OpenBaoHttpClient {
    */
   systemListPoliciesDetailedAclName<STATUS extends keyof SystemListPoliciesDetailedAclNameResponseBodies, CONTENT_TYPE extends never = never>(args?: SystemListPoliciesDetailedAclNameRequestParameters): Keq<SystemListPoliciesDetailedAclNameOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<SystemListPoliciesDetailedAclNameResponseBodies[STATUS]>('/sys/policies/detailed/acl/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/policies/detailed/acl/{name}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -8494,14 +6290,6 @@ export class OpenBaoHttpClient {
    */
   policiesListPasswordPolicies<STATUS extends keyof PoliciesListPasswordPoliciesResponseBodies, CONTENT_TYPE extends never = never>(args?: PoliciesListPasswordPoliciesRequestParameters): Keq<PoliciesListPasswordPoliciesOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<PoliciesListPasswordPoliciesResponseBodies[STATUS]>('/sys/policies/password')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/policies/password',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -8526,14 +6314,6 @@ export class OpenBaoHttpClient {
    */
   policiesReadPasswordPolicy<STATUS extends keyof PoliciesReadPasswordPolicyResponseBodies, CONTENT_TYPE extends never = never>(args?: PoliciesReadPasswordPolicyRequestParameters): Keq<PoliciesReadPasswordPolicyOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<PoliciesReadPasswordPolicyResponseBodies[STATUS]>('/sys/policies/password/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/policies/password/{name}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -8557,14 +6337,6 @@ export class OpenBaoHttpClient {
    */
   policiesWritePasswordPolicy<STATUS extends keyof PoliciesWritePasswordPolicyResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: PoliciesWritePasswordPolicyRequestParameters): Keq<PoliciesWritePasswordPolicyOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<PoliciesWritePasswordPolicyResponseBodies[STATUS]>('/sys/policies/password/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/policies/password/{name}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -8591,14 +6363,6 @@ export class OpenBaoHttpClient {
    */
   policiesDeletePasswordPolicy<STATUS extends keyof PoliciesDeletePasswordPolicyResponseBodies, CONTENT_TYPE extends never = never>(args?: PoliciesDeletePasswordPolicyRequestParameters): Keq<PoliciesDeletePasswordPolicyOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<PoliciesDeletePasswordPolicyResponseBodies[STATUS]>('/sys/policies/password/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/policies/password/{name}',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -8622,14 +6386,6 @@ export class OpenBaoHttpClient {
    */
   policiesGeneratePasswordFromPasswordPolicy<STATUS extends keyof PoliciesGeneratePasswordFromPasswordPolicyResponseBodies, CONTENT_TYPE extends never = never>(args?: PoliciesGeneratePasswordFromPasswordPolicyRequestParameters): Keq<PoliciesGeneratePasswordFromPasswordPolicyOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<PoliciesGeneratePasswordFromPasswordPolicyResponseBodies[STATUS]>('/sys/policies/password/{name}/generate')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/policies/password/{name}/generate',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -8650,474 +6406,10 @@ export class OpenBaoHttpClient {
 
   policiesList<STATUS extends keyof PoliciesListResponseBodies, CONTENT_TYPE extends never = never>(args?: PoliciesListRequestParameters): Keq<PoliciesListOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<PoliciesListResponseBodies[STATUS]>('/sys/policy')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/policy',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
     if (args && 'list' in args) req.query('list', args['list'], { arrayFormat: 'repeat' })
-    /* @anchor:query:end */
-
-    /* @anchor:headers:start */
-    /* @anchor:headers:end */
-
-    /* @anchor:path-parameters:start */
-    /* @anchor:path-parameters:end */
-
-    /* @anchor:body:start */
-    /* @anchor:body:end */
-
-    return req
-  }
-
-  /**
-   * Retrieve the policy body for the named policy.
-   *
-   */
-  policiesReadAclPolicy2<STATUS extends keyof PoliciesReadAclPolicy2ResponseBodies, CONTENT_TYPE extends never = never>(args?: PoliciesReadAclPolicy2RequestParameters): Keq<PoliciesReadAclPolicy2Operation<STATUS, CONTENT_TYPE>> {
-    const req = this.request.get<PoliciesReadAclPolicy2ResponseBodies[STATUS]>('/sys/policy/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/policy/{name}',
-          method: 'get',
-        },
-      )
-
-
-    /* @anchor:query:start */
-    if (args && 'list' in args) req.query('list', args['list'], { arrayFormat: 'repeat' })
-    /* @anchor:query:end */
-
-    /* @anchor:headers:start */
-    /* @anchor:headers:end */
-
-    /* @anchor:path-parameters:start */
-    /* @anchor:path-parameters:end */
-
-    /* @anchor:body:start */
-    /* @anchor:body:end */
-
-    return req
-  }
-
-  /**
-   * Add a new or update an existing policy.
-   *
-   */
-  policiesWriteAclPolicy2<STATUS extends keyof PoliciesWriteAclPolicy2ResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: PoliciesWriteAclPolicy2RequestParameters): Keq<PoliciesWriteAclPolicy2Operation<STATUS, CONTENT_TYPE>> {
-    const req = this.request.post<PoliciesWriteAclPolicy2ResponseBodies[STATUS]>('/sys/policy/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/policy/{name}',
-          method: 'post',
-        },
-      )
-
-    req.type('application/json')
-
-
-    /* @anchor:query:start */
-    /* @anchor:query:end */
-
-    /* @anchor:headers:start */
-    /* @anchor:headers:end */
-
-    /* @anchor:path-parameters:start */
-    /* @anchor:path-parameters:end */
-
-    /* @anchor:body:start */
-    if (args && 'cas' in args) req.send({ cas: args['cas'] })
-    if (args && 'cas_required' in args) req.send({ cas_required: args['cas_required'] })
-    if (args && 'expiration' in args) req.send({ expiration: args['expiration'] })
-    if (args && 'policy' in args) req.send({ policy: args['policy'] })
-    if (args && 'rules' in args) req.send({ rules: args['rules'] })
-    if (args && 'ttl' in args) req.send({ ttl: args['ttl'] })
-    /* @anchor:body:end */
-
-    return req
-  }
-
-  /**
-   * Delete the policy with the given name.
-   *
-   */
-  policiesDeleteAclPolicy2<STATUS extends keyof PoliciesDeleteAclPolicy2ResponseBodies, CONTENT_TYPE extends never = never>(args?: PoliciesDeleteAclPolicy2RequestParameters): Keq<PoliciesDeleteAclPolicy2Operation<STATUS, CONTENT_TYPE>> {
-    const req = this.request.delete<PoliciesDeleteAclPolicy2ResponseBodies[STATUS]>('/sys/policy/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/policy/{name}',
-          method: 'delete',
-        },
-      )
-
-
-    /* @anchor:query:start */
-    /* @anchor:query:end */
-
-    /* @anchor:headers:start */
-    /* @anchor:headers:end */
-
-    /* @anchor:path-parameters:start */
-    /* @anchor:path-parameters:end */
-
-    /* @anchor:body:start */
-    /* @anchor:body:end */
-
-    return req
-  }
-
-  /**
-   * Returns an HTML page listing the available profiles.
-   *
-   * @description Returns an HTML page listing the available
-   * profiles. This should be mainly accessed via browsers or applications that can
-   * render pages.
-   */
-  pprofIndex<STATUS extends keyof PprofIndexResponseBodies, CONTENT_TYPE extends never = never>(args?: PprofIndexRequestParameters): Keq<PprofIndexOperation<STATUS, CONTENT_TYPE>> {
-    const req = this.request.get<PprofIndexResponseBodies[STATUS]>('/sys/pprof')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/pprof',
-          method: 'get',
-        },
-      )
-
-
-    /* @anchor:query:start */
-    /* @anchor:query:end */
-
-    /* @anchor:headers:start */
-    /* @anchor:headers:end */
-
-    /* @anchor:path-parameters:start */
-    /* @anchor:path-parameters:end */
-
-    /* @anchor:body:start */
-    /* @anchor:body:end */
-
-    return req
-  }
-
-  /**
-   * Returns a sampling of all past memory allocations.
-   *
-   * @description Returns a sampling of all past memory allocations.
-   */
-  pprofMemoryAllocations<STATUS extends keyof PprofMemoryAllocationsResponseBodies, CONTENT_TYPE extends never = never>(args?: PprofMemoryAllocationsRequestParameters): Keq<PprofMemoryAllocationsOperation<STATUS, CONTENT_TYPE>> {
-    const req = this.request.get<PprofMemoryAllocationsResponseBodies[STATUS]>('/sys/pprof/allocs')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/pprof/allocs',
-          method: 'get',
-        },
-      )
-
-
-    /* @anchor:query:start */
-    /* @anchor:query:end */
-
-    /* @anchor:headers:start */
-    /* @anchor:headers:end */
-
-    /* @anchor:path-parameters:start */
-    /* @anchor:path-parameters:end */
-
-    /* @anchor:body:start */
-    /* @anchor:body:end */
-
-    return req
-  }
-
-  /**
-   * Returns stack traces that led to blocking on synchronization primitives
-   *
-   * @description Returns stack traces that led to blocking on synchronization primitives
-   */
-  pprofBlocking<STATUS extends keyof PprofBlockingResponseBodies, CONTENT_TYPE extends never = never>(args?: PprofBlockingRequestParameters): Keq<PprofBlockingOperation<STATUS, CONTENT_TYPE>> {
-    const req = this.request.get<PprofBlockingResponseBodies[STATUS]>('/sys/pprof/block')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/pprof/block',
-          method: 'get',
-        },
-      )
-
-
-    /* @anchor:query:start */
-    /* @anchor:query:end */
-
-    /* @anchor:headers:start */
-    /* @anchor:headers:end */
-
-    /* @anchor:path-parameters:start */
-    /* @anchor:path-parameters:end */
-
-    /* @anchor:body:start */
-    /* @anchor:body:end */
-
-    return req
-  }
-
-  /**
-   * Returns the running program's command line.
-   *
-   * @description Returns the running program's command line, with arguments separated by NUL bytes.
-   */
-  pprofCommandLine<STATUS extends keyof PprofCommandLineResponseBodies, CONTENT_TYPE extends never = never>(args?: PprofCommandLineRequestParameters): Keq<PprofCommandLineOperation<STATUS, CONTENT_TYPE>> {
-    const req = this.request.get<PprofCommandLineResponseBodies[STATUS]>('/sys/pprof/cmdline')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/pprof/cmdline',
-          method: 'get',
-        },
-      )
-
-
-    /* @anchor:query:start */
-    /* @anchor:query:end */
-
-    /* @anchor:headers:start */
-    /* @anchor:headers:end */
-
-    /* @anchor:path-parameters:start */
-    /* @anchor:path-parameters:end */
-
-    /* @anchor:body:start */
-    /* @anchor:body:end */
-
-    return req
-  }
-
-  /**
-   * Returns stack traces of all current goroutines.
-   *
-   * @description Returns stack traces of all current goroutines.
-   */
-  pprofGoroutines<STATUS extends keyof PprofGoroutinesResponseBodies, CONTENT_TYPE extends never = never>(args?: PprofGoroutinesRequestParameters): Keq<PprofGoroutinesOperation<STATUS, CONTENT_TYPE>> {
-    const req = this.request.get<PprofGoroutinesResponseBodies[STATUS]>('/sys/pprof/goroutine')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/pprof/goroutine',
-          method: 'get',
-        },
-      )
-
-
-    /* @anchor:query:start */
-    /* @anchor:query:end */
-
-    /* @anchor:headers:start */
-    /* @anchor:headers:end */
-
-    /* @anchor:path-parameters:start */
-    /* @anchor:path-parameters:end */
-
-    /* @anchor:body:start */
-    /* @anchor:body:end */
-
-    return req
-  }
-
-  /**
-   * Returns a sampling of memory allocations of live object.
-   *
-   * @description Returns a sampling of memory allocations of live object.
-   */
-  pprofMemoryAllocationsLive<STATUS extends keyof PprofMemoryAllocationsLiveResponseBodies, CONTENT_TYPE extends never = never>(args?: PprofMemoryAllocationsLiveRequestParameters): Keq<PprofMemoryAllocationsLiveOperation<STATUS, CONTENT_TYPE>> {
-    const req = this.request.get<PprofMemoryAllocationsLiveResponseBodies[STATUS]>('/sys/pprof/heap')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/pprof/heap',
-          method: 'get',
-        },
-      )
-
-
-    /* @anchor:query:start */
-    /* @anchor:query:end */
-
-    /* @anchor:headers:start */
-    /* @anchor:headers:end */
-
-    /* @anchor:path-parameters:start */
-    /* @anchor:path-parameters:end */
-
-    /* @anchor:body:start */
-    /* @anchor:body:end */
-
-    return req
-  }
-
-  /**
-   * Returns stack traces of holders of contended mutexes
-   *
-   * @description Returns stack traces of holders of contended mutexes
-   */
-  pprofMutexes<STATUS extends keyof PprofMutexesResponseBodies, CONTENT_TYPE extends never = never>(args?: PprofMutexesRequestParameters): Keq<PprofMutexesOperation<STATUS, CONTENT_TYPE>> {
-    const req = this.request.get<PprofMutexesResponseBodies[STATUS]>('/sys/pprof/mutex')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/pprof/mutex',
-          method: 'get',
-        },
-      )
-
-
-    /* @anchor:query:start */
-    /* @anchor:query:end */
-
-    /* @anchor:headers:start */
-    /* @anchor:headers:end */
-
-    /* @anchor:path-parameters:start */
-    /* @anchor:path-parameters:end */
-
-    /* @anchor:body:start */
-    /* @anchor:body:end */
-
-    return req
-  }
-
-  /**
-   * Returns a pprof-formatted cpu profile payload.
-   *
-   * @description Returns a pprof-formatted cpu profile payload. Profiling lasts for duration specified in seconds GET parameter, or for 30 seconds if not specified.
-   */
-  pprofCpuProfile<STATUS extends keyof PprofCpuProfileResponseBodies, CONTENT_TYPE extends never = never>(args?: PprofCpuProfileRequestParameters): Keq<PprofCpuProfileOperation<STATUS, CONTENT_TYPE>> {
-    const req = this.request.get<PprofCpuProfileResponseBodies[STATUS]>('/sys/pprof/profile')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/pprof/profile',
-          method: 'get',
-        },
-      )
-
-
-    /* @anchor:query:start */
-    /* @anchor:query:end */
-
-    /* @anchor:headers:start */
-    /* @anchor:headers:end */
-
-    /* @anchor:path-parameters:start */
-    /* @anchor:path-parameters:end */
-
-    /* @anchor:body:start */
-    /* @anchor:body:end */
-
-    return req
-  }
-
-  /**
-   * Returns the program counters listed in the request.
-   *
-   * @description Returns the program counters listed in the request.
-   */
-  pprofSymbols<STATUS extends keyof PprofSymbolsResponseBodies, CONTENT_TYPE extends never = never>(args?: PprofSymbolsRequestParameters): Keq<PprofSymbolsOperation<STATUS, CONTENT_TYPE>> {
-    const req = this.request.get<PprofSymbolsResponseBodies[STATUS]>('/sys/pprof/symbol')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/pprof/symbol',
-          method: 'get',
-        },
-      )
-
-
-    /* @anchor:query:start */
-    /* @anchor:query:end */
-
-    /* @anchor:headers:start */
-    /* @anchor:headers:end */
-
-    /* @anchor:path-parameters:start */
-    /* @anchor:path-parameters:end */
-
-    /* @anchor:body:start */
-    /* @anchor:body:end */
-
-    return req
-  }
-
-  /**
-   * Returns stack traces that led to the creation of new OS threads
-   *
-   * @description Returns stack traces that led to the creation of new OS threads
-   */
-  pprofThreadCreations<STATUS extends keyof PprofThreadCreationsResponseBodies, CONTENT_TYPE extends never = never>(args?: PprofThreadCreationsRequestParameters): Keq<PprofThreadCreationsOperation<STATUS, CONTENT_TYPE>> {
-    const req = this.request.get<PprofThreadCreationsResponseBodies[STATUS]>('/sys/pprof/threadcreate')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/pprof/threadcreate',
-          method: 'get',
-        },
-      )
-
-
-    /* @anchor:query:start */
-    /* @anchor:query:end */
-
-    /* @anchor:headers:start */
-    /* @anchor:headers:end */
-
-    /* @anchor:path-parameters:start */
-    /* @anchor:path-parameters:end */
-
-    /* @anchor:body:start */
-    /* @anchor:body:end */
-
-    return req
-  }
-
-  /**
-   * Returns the execution trace in binary form.
-   *
-   * @description Returns  the execution trace in binary form. Tracing lasts for duration specified in seconds GET parameter, or for 1 second if not specified.
-   */
-  pprofExecutionTrace<STATUS extends keyof PprofExecutionTraceResponseBodies, CONTENT_TYPE extends never = never>(args?: PprofExecutionTraceRequestParameters): Keq<PprofExecutionTraceOperation<STATUS, CONTENT_TYPE>> {
-    const req = this.request.get<PprofExecutionTraceResponseBodies[STATUS]>('/sys/pprof/trace')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/pprof/trace',
-          method: 'get',
-        },
-      )
-
-
-    /* @anchor:query:start */
     /* @anchor:query:end */
 
     /* @anchor:headers:start */
@@ -9135,14 +6427,6 @@ export class OpenBaoHttpClient {
 
   rateLimitQuotasReadConfiguration<STATUS extends keyof RateLimitQuotasReadConfigurationResponseBodies, CONTENT_TYPE extends never = never>(args?: RateLimitQuotasReadConfigurationRequestParameters): Keq<RateLimitQuotasReadConfigurationOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<RateLimitQuotasReadConfigurationResponseBodies[STATUS]>('/sys/quotas/config')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/quotas/config',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -9163,14 +6447,6 @@ export class OpenBaoHttpClient {
 
   rateLimitQuotasConfigure<STATUS extends keyof RateLimitQuotasConfigureResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: RateLimitQuotasConfigureRequestParameters): Keq<RateLimitQuotasConfigureOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<RateLimitQuotasConfigureResponseBodies[STATUS]>('/sys/quotas/config')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/quotas/config',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -9196,14 +6472,6 @@ export class OpenBaoHttpClient {
 
   rateLimitQuotasList<STATUS extends keyof RateLimitQuotasListResponseBodies, CONTENT_TYPE extends never = never>(args?: RateLimitQuotasListRequestParameters): Keq<RateLimitQuotasListOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<RateLimitQuotasListResponseBodies[STATUS]>('/sys/quotas/rate-limit')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/quotas/rate-limit',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -9225,14 +6493,6 @@ export class OpenBaoHttpClient {
 
   rateLimitQuotasRead<STATUS extends keyof RateLimitQuotasReadResponseBodies, CONTENT_TYPE extends never = never>(args?: RateLimitQuotasReadRequestParameters): Keq<RateLimitQuotasReadOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<RateLimitQuotasReadResponseBodies[STATUS]>('/sys/quotas/rate-limit/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/quotas/rate-limit/{name}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -9253,14 +6513,6 @@ export class OpenBaoHttpClient {
 
   rateLimitQuotasWrite<STATUS extends keyof RateLimitQuotasWriteResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: RateLimitQuotasWriteRequestParameters): Keq<RateLimitQuotasWriteOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<RateLimitQuotasWriteResponseBodies[STATUS]>('/sys/quotas/rate-limit/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/quotas/rate-limit/{name}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -9290,14 +6542,6 @@ export class OpenBaoHttpClient {
 
   rateLimitQuotasDelete<STATUS extends keyof RateLimitQuotasDeleteResponseBodies, CONTENT_TYPE extends never = never>(args?: RateLimitQuotasDeleteRequestParameters): Keq<RateLimitQuotasDeleteOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<RateLimitQuotasDeleteResponseBodies[STATUS]>('/sys/quotas/rate-limit/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/quotas/rate-limit/{name}',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -9321,14 +6565,6 @@ export class OpenBaoHttpClient {
    */
   rekeyReadBackupKey<STATUS extends keyof RekeyReadBackupKeyResponseBodies, CONTENT_TYPE extends never = never>(args?: RekeyReadBackupKeyRequestParameters): Keq<RekeyReadBackupKeyOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<RekeyReadBackupKeyResponseBodies[STATUS]>('/sys/rekey/backup')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/rekey/backup',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -9352,14 +6588,6 @@ export class OpenBaoHttpClient {
    */
   rekeyDeleteBackupKey<STATUS extends keyof RekeyDeleteBackupKeyResponseBodies, CONTENT_TYPE extends never = never>(args?: RekeyDeleteBackupKeyRequestParameters): Keq<RekeyDeleteBackupKeyOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<RekeyDeleteBackupKeyResponseBodies[STATUS]>('/sys/rekey/backup')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/rekey/backup',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -9383,14 +6611,6 @@ export class OpenBaoHttpClient {
    */
   rekeyAttemptReadProgress<STATUS extends keyof RekeyAttemptReadProgressResponseBodies, CONTENT_TYPE extends never = never>(args?: RekeyAttemptReadProgressRequestParameters): Keq<RekeyAttemptReadProgressOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<RekeyAttemptReadProgressResponseBodies[STATUS]>('/sys/rekey/init')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/rekey/init',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -9415,14 +6635,6 @@ export class OpenBaoHttpClient {
    */
   rekeyAttemptInitialize<STATUS extends keyof RekeyAttemptInitializeResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: RekeyAttemptInitializeRequestParameters): Keq<RekeyAttemptInitializeOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<RekeyAttemptInitializeResponseBodies[STATUS]>('/sys/rekey/init')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/rekey/init',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -9454,14 +6666,6 @@ export class OpenBaoHttpClient {
    */
   rekeyAttemptCancel<STATUS extends keyof RekeyAttemptCancelResponseBodies, CONTENT_TYPE extends never = never>(args?: RekeyAttemptCancelRequestParameters): Keq<RekeyAttemptCancelOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<RekeyAttemptCancelResponseBodies[STATUS]>('/sys/rekey/init')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/rekey/init',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -9482,14 +6686,6 @@ export class OpenBaoHttpClient {
 
   rekeyReadBackupRecoveryKey<STATUS extends keyof RekeyReadBackupRecoveryKeyResponseBodies, CONTENT_TYPE extends never = never>(args?: RekeyReadBackupRecoveryKeyRequestParameters): Keq<RekeyReadBackupRecoveryKeyOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<RekeyReadBackupRecoveryKeyResponseBodies[STATUS]>('/sys/rekey/recovery-key-backup')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/rekey/recovery-key-backup',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -9510,14 +6706,6 @@ export class OpenBaoHttpClient {
 
   rekeyDeleteBackupRecoveryKey<STATUS extends keyof RekeyDeleteBackupRecoveryKeyResponseBodies, CONTENT_TYPE extends never = never>(args?: RekeyDeleteBackupRecoveryKeyRequestParameters): Keq<RekeyDeleteBackupRecoveryKeyOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<RekeyDeleteBackupRecoveryKeyResponseBodies[STATUS]>('/sys/rekey/recovery-key-backup')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/rekey/recovery-key-backup',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -9541,14 +6729,6 @@ export class OpenBaoHttpClient {
    */
   rekeyAttemptUpdate<STATUS extends keyof RekeyAttemptUpdateResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: RekeyAttemptUpdateRequestParameters): Keq<RekeyAttemptUpdateOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<RekeyAttemptUpdateResponseBodies[STATUS]>('/sys/rekey/update')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/rekey/update',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -9576,14 +6756,6 @@ export class OpenBaoHttpClient {
    */
   rekeyVerificationReadProgress<STATUS extends keyof RekeyVerificationReadProgressResponseBodies, CONTENT_TYPE extends never = never>(args?: RekeyVerificationReadProgressRequestParameters): Keq<RekeyVerificationReadProgressOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<RekeyVerificationReadProgressResponseBodies[STATUS]>('/sys/rekey/verify')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/rekey/verify',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -9607,14 +6779,6 @@ export class OpenBaoHttpClient {
    */
   rekeyVerificationUpdate<STATUS extends keyof RekeyVerificationUpdateResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: RekeyVerificationUpdateRequestParameters): Keq<RekeyVerificationUpdateOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<RekeyVerificationUpdateResponseBodies[STATUS]>('/sys/rekey/verify')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/rekey/verify',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -9643,14 +6807,6 @@ export class OpenBaoHttpClient {
    */
   rekeyVerificationCancel<STATUS extends keyof RekeyVerificationCancelResponseBodies, CONTENT_TYPE extends never = never>(args?: RekeyVerificationCancelRequestParameters): Keq<RekeyVerificationCancelOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<RekeyVerificationCancelResponseBodies[STATUS]>('/sys/rekey/verify')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/rekey/verify',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -9674,14 +6830,6 @@ export class OpenBaoHttpClient {
    */
   remount<STATUS extends keyof RemountResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: RemountRequestParameters): Keq<RemountOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<RemountResponseBodies[STATUS]>('/sys/remount')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/remount',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -9709,14 +6857,6 @@ export class OpenBaoHttpClient {
    */
   remountStatus<STATUS extends keyof RemountStatusResponseBodies, CONTENT_TYPE extends never = never>(args?: RemountStatusRequestParameters): Keq<RemountStatusOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<RemountStatusResponseBodies[STATUS]>('/sys/remount/status/{migration_id}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/remount/status/{migration_id}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -9729,216 +6869,6 @@ export class OpenBaoHttpClient {
     /* @anchor:path-parameters:end */
 
     /* @anchor:body:start */
-    /* @anchor:body:end */
-
-    return req
-  }
-
-  /**
-   * Renews a lease, requesting to extend the lease.
-   *
-   */
-  leasesRenewLease2<STATUS extends keyof LeasesRenewLease2ResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: LeasesRenewLease2RequestParameters): Keq<LeasesRenewLease2Operation<STATUS, CONTENT_TYPE>> {
-    const req = this.request.post<LeasesRenewLease2ResponseBodies[STATUS]>('/sys/renew')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/renew',
-          method: 'post',
-        },
-      )
-
-    req.type('application/json')
-
-
-    /* @anchor:query:start */
-    /* @anchor:query:end */
-
-    /* @anchor:headers:start */
-    /* @anchor:headers:end */
-
-    /* @anchor:path-parameters:start */
-    /* @anchor:path-parameters:end */
-
-    /* @anchor:body:start */
-    if (args && 'increment' in args) req.send({ increment: args['increment'] })
-    if (args && 'lease_id' in args) req.send({ lease_id: args['lease_id'] })
-    if (args && 'url_lease_id' in args) req.send({ url_lease_id: args['url_lease_id'] })
-    /* @anchor:body:end */
-
-    return req
-  }
-
-  /**
-   * Renews a lease, requesting to extend the lease.
-   *
-   */
-  leasesRenewLeaseWithId2<STATUS extends keyof LeasesRenewLeaseWithId2ResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: LeasesRenewLeaseWithId2RequestParameters): Keq<LeasesRenewLeaseWithId2Operation<STATUS, CONTENT_TYPE>> {
-    const req = this.request.post<LeasesRenewLeaseWithId2ResponseBodies[STATUS]>('/sys/renew/{url_lease_id}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/renew/{url_lease_id}',
-          method: 'post',
-        },
-      )
-
-    req.type('application/json')
-
-
-    /* @anchor:query:start */
-    /* @anchor:query:end */
-
-    /* @anchor:headers:start */
-    /* @anchor:headers:end */
-
-    /* @anchor:path-parameters:start */
-    /* @anchor:path-parameters:end */
-
-    /* @anchor:body:start */
-    if (args && 'increment' in args) req.send({ increment: args['increment'] })
-    if (args && 'lease_id' in args) req.send({ lease_id: args['lease_id'] })
-    /* @anchor:body:end */
-
-    return req
-  }
-
-  /**
-   * Revokes a lease immediately.
-   *
-   */
-  leasesRevokeLease2<STATUS extends keyof LeasesRevokeLease2ResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: LeasesRevokeLease2RequestParameters): Keq<LeasesRevokeLease2Operation<STATUS, CONTENT_TYPE>> {
-    const req = this.request.post<LeasesRevokeLease2ResponseBodies[STATUS]>('/sys/revoke')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/revoke',
-          method: 'post',
-        },
-      )
-
-    req.type('application/json')
-
-
-    /* @anchor:query:start */
-    /* @anchor:query:end */
-
-    /* @anchor:headers:start */
-    /* @anchor:headers:end */
-
-    /* @anchor:path-parameters:start */
-    /* @anchor:path-parameters:end */
-
-    /* @anchor:body:start */
-    if (args && 'lease_id' in args) req.send({ lease_id: args['lease_id'] })
-    if (args && 'sync' in args) req.send({ sync: args['sync'] })
-    if (args && 'url_lease_id' in args) req.send({ url_lease_id: args['url_lease_id'] })
-    /* @anchor:body:end */
-
-    return req
-  }
-
-  /**
-   * Revokes all secrets or tokens generated under a given prefix immediately
-   *
-   * @description Unlike `/sys/leases/revoke-prefix`, this path ignores backend errors encountered during revocation. This is potentially very dangerous and should only be used in specific emergency situations where errors in the backend or the connected backend service prevent normal revocation.
-   *
-   * By ignoring these errors, OpenBao abdicates responsibility for ensuring that the issued credentials or secrets are properly revoked and/or cleaned up. Access to this endpoint should be tightly controlled.
-   */
-  leasesForceRevokeLeaseWithPrefix2<STATUS extends keyof LeasesForceRevokeLeaseWithPrefix2ResponseBodies, CONTENT_TYPE extends never = never>(args?: LeasesForceRevokeLeaseWithPrefix2RequestParameters): Keq<LeasesForceRevokeLeaseWithPrefix2Operation<STATUS, CONTENT_TYPE>> {
-    const req = this.request.post<LeasesForceRevokeLeaseWithPrefix2ResponseBodies[STATUS]>('/sys/revoke-force/{prefix}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/revoke-force/{prefix}',
-          method: 'post',
-        },
-      )
-
-
-    /* @anchor:query:start */
-    /* @anchor:query:end */
-
-    /* @anchor:headers:start */
-    /* @anchor:headers:end */
-
-    /* @anchor:path-parameters:start */
-    /* @anchor:path-parameters:end */
-
-    /* @anchor:body:start */
-    /* @anchor:body:end */
-
-    return req
-  }
-
-  /**
-   * Revokes all secrets (via a lease ID prefix) or tokens (via the tokens' path property) generated under a given prefix immediately.
-   *
-   */
-  leasesRevokeLeaseWithPrefix2<STATUS extends keyof LeasesRevokeLeaseWithPrefix2ResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: LeasesRevokeLeaseWithPrefix2RequestParameters): Keq<LeasesRevokeLeaseWithPrefix2Operation<STATUS, CONTENT_TYPE>> {
-    const req = this.request.post<LeasesRevokeLeaseWithPrefix2ResponseBodies[STATUS]>('/sys/revoke-prefix/{prefix}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/revoke-prefix/{prefix}',
-          method: 'post',
-        },
-      )
-
-    req.type('application/json')
-
-
-    /* @anchor:query:start */
-    /* @anchor:query:end */
-
-    /* @anchor:headers:start */
-    /* @anchor:headers:end */
-
-    /* @anchor:path-parameters:start */
-    /* @anchor:path-parameters:end */
-
-    /* @anchor:body:start */
-    if (args && 'sync' in args) req.send({ sync: args['sync'] })
-    /* @anchor:body:end */
-
-    return req
-  }
-
-  /**
-   * Revokes a lease immediately.
-   *
-   */
-  leasesRevokeLeaseWithId2<STATUS extends keyof LeasesRevokeLeaseWithId2ResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: LeasesRevokeLeaseWithId2RequestParameters): Keq<LeasesRevokeLeaseWithId2Operation<STATUS, CONTENT_TYPE>> {
-    const req = this.request.post<LeasesRevokeLeaseWithId2ResponseBodies[STATUS]>('/sys/revoke/{url_lease_id}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/revoke/{url_lease_id}',
-          method: 'post',
-        },
-      )
-
-    req.type('application/json')
-
-
-    /* @anchor:query:start */
-    /* @anchor:query:end */
-
-    /* @anchor:headers:start */
-    /* @anchor:headers:end */
-
-    /* @anchor:path-parameters:start */
-    /* @anchor:path-parameters:end */
-
-    /* @anchor:body:start */
-    if (args && 'lease_id' in args) req.send({ lease_id: args['lease_id'] })
-    if (args && 'sync' in args) req.send({ sync: args['sync'] })
     /* @anchor:body:end */
 
     return req
@@ -9947,14 +6877,6 @@ export class OpenBaoHttpClient {
 
   encryptionKeyRotate<STATUS extends keyof EncryptionKeyRotateResponseBodies, CONTENT_TYPE extends never = never>(args?: EncryptionKeyRotateRequestParameters): Keq<EncryptionKeyRotateOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<EncryptionKeyRotateResponseBodies[STATUS]>('/sys/rotate')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/rotate',
-          method: 'post',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -9975,14 +6897,6 @@ export class OpenBaoHttpClient {
 
   encryptionKeyReadRotationConfiguration<STATUS extends keyof EncryptionKeyReadRotationConfigurationResponseBodies, CONTENT_TYPE extends never = never>(args?: EncryptionKeyReadRotationConfigurationRequestParameters): Keq<EncryptionKeyReadRotationConfigurationOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<EncryptionKeyReadRotationConfigurationResponseBodies[STATUS]>('/sys/rotate/config')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/rotate/config',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -10003,14 +6917,6 @@ export class OpenBaoHttpClient {
 
   encryptionKeyConfigureRotationConfiguration<STATUS extends keyof EncryptionKeyConfigureRotationConfigurationResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: EncryptionKeyConfigureRotationConfigurationRequestParameters): Keq<EncryptionKeyConfigureRotationConfigurationOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<EncryptionKeyConfigureRotationConfigurationResponseBodies[STATUS]>('/sys/rotate/config')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/rotate/config',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -10036,14 +6942,6 @@ export class OpenBaoHttpClient {
 
   encryptionKeyRotateRotateKeyring<STATUS extends keyof EncryptionKeyRotateRotateKeyringResponseBodies, CONTENT_TYPE extends never = never>(args?: EncryptionKeyRotateRotateKeyringRequestParameters): Keq<EncryptionKeyRotateRotateKeyringOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<EncryptionKeyRotateRotateKeyringResponseBodies[STATUS]>('/sys/rotate/keyring')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/rotate/keyring',
-          method: 'post',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -10064,14 +6962,6 @@ export class OpenBaoHttpClient {
 
   encryptionKeyReadRotateKeyringConfig<STATUS extends keyof EncryptionKeyReadRotateKeyringConfigResponseBodies, CONTENT_TYPE extends never = never>(args?: EncryptionKeyReadRotateKeyringConfigRequestParameters): Keq<EncryptionKeyReadRotateKeyringConfigOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<EncryptionKeyReadRotateKeyringConfigResponseBodies[STATUS]>('/sys/rotate/keyring/config')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/rotate/keyring/config',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -10092,14 +6982,6 @@ export class OpenBaoHttpClient {
 
   encryptionKeyConfigureRotateKeyringConfig<STATUS extends keyof EncryptionKeyConfigureRotateKeyringConfigResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: EncryptionKeyConfigureRotateKeyringConfigRequestParameters): Keq<EncryptionKeyConfigureRotateKeyringConfigOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<EncryptionKeyConfigureRotateKeyringConfigResponseBodies[STATUS]>('/sys/rotate/keyring/config')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/rotate/keyring/config',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -10128,14 +7010,6 @@ export class OpenBaoHttpClient {
    */
   rotateReadRotateRecoveryBackup<STATUS extends keyof RotateReadRotateRecoveryBackupResponseBodies, CONTENT_TYPE extends never = never>(args?: RotateReadRotateRecoveryBackupRequestParameters): Keq<RotateReadRotateRecoveryBackupOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<RotateReadRotateRecoveryBackupResponseBodies[STATUS]>('/sys/rotate/recovery/backup')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/rotate/recovery/backup',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -10159,14 +7033,6 @@ export class OpenBaoHttpClient {
    */
   rotateDeleteRotateRecoveryBackup<STATUS extends keyof RotateDeleteRotateRecoveryBackupResponseBodies, CONTENT_TYPE extends never = never>(args?: RotateDeleteRotateRecoveryBackupRequestParameters): Keq<RotateDeleteRotateRecoveryBackupOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<RotateDeleteRotateRecoveryBackupResponseBodies[STATUS]>('/sys/rotate/recovery/backup')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/rotate/recovery/backup',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -10190,14 +7056,6 @@ export class OpenBaoHttpClient {
    */
   rotateAttemptReadRotateRecoveryInit<STATUS extends keyof RotateAttemptReadRotateRecoveryInitResponseBodies, CONTENT_TYPE extends never = never>(args?: RotateAttemptReadRotateRecoveryInitRequestParameters): Keq<RotateAttemptReadRotateRecoveryInitOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<RotateAttemptReadRotateRecoveryInitResponseBodies[STATUS]>('/sys/rotate/recovery/init')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/rotate/recovery/init',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -10222,14 +7080,6 @@ export class OpenBaoHttpClient {
    */
   rotateAttemptInitializeRotateRecoveryInit<STATUS extends keyof RotateAttemptInitializeRotateRecoveryInitResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: RotateAttemptInitializeRotateRecoveryInitRequestParameters): Keq<RotateAttemptInitializeRotateRecoveryInitOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<RotateAttemptInitializeRotateRecoveryInitResponseBodies[STATUS]>('/sys/rotate/recovery/init')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/rotate/recovery/init',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -10261,14 +7111,6 @@ export class OpenBaoHttpClient {
    */
   rotateAttemptCancelRotateRecoveryInit<STATUS extends keyof RotateAttemptCancelRotateRecoveryInitResponseBodies, CONTENT_TYPE extends never = never>(args?: RotateAttemptCancelRotateRecoveryInitRequestParameters): Keq<RotateAttemptCancelRotateRecoveryInitOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<RotateAttemptCancelRotateRecoveryInitResponseBodies[STATUS]>('/sys/rotate/recovery/init')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/rotate/recovery/init',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -10292,14 +7134,6 @@ export class OpenBaoHttpClient {
    */
   rotateAttemptUpdateRotateRecoveryUpdate<STATUS extends keyof RotateAttemptUpdateRotateRecoveryUpdateResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: RotateAttemptUpdateRotateRecoveryUpdateRequestParameters): Keq<RotateAttemptUpdateRotateRecoveryUpdateOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<RotateAttemptUpdateRotateRecoveryUpdateResponseBodies[STATUS]>('/sys/rotate/recovery/update')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/rotate/recovery/update',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -10327,14 +7161,6 @@ export class OpenBaoHttpClient {
    */
   rotateVerificationReadRotateRecoveryVerify<STATUS extends keyof RotateVerificationReadRotateRecoveryVerifyResponseBodies, CONTENT_TYPE extends never = never>(args?: RotateVerificationReadRotateRecoveryVerifyRequestParameters): Keq<RotateVerificationReadRotateRecoveryVerifyOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<RotateVerificationReadRotateRecoveryVerifyResponseBodies[STATUS]>('/sys/rotate/recovery/verify')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/rotate/recovery/verify',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -10358,14 +7184,6 @@ export class OpenBaoHttpClient {
    */
   rotateVerificationUpdateRotateRecoveryVerify<STATUS extends keyof RotateVerificationUpdateRotateRecoveryVerifyResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: RotateVerificationUpdateRotateRecoveryVerifyRequestParameters): Keq<RotateVerificationUpdateRotateRecoveryVerifyOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<RotateVerificationUpdateRotateRecoveryVerifyResponseBodies[STATUS]>('/sys/rotate/recovery/verify')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/rotate/recovery/verify',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -10394,14 +7212,6 @@ export class OpenBaoHttpClient {
    */
   rotateVerificationCancelRotateRecoveryVerify<STATUS extends keyof RotateVerificationCancelRotateRecoveryVerifyResponseBodies, CONTENT_TYPE extends never = never>(args?: RotateVerificationCancelRotateRecoveryVerifyRequestParameters): Keq<RotateVerificationCancelRotateRecoveryVerifyOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<RotateVerificationCancelRotateRecoveryVerifyResponseBodies[STATUS]>('/sys/rotate/recovery/verify')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/rotate/recovery/verify',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -10422,14 +7232,6 @@ export class OpenBaoHttpClient {
 
   rootKeyRotate<STATUS extends keyof RootKeyRotateResponseBodies, CONTENT_TYPE extends never = never>(args?: RootKeyRotateRequestParameters): Keq<RootKeyRotateOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<RootKeyRotateResponseBodies[STATUS]>('/sys/rotate/root')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/rotate/root',
-          method: 'post',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -10453,14 +7255,6 @@ export class OpenBaoHttpClient {
    */
   rotateReadBackupKey<STATUS extends keyof RotateReadBackupKeyResponseBodies, CONTENT_TYPE extends never = never>(args?: RotateReadBackupKeyRequestParameters): Keq<RotateReadBackupKeyOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<RotateReadBackupKeyResponseBodies[STATUS]>('/sys/rotate/root/backup')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/rotate/root/backup',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -10484,14 +7278,6 @@ export class OpenBaoHttpClient {
    */
   rotateDeleteBackupKey<STATUS extends keyof RotateDeleteBackupKeyResponseBodies, CONTENT_TYPE extends never = never>(args?: RotateDeleteBackupKeyRequestParameters): Keq<RotateDeleteBackupKeyOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<RotateDeleteBackupKeyResponseBodies[STATUS]>('/sys/rotate/root/backup')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/rotate/root/backup',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -10515,14 +7301,6 @@ export class OpenBaoHttpClient {
    */
   rotateAttemptReadProgress<STATUS extends keyof RotateAttemptReadProgressResponseBodies, CONTENT_TYPE extends never = never>(args?: RotateAttemptReadProgressRequestParameters): Keq<RotateAttemptReadProgressOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<RotateAttemptReadProgressResponseBodies[STATUS]>('/sys/rotate/root/init')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/rotate/root/init',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -10547,14 +7325,6 @@ export class OpenBaoHttpClient {
    */
   rotateAttemptInitialize<STATUS extends keyof RotateAttemptInitializeResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: RotateAttemptInitializeRequestParameters): Keq<RotateAttemptInitializeOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<RotateAttemptInitializeResponseBodies[STATUS]>('/sys/rotate/root/init')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/rotate/root/init',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -10586,14 +7356,6 @@ export class OpenBaoHttpClient {
    */
   rotateAttemptCancel<STATUS extends keyof RotateAttemptCancelResponseBodies, CONTENT_TYPE extends never = never>(args?: RotateAttemptCancelRequestParameters): Keq<RotateAttemptCancelOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<RotateAttemptCancelResponseBodies[STATUS]>('/sys/rotate/root/init')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/rotate/root/init',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -10617,14 +7379,6 @@ export class OpenBaoHttpClient {
    */
   rotateAttemptUpdate<STATUS extends keyof RotateAttemptUpdateResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: RotateAttemptUpdateRequestParameters): Keq<RotateAttemptUpdateOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<RotateAttemptUpdateResponseBodies[STATUS]>('/sys/rotate/root/update')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/rotate/root/update',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -10652,14 +7406,6 @@ export class OpenBaoHttpClient {
    */
   rotateVerificationReadProgress<STATUS extends keyof RotateVerificationReadProgressResponseBodies, CONTENT_TYPE extends never = never>(args?: RotateVerificationReadProgressRequestParameters): Keq<RotateVerificationReadProgressOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<RotateVerificationReadProgressResponseBodies[STATUS]>('/sys/rotate/root/verify')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/rotate/root/verify',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -10683,14 +7429,6 @@ export class OpenBaoHttpClient {
    */
   rotateVerificationUpdate<STATUS extends keyof RotateVerificationUpdateResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: RotateVerificationUpdateRequestParameters): Keq<RotateVerificationUpdateOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<RotateVerificationUpdateResponseBodies[STATUS]>('/sys/rotate/root/verify')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/rotate/root/verify',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -10719,14 +7457,6 @@ export class OpenBaoHttpClient {
    */
   rotateVerificationCancel<STATUS extends keyof RotateVerificationCancelResponseBodies, CONTENT_TYPE extends never = never>(args?: RotateVerificationCancelRequestParameters): Keq<RotateVerificationCancelOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<RotateVerificationCancelResponseBodies[STATUS]>('/sys/rotate/root/verify')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/rotate/root/verify',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -10750,14 +7480,6 @@ export class OpenBaoHttpClient {
    */
   seal<STATUS extends keyof SealResponseBodies, CONTENT_TYPE extends never = never>(args?: SealRequestParameters): Keq<SealOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<SealResponseBodies[STATUS]>('/sys/seal')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/seal',
-          method: 'post',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -10781,14 +7503,6 @@ export class OpenBaoHttpClient {
    */
   sealStatus<STATUS extends keyof SealStatusResponseBodies, CONTENT_TYPE extends never = never>(args?: SealStatusRequestParameters): Keq<SealStatusOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<SealStatusResponseBodies[STATUS]>('/sys/seal-status')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/seal-status',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -10813,14 +7527,6 @@ export class OpenBaoHttpClient {
    */
   stepDownLeader<STATUS extends keyof StepDownLeaderResponseBodies, CONTENT_TYPE extends never = never>(args?: StepDownLeaderRequestParameters): Keq<StepDownLeaderOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<StepDownLeaderResponseBodies[STATUS]>('/sys/step-down')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/step-down',
-          method: 'post',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -10841,14 +7547,6 @@ export class OpenBaoHttpClient {
 
   generateHash<STATUS extends keyof GenerateHashResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: GenerateHashRequestParameters): Keq<GenerateHashOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<GenerateHashResponseBodies[STATUS]>('/sys/tools/hash')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/tools/hash',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -10875,14 +7573,6 @@ export class OpenBaoHttpClient {
 
   generateHashWithAlgorithm<STATUS extends keyof GenerateHashWithAlgorithmResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: GenerateHashWithAlgorithmRequestParameters): Keq<GenerateHashWithAlgorithmOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<GenerateHashWithAlgorithmResponseBodies[STATUS]>('/sys/tools/hash/{urlalgorithm}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/tools/hash/{urlalgorithm}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -10908,14 +7598,6 @@ export class OpenBaoHttpClient {
 
   generateRandom<STATUS extends keyof GenerateRandomResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: GenerateRandomRequestParameters): Keq<GenerateRandomOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<GenerateRandomResponseBodies[STATUS]>('/sys/tools/random')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/tools/random',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -10942,14 +7624,6 @@ export class OpenBaoHttpClient {
 
   generateRandomWithSource<STATUS extends keyof GenerateRandomWithSourceResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: GenerateRandomWithSourceRequestParameters): Keq<GenerateRandomWithSourceOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<GenerateRandomWithSourceResponseBodies[STATUS]>('/sys/tools/random/{source}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/tools/random/{source}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -10975,14 +7649,6 @@ export class OpenBaoHttpClient {
 
   generateRandomWithSourceAndBytes<STATUS extends keyof GenerateRandomWithSourceAndBytesResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: GenerateRandomWithSourceAndBytesRequestParameters): Keq<GenerateRandomWithSourceAndBytesOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<GenerateRandomWithSourceAndBytesResponseBodies[STATUS]>('/sys/tools/random/{source}/{urlbytes}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/tools/random/{source}/{urlbytes}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -11007,14 +7673,6 @@ export class OpenBaoHttpClient {
 
   generateRandomWithBytes<STATUS extends keyof GenerateRandomWithBytesResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: GenerateRandomWithBytesRequestParameters): Keq<GenerateRandomWithBytesOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<GenerateRandomWithBytesResponseBodies[STATUS]>('/sys/tools/random/{urlbytes}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/tools/random/{urlbytes}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -11043,14 +7701,6 @@ export class OpenBaoHttpClient {
    */
   unseal<STATUS extends keyof UnsealResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: UnsealRequestParameters): Keq<UnsealOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<UnsealResponseBodies[STATUS]>('/sys/unseal')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/unseal',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -11073,82 +7723,11 @@ export class OpenBaoHttpClient {
   }
 
   /**
-   * Returns map of historical version change entries
-   *
-   */
-  versionHistory<STATUS extends keyof VersionHistoryResponseBodies, CONTENT_TYPE extends never = never>(args?: VersionHistoryRequestParameters): Keq<VersionHistoryOperation<STATUS, CONTENT_TYPE>> {
-    const req = this.request.get<VersionHistoryResponseBodies[STATUS]>('/sys/version-history')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/version-history',
-          method: 'get',
-        },
-      )
-
-
-    /* @anchor:query:start */
-    if (args && 'list' in args) req.query('list', args['list'], { arrayFormat: 'repeat' })
-    /* @anchor:query:end */
-
-    /* @anchor:headers:start */
-    /* @anchor:headers:end */
-
-    /* @anchor:path-parameters:start */
-    /* @anchor:path-parameters:end */
-
-    /* @anchor:body:start */
-    /* @anchor:body:end */
-
-    return req
-  }
-
-  /**
-   * Look up wrapping properties for the requester's token.
-   *
-   */
-  readWrappingProperties2<STATUS extends keyof ReadWrappingProperties2ResponseBodies, CONTENT_TYPE extends never = never>(args?: ReadWrappingProperties2RequestParameters): Keq<ReadWrappingProperties2Operation<STATUS, CONTENT_TYPE>> {
-    const req = this.request.get<ReadWrappingProperties2ResponseBodies[STATUS]>('/sys/wrapping/lookup')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/wrapping/lookup',
-          method: 'get',
-        },
-      )
-
-
-    /* @anchor:query:start */
-    /* @anchor:query:end */
-
-    /* @anchor:headers:start */
-    /* @anchor:headers:end */
-
-    /* @anchor:path-parameters:start */
-    /* @anchor:path-parameters:end */
-
-    /* @anchor:body:start */
-    /* @anchor:body:end */
-
-    return req
-  }
-
-  /**
    * Look up wrapping properties for the given token.
    *
    */
   readWrappingProperties<STATUS extends keyof ReadWrappingPropertiesResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: ReadWrappingPropertiesRequestParameters): Keq<ReadWrappingPropertiesOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<ReadWrappingPropertiesResponseBodies[STATUS]>('/sys/wrapping/lookup')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/wrapping/lookup',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -11172,14 +7751,6 @@ export class OpenBaoHttpClient {
 
   rewrap<STATUS extends keyof RewrapResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: RewrapRequestParameters): Keq<RewrapOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<RewrapResponseBodies[STATUS]>('/sys/wrapping/rewrap')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/wrapping/rewrap',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -11203,14 +7774,6 @@ export class OpenBaoHttpClient {
 
   unwrap<STATUS extends keyof UnwrapResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: UnwrapRequestParameters): Keq<UnwrapOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<UnwrapResponseBodies[STATUS]>('/sys/wrapping/unwrap')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/wrapping/unwrap',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -11234,14 +7797,6 @@ export class OpenBaoHttpClient {
 
   wrap<STATUS extends keyof WrapResponseBodies, CONTENT_TYPE extends never = never>(args?: WrapRequestParameters): Keq<WrapOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<WrapResponseBodies[STATUS]>('/sys/wrapping/wrap')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/sys/wrapping/wrap',
-          method: 'post',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -11262,14 +7817,6 @@ export class OpenBaoHttpClient {
 
   transitBackUpKey<STATUS extends keyof TransitBackUpKeyResponseBodies, CONTENT_TYPE extends never = never>(args?: TransitBackUpKeyRequestParameters): Keq<TransitBackUpKeyOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<TransitBackUpKeyResponseBodies[STATUS]>('/transit/backup/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/transit/backup/{name}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -11290,14 +7837,6 @@ export class OpenBaoHttpClient {
 
   transitByokKey<STATUS extends keyof TransitByokKeyResponseBodies, CONTENT_TYPE extends never = never>(args?: TransitByokKeyRequestParameters): Keq<TransitByokKeyOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<TransitByokKeyResponseBodies[STATUS]>('/transit/byok-export/{destination}/{source}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/transit/byok-export/{destination}/{source}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -11318,14 +7857,6 @@ export class OpenBaoHttpClient {
 
   transitByokKeyVersion<STATUS extends keyof TransitByokKeyVersionResponseBodies, CONTENT_TYPE extends never = never>(args?: TransitByokKeyVersionRequestParameters): Keq<TransitByokKeyVersionOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<TransitByokKeyVersionResponseBodies[STATUS]>('/transit/byok-export/{destination}/{source}/{version}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/transit/byok-export/{destination}/{source}/{version}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -11349,14 +7880,6 @@ export class OpenBaoHttpClient {
    */
   transitReadCacheConfiguration<STATUS extends keyof TransitReadCacheConfigurationResponseBodies, CONTENT_TYPE extends never = never>(args?: TransitReadCacheConfigurationRequestParameters): Keq<TransitReadCacheConfigurationOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<TransitReadCacheConfigurationResponseBodies[STATUS]>('/transit/cache-config')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/transit/cache-config',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -11380,14 +7903,6 @@ export class OpenBaoHttpClient {
    */
   transitConfigureCache<STATUS extends keyof TransitConfigureCacheResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: TransitConfigureCacheRequestParameters): Keq<TransitConfigureCacheOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<TransitConfigureCacheResponseBodies[STATUS]>('/transit/cache-config')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/transit/cache-config',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -11411,14 +7926,6 @@ export class OpenBaoHttpClient {
 
   transitReadKeysConfiguration<STATUS extends keyof TransitReadKeysConfigurationResponseBodies, CONTENT_TYPE extends never = never>(args?: TransitReadKeysConfigurationRequestParameters): Keq<TransitReadKeysConfigurationOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<TransitReadKeysConfigurationResponseBodies[STATUS]>('/transit/config/keys')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/transit/config/keys',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -11439,14 +7946,6 @@ export class OpenBaoHttpClient {
 
   transitConfigureKeys<STATUS extends keyof TransitConfigureKeysResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: TransitConfigureKeysRequestParameters): Keq<TransitConfigureKeysOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<TransitConfigureKeysResponseBodies[STATUS]>('/transit/config/keys')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/transit/config/keys',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -11470,14 +7969,6 @@ export class OpenBaoHttpClient {
 
   transitGenerateDataKey<STATUS extends keyof TransitGenerateDataKeyResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: TransitGenerateDataKeyRequestParameters): Keq<TransitGenerateDataKeyOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<TransitGenerateDataKeyResponseBodies[STATUS]>('/transit/datakey/{plaintext}/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/transit/datakey/{plaintext}/{name}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -11504,14 +7995,6 @@ export class OpenBaoHttpClient {
 
   transitDecrypt<STATUS extends keyof TransitDecryptResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: TransitDecryptRequestParameters): Keq<TransitDecryptOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<TransitDecryptResponseBodies[STATUS]>('/transit/decrypt/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/transit/decrypt/{name}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -11539,14 +8022,6 @@ export class OpenBaoHttpClient {
 
   transitDeriveKey<STATUS extends keyof TransitDeriveKeyResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: TransitDeriveKeyRequestParameters): Keq<TransitDeriveKeyOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<TransitDeriveKeyResponseBodies[STATUS]>('/transit/derive-key/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/transit/derive-key/{name}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -11574,14 +8049,6 @@ export class OpenBaoHttpClient {
 
   transitEncrypt<STATUS extends keyof TransitEncryptResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: TransitEncryptRequestParameters): Keq<TransitEncryptOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<TransitEncryptResponseBodies[STATUS]>('/transit/encrypt/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/transit/encrypt/{name}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -11612,14 +8079,6 @@ export class OpenBaoHttpClient {
 
   transitExportKey<STATUS extends keyof TransitExportKeyResponseBodies, CONTENT_TYPE extends never = never>(args?: TransitExportKeyRequestParameters): Keq<TransitExportKeyOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<TransitExportKeyResponseBodies[STATUS]>('/transit/export/{type}/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/transit/export/{type}/{name}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -11640,14 +8099,6 @@ export class OpenBaoHttpClient {
 
   transitExportKeyVersion<STATUS extends keyof TransitExportKeyVersionResponseBodies, CONTENT_TYPE extends never = never>(args?: TransitExportKeyVersionRequestParameters): Keq<TransitExportKeyVersionOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<TransitExportKeyVersionResponseBodies[STATUS]>('/transit/export/{type}/{name}/{version}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/transit/export/{type}/{name}/{version}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -11668,14 +8119,6 @@ export class OpenBaoHttpClient {
 
   transitHash<STATUS extends keyof TransitHashResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: TransitHashRequestParameters): Keq<TransitHashOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<TransitHashResponseBodies[STATUS]>('/transit/hash')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/transit/hash',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -11702,14 +8145,6 @@ export class OpenBaoHttpClient {
 
   transitHashWithAlgorithm<STATUS extends keyof TransitHashWithAlgorithmResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: TransitHashWithAlgorithmRequestParameters): Keq<TransitHashWithAlgorithmOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<TransitHashWithAlgorithmResponseBodies[STATUS]>('/transit/hash/{urlalgorithm}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/transit/hash/{urlalgorithm}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -11735,14 +8170,6 @@ export class OpenBaoHttpClient {
 
   transitGenerateHmac<STATUS extends keyof TransitGenerateHmacResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: TransitGenerateHmacRequestParameters): Keq<TransitGenerateHmacOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<TransitGenerateHmacResponseBodies[STATUS]>('/transit/hmac/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/transit/hmac/{name}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -11770,14 +8197,6 @@ export class OpenBaoHttpClient {
 
   transitGenerateHmacWithAlgorithm<STATUS extends keyof TransitGenerateHmacWithAlgorithmResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: TransitGenerateHmacWithAlgorithmRequestParameters): Keq<TransitGenerateHmacWithAlgorithmOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<TransitGenerateHmacWithAlgorithmResponseBodies[STATUS]>('/transit/hmac/{name}/{urlalgorithm}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/transit/hmac/{name}/{urlalgorithm}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -11804,14 +8223,6 @@ export class OpenBaoHttpClient {
 
   transitListKeys<STATUS extends keyof TransitListKeysResponseBodies, CONTENT_TYPE extends never = never>(args?: TransitListKeysRequestParameters): Keq<TransitListKeysOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<TransitListKeysResponseBodies[STATUS]>('/transit/keys')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/transit/keys',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -11833,14 +8244,6 @@ export class OpenBaoHttpClient {
 
   transitReadKey<STATUS extends keyof TransitReadKeyResponseBodies, CONTENT_TYPE extends never = never>(args?: TransitReadKeyRequestParameters): Keq<TransitReadKeyOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<TransitReadKeyResponseBodies[STATUS]>('/transit/keys/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/transit/keys/{name}',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -11861,14 +8264,6 @@ export class OpenBaoHttpClient {
 
   transitCreateKey<STATUS extends keyof TransitCreateKeyResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: TransitCreateKeyRequestParameters): Keq<TransitCreateKeyOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<TransitCreateKeyResponseBodies[STATUS]>('/transit/keys/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/transit/keys/{name}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -11899,14 +8294,6 @@ export class OpenBaoHttpClient {
 
   transitDeleteKey<STATUS extends keyof TransitDeleteKeyResponseBodies, CONTENT_TYPE extends never = never>(args?: TransitDeleteKeyRequestParameters): Keq<TransitDeleteKeyOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<TransitDeleteKeyResponseBodies[STATUS]>('/transit/keys/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/transit/keys/{name}',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -11927,14 +8314,6 @@ export class OpenBaoHttpClient {
 
   transitConfigureKey<STATUS extends keyof TransitConfigureKeyResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: TransitConfigureKeyRequestParameters): Keq<TransitConfigureKeyOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<TransitConfigureKeyResponseBodies[STATUS]>('/transit/keys/{name}/config')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/transit/keys/{name}/config',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -11963,14 +8342,6 @@ export class OpenBaoHttpClient {
 
   getCsr<STATUS extends keyof GetCsrResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: GetCsrRequestParameters): Keq<GetCsrOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<GetCsrResponseBodies[STATUS]>('/transit/keys/{name}/csr')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/transit/keys/{name}/csr',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -11995,14 +8366,6 @@ export class OpenBaoHttpClient {
 
   transitImportKey<STATUS extends keyof TransitImportKeyResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: TransitImportKeyRequestParameters): Keq<TransitImportKeyOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<TransitImportKeyResponseBodies[STATUS]>('/transit/keys/{name}/import')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/transit/keys/{name}/import',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -12035,14 +8398,6 @@ export class OpenBaoHttpClient {
 
   transitImportKeyVersion<STATUS extends keyof TransitImportKeyVersionResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: TransitImportKeyVersionRequestParameters): Keq<TransitImportKeyVersionOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<TransitImportKeyVersionResponseBodies[STATUS]>('/transit/keys/{name}/import_version')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/transit/keys/{name}/import_version',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -12069,14 +8424,6 @@ export class OpenBaoHttpClient {
 
   transitRotateKey<STATUS extends keyof TransitRotateKeyResponseBodies, CONTENT_TYPE extends never = never>(args?: TransitRotateKeyRequestParameters): Keq<TransitRotateKeyOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<TransitRotateKeyResponseBodies[STATUS]>('/transit/keys/{name}/rotate')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/transit/keys/{name}/rotate',
-          method: 'post',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -12097,14 +8444,6 @@ export class OpenBaoHttpClient {
 
   setChain<STATUS extends keyof SetChainResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: SetChainRequestParameters): Keq<SetChainOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<SetChainResponseBodies[STATUS]>('/transit/keys/{name}/set-certificate')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/transit/keys/{name}/set-certificate',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -12129,14 +8468,6 @@ export class OpenBaoHttpClient {
 
   transitSoftDeleteKey<STATUS extends keyof TransitSoftDeleteKeyResponseBodies, CONTENT_TYPE extends never = never>(args?: TransitSoftDeleteKeyRequestParameters): Keq<TransitSoftDeleteKeyOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.delete<TransitSoftDeleteKeyResponseBodies[STATUS]>('/transit/keys/{name}/soft-delete')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/transit/keys/{name}/soft-delete',
-          method: 'delete',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -12157,14 +8488,6 @@ export class OpenBaoHttpClient {
 
   transitSoftDeleteRestoreKey<STATUS extends keyof TransitSoftDeleteRestoreKeyResponseBodies, CONTENT_TYPE extends never = never>(args?: TransitSoftDeleteRestoreKeyRequestParameters): Keq<TransitSoftDeleteRestoreKeyOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<TransitSoftDeleteRestoreKeyResponseBodies[STATUS]>('/transit/keys/{name}/soft-delete-restore')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/transit/keys/{name}/soft-delete-restore',
-          method: 'post',
-        },
-      )
 
 
     /* @anchor:query:start */
@@ -12185,14 +8508,6 @@ export class OpenBaoHttpClient {
 
   transitTrimKey<STATUS extends keyof TransitTrimKeyResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: TransitTrimKeyRequestParameters): Keq<TransitTrimKeyOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<TransitTrimKeyResponseBodies[STATUS]>('/transit/keys/{name}/trim')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/transit/keys/{name}/trim',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -12216,14 +8531,6 @@ export class OpenBaoHttpClient {
 
   transitGenerateRandom<STATUS extends keyof TransitGenerateRandomResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: TransitGenerateRandomRequestParameters): Keq<TransitGenerateRandomOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<TransitGenerateRandomResponseBodies[STATUS]>('/transit/random')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/transit/random',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -12250,14 +8557,6 @@ export class OpenBaoHttpClient {
 
   transitGenerateRandomWithSource<STATUS extends keyof TransitGenerateRandomWithSourceResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: TransitGenerateRandomWithSourceRequestParameters): Keq<TransitGenerateRandomWithSourceOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<TransitGenerateRandomWithSourceResponseBodies[STATUS]>('/transit/random/{source}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/transit/random/{source}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -12283,14 +8582,6 @@ export class OpenBaoHttpClient {
 
   transitGenerateRandomWithSourceAndBytes<STATUS extends keyof TransitGenerateRandomWithSourceAndBytesResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: TransitGenerateRandomWithSourceAndBytesRequestParameters): Keq<TransitGenerateRandomWithSourceAndBytesOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<TransitGenerateRandomWithSourceAndBytesResponseBodies[STATUS]>('/transit/random/{source}/{urlbytes}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/transit/random/{source}/{urlbytes}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -12315,14 +8606,6 @@ export class OpenBaoHttpClient {
 
   transitGenerateRandomWithBytes<STATUS extends keyof TransitGenerateRandomWithBytesResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: TransitGenerateRandomWithBytesRequestParameters): Keq<TransitGenerateRandomWithBytesOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<TransitGenerateRandomWithBytesResponseBodies[STATUS]>('/transit/random/{urlbytes}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/transit/random/{urlbytes}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -12348,14 +8631,6 @@ export class OpenBaoHttpClient {
 
   transitRestoreKey<STATUS extends keyof TransitRestoreKeyResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: TransitRestoreKeyRequestParameters): Keq<TransitRestoreKeyOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<TransitRestoreKeyResponseBodies[STATUS]>('/transit/restore')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/transit/restore',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -12381,14 +8656,6 @@ export class OpenBaoHttpClient {
 
   transitRestoreAndRenameKey<STATUS extends keyof TransitRestoreAndRenameKeyResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: TransitRestoreAndRenameKeyRequestParameters): Keq<TransitRestoreAndRenameKeyOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<TransitRestoreAndRenameKeyResponseBodies[STATUS]>('/transit/restore/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/transit/restore/{name}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -12413,14 +8680,6 @@ export class OpenBaoHttpClient {
 
   transitRewrap<STATUS extends keyof TransitRewrapResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: TransitRewrapRequestParameters): Keq<TransitRewrapOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<TransitRewrapResponseBodies[STATUS]>('/transit/rewrap/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/transit/rewrap/{name}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -12447,14 +8706,6 @@ export class OpenBaoHttpClient {
 
   transitSign<STATUS extends keyof TransitSignResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: TransitSignRequestParameters): Keq<TransitSignOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<TransitSignResponseBodies[STATUS]>('/transit/sign/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/transit/sign/{name}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -12488,14 +8739,6 @@ export class OpenBaoHttpClient {
 
   transitSignWithAlgorithm<STATUS extends keyof TransitSignWithAlgorithmResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: TransitSignWithAlgorithmRequestParameters): Keq<TransitSignWithAlgorithmOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<TransitSignWithAlgorithmResponseBodies[STATUS]>('/transit/sign/{name}/{urlalgorithm}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/transit/sign/{name}/{urlalgorithm}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -12528,14 +8771,6 @@ export class OpenBaoHttpClient {
 
   transitVerify<STATUS extends keyof TransitVerifyResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: TransitVerifyRequestParameters): Keq<TransitVerifyOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<TransitVerifyResponseBodies[STATUS]>('/transit/verify/{name}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/transit/verify/{name}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -12570,14 +8805,6 @@ export class OpenBaoHttpClient {
 
   transitVerifyWithAlgorithm<STATUS extends keyof TransitVerifyWithAlgorithmResponseBodies, CONTENT_TYPE extends 'application/json' = 'application/json'>(args?: TransitVerifyWithAlgorithmRequestParameters): Keq<TransitVerifyWithAlgorithmOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.post<TransitVerifyWithAlgorithmResponseBodies[STATUS]>('/transit/verify/{name}/{urlalgorithm}')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/transit/verify/{name}/{urlalgorithm}',
-          method: 'post',
-        },
-      )
 
     req.type('application/json')
 
@@ -12611,14 +8838,6 @@ export class OpenBaoHttpClient {
 
   transitReadWrappingKey<STATUS extends keyof TransitReadWrappingKeyResponseBodies, CONTENT_TYPE extends never = never>(args?: TransitReadWrappingKeyRequestParameters): Keq<TransitReadWrappingKeyOperation<STATUS, CONTENT_TYPE>> {
     const req = this.request.get<TransitReadWrappingKeyResponseBodies[STATUS]>('/transit/wrapping_key')
-      .option(
-        'module',
-        {
-          name: 'openBaoHttp',
-          pathname: '/transit/wrapping_key',
-          method: 'get',
-        },
-      )
 
 
     /* @anchor:query:start */

@@ -14,7 +14,7 @@ export interface LeasesLookUpResponseBodies {
 export interface LeasesLookUpRequestBodies {}
 
 export type LeasesLookUpRequestQuery = {
-  list: 'true'
+  list: ('true')
 }
 
 export type LeasesLookUpRouteParameters = {}

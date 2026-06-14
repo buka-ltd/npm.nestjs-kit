@@ -13,7 +13,7 @@ export interface UserpassListUsersResponseBodies {
 export interface UserpassListUsersRequestBodies {}
 
 export type UserpassListUsersRequestQuery = {
-  list: 'true'
+  list: ('true')
 }
 
 export type UserpassListUsersRouteParameters = {}

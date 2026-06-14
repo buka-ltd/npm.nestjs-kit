@@ -13,7 +13,7 @@ export interface EntityListByNameResponseBodies {
 export interface EntityListByNameRequestBodies {}
 
 export type EntityListByNameRequestQuery = {
-  list: 'true'
+  list: ('true')
 }
 
 export type EntityListByNameRouteParameters = {}

@@ -13,7 +13,7 @@ export interface MfaListMethodsResponseBodies {
 export interface MfaListMethodsRequestBodies {}
 
 export type MfaListMethodsRequestQuery = {
-  list: 'true'
+  list: ('true')
 }
 
 export type MfaListMethodsRouteParameters = {}

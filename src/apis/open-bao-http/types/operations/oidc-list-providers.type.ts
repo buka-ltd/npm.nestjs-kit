@@ -13,7 +13,7 @@ export interface OidcListProvidersResponseBodies {
 export interface OidcListProvidersRequestBodies {}
 
 export type OidcListProvidersRequestQuery = {
-  list: 'true'
+  list: ('true')
 }
 
 export type OidcListProvidersRouteParameters = {}
