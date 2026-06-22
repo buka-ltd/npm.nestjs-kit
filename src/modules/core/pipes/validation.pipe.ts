@@ -123,6 +123,11 @@ export class BukaValidationPipe extends ValidationPipe implements PipeTransform 
   async transform(value: any, metadata: ArgumentMetadata): Promise<any> {
     value = await super.transform(value, metadata)
 
+    // 自定义装饰器（type === 'custom'）的参数值由开发者代码在运行时注入，
+    // 不是来自 HTTP 请求体的 JSON 数据，不需要 MikroORM 实体引用转换。
+    // 遵循 NestJS ValidationPipe.toValidate() 对 custom 类型跳过验证的设计模式
+    if (metadata.type === 'custom') return value
+
     if (this.validationOptions && !this.validationOptions.transform) return value
 
     if (!metadata.metatype || typeof metadata.metatype !== 'function') {
