@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.4.3](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.4.2...v4.4.3) (2026-06-22)
+
+
+### Bug Fixes
+
+* 修复ValidationPipe导致的自定义参数装饰器被错误的解构问题 ([ba01a81](https://github.com/buka-ltd/npm.nestjs-kit/commit/ba01a817cb151af5da0700c8127c362958e0a46d))
+* 升级 keq 并修复版本错误 ([39ada4f](https://github.com/buka-ltd/npm.nestjs-kit/commit/39ada4fbbb41d2bc64d41d0993348dce2dbd30e6))
+
 ## [4.4.2](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.4.1...v4.4.2) (2026-06-07)
 
 
