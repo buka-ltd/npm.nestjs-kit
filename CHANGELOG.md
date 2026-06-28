@@ -1,5 +1,14 @@
 # Changelog
 
+## [4.4.4](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.4.3...v4.4.4) (2026-06-28)
+
+
+### Bug Fixes
+
+* keq module is required for open bao module ([dca3091](https://github.com/buka-ltd/npm.nestjs-kit/commit/dca30910a3de536c8a34247864b2425c0dd450b5))
+* 修复Entity引用类重名问题 ([5bab569](https://github.com/buka-ltd/npm.nestjs-kit/commit/5bab569643f652dd6990237cafc9ae6394ddadbe))
+* 修复isBrowserRequest的误判问题 ([17f9274](https://github.com/buka-ltd/npm.nestjs-kit/commit/17f92747fa2073bc70a2b894e1c7ba7d60dc0115))
+
 ## [4.4.3](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.4.2...v4.4.3) (2026-06-22)
 
 
