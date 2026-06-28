@@ -27,6 +27,13 @@ export function PrimaryKeyType<T extends object>(classRef: Class<T>): Class<IEnt
 
   class PrimaryKeyTypeClass {}
 
+  // 设置唯一类名，使 @nestjs/swagger 为每个实体生成独立的 schema
+  // 例如：UserPrimaryKeyType, ProductPrimaryKeyType
+  // 避免不同实体的 PrimaryKeyType schema 相互覆盖
+  Object.defineProperty(PrimaryKeyTypeClass, 'name', {
+    value: `${classRef.name}PrimaryKeyType`,
+  })
+
   PrimaryKeyTypeClass[PrimaryKeyTypeClassMetadataPropertyKey] = classRef
 
   SwaggerUtils.cloneMetadata(PrimaryKeyTypeClass, classRef, primaryProperties)
