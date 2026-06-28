@@ -2,5 +2,8 @@ onlyBuiltDependencies:
   - '@nestjs/core'
   - '@scarf/scarf'
   - '@swc/core'
+  - onnxruntime-node
+  - protobufjs
   - rolldown
+  - sharp
   - unrs-resolver

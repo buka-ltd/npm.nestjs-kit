@@ -2,6 +2,7 @@ import { Global, Module, Inject } from '@nestjs/common'
 import { setBaseUrl } from '@keq-request/url'
 import { validateStatusCode } from '@keq-request/exception'
 import {
+  KeqModule,
   KeqMiddlewareModule,
   KeqMiddlewareConsumer,
 } from '@keq-request/nestjs'
@@ -65,6 +66,7 @@ import type { OpenBaoModuleOptions } from './types'
 @Global()
 @Module({
   imports: [
+    KeqModule,
     OpenBaoHttpModule.register({ isGlobal: true }),
   ],
   providers: [OpenBaoTokenManager],
@@ -72,8 +74,7 @@ import type { OpenBaoModuleOptions } from './types'
 })
 export class OpenBaoModule
   extends ConfigurableModuleClass
-  implements KeqMiddlewareModule
-{
+  implements KeqMiddlewareModule {
   constructor(
     @Inject(MODULE_OPTIONS_TOKEN) private readonly options: OpenBaoModuleOptions,
     private readonly tokenManager: OpenBaoTokenManager,
