@@ -1,5 +1,8 @@
+import { Logger } from '@nestjs/common'
 import type { KeqMiddleware } from 'keq'
 import { RequestException } from 'keq'
+
+const logger = new Logger('ClarifyOpenbaoError')
 
 /**
  * 根据 HTTP 状态码生成中文操作建议
@@ -26,14 +29,20 @@ function getStatusCodeGuidance(statusCode: number): string {
  * 必须注册在 `validateStatusCode` 之后，作为中间件链的最外层，
  * 捕获 `RequestException` 并重写其错误消息，补充请求上下文和操作建议。
  *
- * 非 RequestException 错误（网络故障、超时等）原样透传。
+ * 非 RequestException 错误（网络故障、超时等）记录日志后原样透传。
  */
-export function formatError(): KeqMiddleware {
+export function clarifyOpenbaoError(): KeqMiddleware {
   const middleware: KeqMiddleware = async (ctx, next) => {
     try {
       await next()
     } catch (err: unknown) {
       if (!(err instanceof RequestException)) {
+        const method = ctx.request.method.toUpperCase()
+        const url = ctx.request.url.toString()
+        logger.error(
+          `OpenBaoModule API 请求异常: ${method} ${url}`,
+          err instanceof Error ? err.stack : undefined,
+        )
         throw err
       }
 
@@ -68,6 +77,6 @@ export function formatError(): KeqMiddleware {
     }
   }
 
-  middleware.__keqMiddlewareName__ = 'formatError'
+  middleware.__keqMiddlewareName__ = 'clarifyOpenbaoError'
   return middleware
 }

@@ -5,7 +5,7 @@
 /* @anchor:file:start */
 import { Module, ConfigurableModuleBuilder, Provider } from '@nestjs/common'
 import { KeqRequest } from 'keq'
-import type { KeqModuleOptions } from '@keq-request/nestjs'
+import { KeqModule, type KeqModuleOptions, KeqConsumer } from '@keq-request/nestjs'
 import { OpenBaoHttpClient } from './open-bao-http.client'
 
 
@@ -18,6 +18,7 @@ export interface OpenBaoHttpModuleOptions extends KeqModuleOptions {
 }
 
 const KEQ_REQUEST_TOKEN = Symbol('OpenBaoHttpKeqRequest')
+const KEQ_CONSUMER_TOKEN = Symbol('OpenBaoHttpKeqConsumer')
 
 const { ConfigurableModuleClass, MODULE_OPTIONS_TOKEN } = new ConfigurableModuleBuilder<OpenBaoHttpModuleOptions>()
   .setExtras({ isGlobal: false }, (definition, extras) => ({
@@ -54,6 +55,12 @@ const REQUEST_PROVIDER: Provider = {
 const CLIENT_PROVIDER: Provider = {
   provide: OpenBaoHttpClient,
   useFactory: (request: KeqRequest) => new OpenBaoHttpClient(request),
+  inject: [KEQ_REQUEST_TOKEN],
+}
+
+const CONSUMER_PROVIDER: Provider = {
+  provide: KEQ_CONSUMER_TOKEN,
+  useFactory: (request: KeqRequest) => new KeqConsumer(request),
   inject: [KEQ_REQUEST_TOKEN],
 }
 
@@ -106,11 +113,13 @@ const CLIENT_PROVIDER: Provider = {
  * ```
  */
 @Module({
-  providers: [REQUEST_PROVIDER, CLIENT_PROVIDER],
-  exports: [OpenBaoHttpClient],
+  imports: [KeqModule],
+  providers: [REQUEST_PROVIDER, CONSUMER_PROVIDER, CLIENT_PROVIDER],
+  exports: [OpenBaoHttpClient, KEQ_CONSUMER_TOKEN],
 })
 export class OpenBaoHttpModule extends ConfigurableModuleClass {
   static readonly KEQ_REQUEST = KEQ_REQUEST_TOKEN
+  static readonly KEQ_CONSUMER = KEQ_CONSUMER_TOKEN
 }
 
 /* @anchor:file:end */

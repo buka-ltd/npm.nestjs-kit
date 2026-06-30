@@ -1,16 +1,17 @@
 import { Global, Module, Inject } from '@nestjs/common'
 import { setBaseUrl } from '@keq-request/url'
-import { validateStatusCode } from '@keq-request/exception'
+import { clarifyFetchFailed, validateStatusCode } from '@keq-request/exception'
 import {
   KeqModule,
-  KeqMiddlewareModule,
-  KeqMiddlewareConsumer,
+  KeqConsumer,
+  InjectKeqConsumer,
+  KEQ_ROUTES,
 } from '@keq-request/nestjs'
 import { OpenBaoHttpModule } from '../../apis/open-bao-http/open-bao-http.module'
 import { OpenBaoTokenManager } from './open-bao-token.manager'
 import { ConfigurableModuleClass, MODULE_OPTIONS_TOKEN } from './open-bao.module-definition'
 import { setOpenBaoToken } from './set-open-bao-token.middleware'
-import { formatError } from './request/format-error'
+import { clarifyOpenbaoError } from './request/format-error'
 import type { OpenBaoModuleOptions } from './types'
 
 /**
@@ -73,23 +74,22 @@ import type { OpenBaoModuleOptions } from './types'
   exports: [OpenBaoTokenManager, OpenBaoHttpModule],
 })
 export class OpenBaoModule
-  extends ConfigurableModuleClass
-  implements KeqMiddlewareModule {
+  extends ConfigurableModuleClass {
   constructor(
     @Inject(MODULE_OPTIONS_TOKEN) private readonly options: OpenBaoModuleOptions,
     private readonly tokenManager: OpenBaoTokenManager,
+    @InjectKeqConsumer(OpenBaoHttpModule) consumer: KeqConsumer<typeof OpenBaoHttpModule>,
   ) {
     super()
-  }
 
-  configureKeqMiddleware(consumer: KeqMiddlewareConsumer): void {
     consumer
       .apply(
-        formatError(),
+        clarifyOpenbaoError(),
         setBaseUrl(this.options.address + '/v1/'),
         setOpenBaoToken(() => this.tokenManager.getToken()),
         validateStatusCode(),
+        clarifyFetchFailed(),
       )
-      .forRoutes(OpenBaoHttpModule)
+      .forRoutes(KEQ_ROUTES.ALL)
   }
 }
