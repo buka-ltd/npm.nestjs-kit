@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.4.6](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.4.5...v4.4.6) (2026-06-30)
+
+
+### Bug Fixes
+
+* wrong package depenpencies version ([2bd531a](https://github.com/buka-ltd/npm.nestjs-kit/commit/2bd531ad6a24cc80d7b72a3f566c2539d59e71d4))
+
 ## [4.4.5](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.4.4...v4.4.5) (2026-06-30)
 
 
