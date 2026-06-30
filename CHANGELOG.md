@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.4.5](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.4.4...v4.4.5) (2026-06-30)
+
+
+### Performance Improvements
+
+* upgrade keq to 5.0.0-beta.14 ([8e93f73](https://github.com/buka-ltd/npm.nestjs-kit/commit/8e93f73a58dc178a0bda06ffc1dc3546db1a5885))
+
 ## [4.4.4](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.4.3...v4.4.4) (2026-06-28)
 
 
