@@ -1,5 +1,17 @@
 # Changelog
 
+## [4.5.0](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.4.13...v4.5.0) (2026-10-07)
+
+
+### Features
+
+* add skills ([dc7213a](https://github.com/buka-ltd/npm.nestjs-kit/commit/dc7213af706ccb85ee3285ef4723ec5bc0347f7e))
+
+
+### Bug Fixes
+
+* 分页参数为标量时避免 in 运算符抛 TypeError ([3d5b2ab](https://github.com/buka-ltd/npm.nestjs-kit/commit/3d5b2ab32731182942b2acb6d775c66f37600ed4))
+
 ## [4.4.13](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.4.12...v4.4.13) (2026-08-09)
 
 
