@@ -41,6 +41,16 @@ export class BukaPageQueryValidationPipe implements PipeTransform {
       }
     }
 
+    /**
+     * 走到这里时 `value.page` 已非空，但 query string 可能把 `page` 解析为标量
+     * （如 `?page=1` 解析为字符串 `"1"`），对原始值使用 `in` 运算符会抛 TypeError，
+     * 冒泡到全局异常过滤器后被映射为 500。先保证 `page` 是纯对象，数组一并拦截，
+     * 使非法形态收敛为 400。
+     */
+    if (typeof value.page !== 'object' || Array.isArray(value.page)) {
+      throw new BadRequestException('Invalid page query: page must be an object.')
+    }
+
     const mode = this.options.mode
 
     if ((!mode || mode === 'offset') && ('limit' in value.page || 'offset' in value.page)) {
