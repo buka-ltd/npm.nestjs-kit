@@ -10,6 +10,7 @@ import { Double } from './double.column'
 import { Numeric } from './numeric.column'
 import { Boolean } from './boolean.column'
 import { Uuid } from './uuid.column'
+import { Date } from './date.column'
 import { Timestamptz } from './timestamptz.column'
 import { Enum } from './enum.column'
 import { Jsonb } from './jsonb.column'
@@ -30,6 +31,7 @@ export const Column = {
   Numeric,
   Boolean,
   Uuid,
+  Date,
   Timestamptz,
   Enum,
   Jsonb,

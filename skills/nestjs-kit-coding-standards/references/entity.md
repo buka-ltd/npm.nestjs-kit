@@ -36,7 +36,7 @@
 
 三者都有泛型参数 `<Optional = never>`:声明 `extends DiscreteEntity<'extra' | 'fields'>` 让 MikroORM `OptionalProps` 感知子类有默认值的属性(有默认值的字段装饰器 `default` + 属性初始化需同时声明)。
 
-## Column 列装饰器(17 种)
+## Column 列装饰器(18 种)
 
 一次声明自动叠加三到四层:MikroORM `@Property` 映射 + class-validator 校验 + Swagger schema + Model 元数据。所有列支持 `comment`(同时写入数据库注释与 Swagger description)、`nullable`(联动 TS 可选与 Swagger required)、`default`/`onCreate`/`onUpdate`/`defaultRaw`、`lazy`(不默认查询、不出现在 Swagger)、`example/examples`。
 
@@ -54,6 +54,7 @@
 | `Column.Numeric` | `number` | `IsNumber` | |
 | `Column.Boolean` | `boolean` | `IsBoolean` | |
 | `Column.Uuid` | `string` | `IsString` | 需要版本校验时叠加 `@IsUUID('7')` |
+| `Column.Date` | `string` | `Matches` + `IsISO8601({ strict: true })` | Swagger `format: 'date'`;JS 侧是 `YYYY-MM-DD` 字符串,不是 `Date` 对象 |
 | `Column.Timestamptz` | `Date` | `IsISO8601` | 带时区时间戳 |
 | `Column.Enum` | 自定义 enum | `IsEnumColumn`(`array: true` 时 `IsArray` + each) | `items` 必填,见下 |
 | `Column.Jsonb` | DTO 对象 / 数组 | 无(可选) | 见下 |

@@ -16,7 +16,9 @@ const jestConfig: JestConfigWithTsJest = {
     '.*__snapshots__/.*',
   ],
   setupFilesAfterEnv: ['<rootDir>/__tests__/setup.ts'],
-  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths),
+  // 源码使用 `~/` 别名与 `.js` 后缀（nodenext 写法），需前缀 rootDir 并交给 ts-jest-resolver 解析
+  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/' }),
+  resolver: 'ts-jest-resolver',
   passWithNoTests: true,
 }
 

@@ -180,11 +180,28 @@ export class BookEntity extends DiscreteEntity {
 | `Column.Numeric` | `numeric` | `number` | `@IsNumber()` | 精确数值 |
 | `Column.Boolean` | `boolean` | `boolean` | `@IsBoolean()` | 布尔值 |
 | `Column.Uuid` | `uuid` | `string` | `@IsUUID()` | UUID |
+| `Column.Date` | `date` | `string` | `@Matches()`, `@IsISO8601({ strict: true })` | 仅日期（`YYYY-MM-DD`），无时间、无时区 |
 | `Column.Timestamptz` | `timestamptz` | `Date` | — | 带时区时间戳 |
 | `Column.Enum` | `enum` | `enum` | `@IsEnum()` | 枚举 |
 | `Column.Jsonb` | `jsonb` | `object` | — | JSONB |
 | `Column.Transient` | — | `any` | — | 非持久化字段 |
 | `Column.Embedded` | — | `object` | — | 嵌入式实体 |
+
+### Column.Date — 日历日
+
+```typescript
+@Entity()
+export class CourseOccurrenceEntity extends DiscreteEntity {
+  @Column.Date({ comment: '计划日期' })
+  date!: string
+}
+```
+
+`Column.Date` 对应 PostgreSQL `date`，MikroORM `DateType` 在 JS 侧是 `YYYY-MM-DD` 字符串，不是 `Date` 对象：
+
+- 适合"某一天"这类业务日期（租约日、生日、计划日期），与绝对时刻无关；
+- 需要绝对时刻（创建时间、支付时间）请用 `Column.Timestamptz`；
+- 日期按哪个时区解释属于业务层语义，列本身不保存时区。
 
 ### Column.Enum — 枚举字段
 
