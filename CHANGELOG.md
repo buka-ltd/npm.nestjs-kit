@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.6.0](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.5.0...v4.6.0) (2026-10-26)
+
+
+### Features
+
+* 添加 Columns.Date ([d116cf2](https://github.com/buka-ltd/npm.nestjs-kit/commit/d116cf20985e0ece543031d8dd2f9b1e8e0c2559))
+
 ## [4.5.0](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.4.13...v4.5.0) (2026-10-07)
 
 
