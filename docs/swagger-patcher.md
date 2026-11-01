@@ -28,7 +28,8 @@ SwaggerModule.setup("/swagger/ui", app, document);
 | 选项 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
 | `overwrite` | `('4xx' \| '5xx' \| 'default' \| number)[]` | `[]` | 覆写已有的哪些响应 |
-| `insert` | `(number \| 'default')[]` | `[]` | 插入新的状态码响应 |
+| `insert` | `(number \| 'default')[]` | `[]` | 插入状态码响应（已存在也覆盖） |
+| `filter` | `(context: { pathname, method, operation }) => boolean` | `undefined` | 返回 `false` 的 operation 完全跳过（既不覆写也不插入） |
 
 ```typescript
 import { SwaggerPatcher } from "@buka/nestjs-kit";
@@ -57,4 +58,31 @@ SwaggerPatcher.unifyExceptionResponses(document, {
 });
 
 SwaggerModule.setup("/swagger/ui", app, document);
+```
+
+### 跳过统一异常响应
+
+错误体遵循其他规范的端点（如 OAuth2 token、健康检查）不应被统一为 Buka 信封。在 controller 方法上添加 `@SkipUnifiedExceptionResponse()`，该 operation 就会完全跳过：
+
+```typescript
+import { SkipUnifiedExceptionResponse } from "@buka/nestjs-kit";
+import { ApiResponse } from "@nestjs/swagger";
+
+@Post("token")
+@SkipUnifiedExceptionResponse()
+@ApiResponse({ status: 400, type: OAuth2ErrorResponseDto })
+@ApiResponse({ status: 401, type: OAuth2ErrorResponseDto })
+exchangeToken() {}
+```
+
+- 装饰器写入 `x-buka-skip-unified-exception-response: true` 扩展；标记在 controller 类上时对该类所有 operation 生效。
+- 被跳过的 operation 不会被 `overwrite` 或 `insert` 修改，需自行用 `@ApiResponse` 声明错误响应。
+- `components.schemas.ExceptionResponse` 与 `components.responses.ExceptionResponse` 仍会注册（全局组件，与具体 operation 无关）。
+- 无法修改 controller 的 operation（第三方模块等）用 `filter` 豁免：
+
+```typescript
+SwaggerPatcher.unifyExceptionResponses(document, {
+  overwrite: ["4xx", "5xx"],
+  filter: ({ pathname }) => pathname !== "/health",
+});
 ```

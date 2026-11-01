@@ -13,6 +13,7 @@ import { isFunction, isString } from './nestjs-common'
 export const DECORATORS = {
   API_MODEL_PROPERTIES: 'swagger/apiModelProperties',
   API_MODEL_PROPERTIES_ARRAY: 'swagger/apiModelPropertiesArray',
+  API_EXTENSION: 'swagger/apiExtension',
 } as const
 
 // 来自 @nestjs/swagger/dist/plugin/plugin-constants

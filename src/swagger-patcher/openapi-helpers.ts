@@ -5,6 +5,13 @@ type ReferenceObject = { $ref: string }
 type ParameterObject = Exclude<ValueOf<Required<Required<OpenAPIObject>['components']>['parameters']>, ReferenceObject>
 export type SchemaObject = Exclude<ValueOf<Required<Required<OpenAPIObject>['components']>['schemas']>, ReferenceObject>
 
+/**
+ * OpenAPI operation 对象
+ *
+ * `@nestjs/swagger` 未公开导出 `OperationObject`，这里从 `PathItemObject` 派生。
+ */
+export type OperationObject = NonNullable<OpenAPIObject['paths'][string]['get']>
+
 export function isReferenceObject(obj: any): obj is ReferenceObject {
   return !!obj && typeof obj === 'object' && typeof obj.$ref === 'string'
 }
@@ -30,7 +37,7 @@ export function deepDereference<T>(openapi: OpenAPIObject, reference: ReferenceO
     current = next
   }
 
-  return current as T
+  return current
 }
 
 export function forEachParameter(openapi: OpenAPIObject, callback: (parameter: ParameterObject) => void): void {

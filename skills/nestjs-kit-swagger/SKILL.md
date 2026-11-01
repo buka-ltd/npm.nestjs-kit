@@ -4,7 +4,7 @@ description: >
   本 skill 覆盖 @buka/nestjs-kit 的 Swagger 文档修补。当用户遇到 Swagger UI 中 object 型 query 参数
   渲染成手敲 JSON 文本框、需要统一异常响应文档(unifyExceptionResponses)、
   配置 SwaggerPatcher(deepObjectifyQueries/unifyExceptionResponses)、
-  或按项目实际暴露状态码裁剪 insert 列表时使用本 skill。
+  按项目实际暴露状态码裁剪 insert 列表,或某端点错误体不符合统一信封需要豁免时使用本 skill。
   SwaggerPatcher 只做文档层后处理、不改变运行时校验;运行时错误响应来自 nestjs-kit-exception,
   @FilterQuery/@PageQuery 的 Swagger 声明随 nestjs-kit-coding-standards 生成。
 ---
@@ -52,6 +52,7 @@ SwaggerModule.setup('/swagger/ui', app, document)
 |---|---|---|---|
 | `overwrite` | `('4xx' \| '5xx' \| 'default' \| number)[]` | `[]` | 覆写已有响应为 ExceptionResponse |
 | `insert` | `(number \| 'default')[]` | `[]` | 插入新状态码响应(已存在也覆盖) |
+| `filter` | `(context: { pathname, method, operation }) => boolean` | `undefined` | 返回 `false` 的 operation 完全跳过(既不覆写也不插入) |
 
 ```typescript
 SwaggerPatcher.unifyExceptionResponses(document)                              // 仅注册组件
@@ -61,9 +62,30 @@ SwaggerPatcher.unifyExceptionResponses(document, { overwrite: ['4xx', '5xx'] }) 
 SwaggerPatcher.unifyExceptionResponses(document, { overwrite: ['5xx'], insert: [401, 403] })
 ```
 
+### 协议端点豁免
+
+错误体遵循其他规范的端点(OAuth2 token、健康检查等)不应被统一为 Buka 信封。在 controller 方法上添加 `@SkipUnifiedExceptionResponse()`:
+
+```typescript
+import { SkipUnifiedExceptionResponse } from '@buka/nestjs-kit'
+import { ApiResponse } from '@nestjs/swagger'
+
+@Post('token')
+@SkipUnifiedExceptionResponse()
+@ApiResponse({ status: 400, type: OAuth2ErrorResponseDto })
+@ApiResponse({ status: 401, type: OAuth2ErrorResponseDto })
+exchangeToken() {}
+```
+
+- 装饰器写入 `x-buka-skip-unified-exception-response: true`;标记在 controller 类上时对该类所有 operation 生效
+- 被跳过的 operation 不会被 `overwrite`/`insert` 修改,需自行用 `@ApiResponse` 声明错误响应
+- `components` 中的 `ExceptionResponse` 仍会注册(全局组件,与具体 operation 无关)
+- 无法修改 controller 的 operation(第三方模块等)用 `filter` 豁免:`filter: ({ pathname }) => pathname !== '/health'`
+
 ## 注意事项
 
 - 只影响**文档**,不改变运行时——运行时校验还是全局验证管道的职责
+- 被豁免的 operation 在文档里没有错误响应,必须补 `@ApiResponse`,否则客户端生成器拿不到错误类型
 - 服务多了以后文档体积会大,`unifyExceptionResponses` 的 `insert` 列表按项目真实暴露的状态码裁剪(如认证豁免的接口可不插 401)
 - CLI 插件的 `dtoFileNameSuffix` 配置(见 [coding-standards 的 references/entity.md](../nestjs-kit-coding-standards/references/entity.md))作用于编译期 schema 生成;`SwaggerPatcher` 作用于 `createDocument` 之后的文档后处理,两者位于不同阶段
 
