@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.7.0](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.6.0...v4.7.0) (2026-11-01)
+
+
+### Features
+
+* **swagger-patcher:** 支持按 operation 跳过统一异常响应 ([57e6d3f](https://github.com/buka-ltd/npm.nestjs-kit/commit/57e6d3f430267d41e111d540397e3e2a2cd4d3b6))
+
 ## [4.6.0](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.5.0...v4.6.0) (2026-10-26)
 
 
