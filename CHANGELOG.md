@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.7.1](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.7.0...v4.7.1) (2026-11-13)
+
+
+### Bug Fixes
+
+* **validation-pipe:** 列表与字典中的 PrimaryKeyType 转换为托管引用 ([4134d36](https://github.com/buka-ltd/npm.nestjs-kit/commit/4134d36aaf5962c6a6adbe256067e61bb4602816))
+
 ## [4.7.0](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.6.0...v4.7.0) (2026-11-01)
 
 
