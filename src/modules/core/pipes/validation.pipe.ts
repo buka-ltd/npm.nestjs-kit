@@ -3,7 +3,7 @@ import { MikroORM, EntityManager } from '@mikro-orm/core'
 import { ValidationPipe, ValidationPipeOptions } from '@nestjs/common'
 import { ArgumentMetadata, Injectable, Logger, PipeTransform, Type } from '@nestjs/common'
 import { Class } from 'type-fest'
-import { PrimaryKeyTypeClassMetadataPropertyKey } from '~/modules/mikro-orm'
+import { PrimaryKeyTypeClassMetadataPropertyKey } from '~/modules/mikro-orm/converters/entity-primary-key-type/entity-primary-key-type'
 import * as MikroOrmUtils from '~/modules/mikro-orm/utils/mikro-orm-utils'
 import { isScalarClass, ModelRegister } from '../decorators'
 
@@ -14,6 +14,20 @@ function deepMap(obj: any, fn: (value: any) => any): any {
   } else {
     return fn(obj)
   }
+}
+
+
+type PrimaryKeyTypeClass = Class<object> & {
+  [PrimaryKeyTypeClassMetadataPropertyKey]?: Class<object>
+}
+
+/**
+ * 判断 ctor 是否为 `PrimaryKeyType(Entity)` 生成的引用类
+ *
+ * 这类类上挂着原始实体类，转换时不能当普通 DTO 继续递归，而要换成 `em.getReference`。
+ */
+function isPrimaryKeyTypeClass(ctor: Class<object>): ctor is PrimaryKeyTypeClass {
+  return typeof ctor === 'function' && PrimaryKeyTypeClassMetadataPropertyKey in ctor
 }
 
 
@@ -37,6 +51,22 @@ function transformReference(em: EntityManager, value: any, metatype: Class<objec
 }
 
 
+/**
+ * 按属性声明的类型转换单个值
+ *
+ * `PrimaryKeyType` 换成托管引用；其它 DTO 继续递归。单值、列表元素与字典值共用这一套判断，
+ * 否则列表 / 字典里的 `PrimaryKeyType` 会被当成普通对象，最终被 ORM 当作新实体插入。
+ */
+function transformNested(em: EntityManager, value: any, ctor: Class<any>): any {
+  if (isPrimaryKeyTypeClass(ctor)) {
+    const entity = ctor[PrimaryKeyTypeClassMetadataPropertyKey]
+    if (entity) return transformReference(em, value, entity)
+  }
+
+  return deepTransform(em, value, ctor)
+}
+
+
 function deepTransform(em: EntityManager, value: any, metatype: Class<any>): any {
   // value = transformReferenceProperties(em, value, metatype)
 
@@ -57,34 +87,24 @@ function deepTransform(em: EntityManager, value: any, metatype: Class<any>): any
     const propertyValue = value[propertyKey]
 
     if (propertyMetadata.kind === 'composite') {
-      const ctor = propertyMetadata.type() as Type<any>
-
-      if (PrimaryKeyTypeClassMetadataPropertyKey in ctor) {
-        // 是 PrimaryKeyType，读取存储在标记上的原始实体类
-        const originalEntity = ctor[PrimaryKeyTypeClassMetadataPropertyKey] as Type<any>
-        result[propertyKey] = transformReference(em, propertyValue, originalEntity)
-      } else {
-        const v = deepTransform(em, propertyValue, ctor)
-        result[propertyKey] = v
-      }
+      result[propertyKey] = transformNested(em, propertyValue, propertyMetadata.type() as Type<any>)
     } else if (propertyMetadata.kind === 'list') {
       if (propertyMetadata.type && !isScalarClass(propertyMetadata.type)) {
-        result[propertyKey] = deepMap(
-          propertyValue,
-          (item) => deepTransform(em, item, propertyMetadata.type!() as Type<any>),
-        )
+        const itemCtor = propertyMetadata.type() as Type<any>
+        result[propertyKey] = deepMap(propertyValue, (item) => transformNested(em, item, itemCtor))
       }
     } else if (propertyMetadata.kind === 'dictionary') {
       if (propertyMetadata.type && !isScalarClass(propertyMetadata.type)) {
+        const valueCtor = propertyMetadata.type() as Type<any>
         if (propertyValue instanceof Map) {
           result[propertyKey] = new Map(
             Array.from((propertyValue as Map<string, any>).entries())
-              .map(([k, v]) => [k, deepTransform(em, v, propertyMetadata.type!() as Type<any>)] as const),
+              .map(([k, v]) => [k, transformNested(em, v, valueCtor)] as const),
           )
         } else {
           result[propertyKey] = Object.fromEntries(
             Object.entries(propertyValue)
-              .map(([k, v]) => [k, deepTransform(em, v, propertyMetadata.type!() as Type<any>)]),
+              .map(([k, v]) => [k, transformNested(em, v, valueCtor)]),
           )
         }
       }
