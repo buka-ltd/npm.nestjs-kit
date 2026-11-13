@@ -25,8 +25,37 @@ urn:buka:<domain>[:<resource>]
 
 概念域按**资源类型的定义权归属**划分,非按部署单元。一个概念域可以有多个服务实现。
 
-- 绝大多数情况使用**系统名**(如 `galaxy`、`openbao`、`kafka`、`kubernetes`)
-- 虚拟域(非系统名)的命名需慎重,仅在有充分理由时使用
+| 类型 | 定义权归属 | 名称 | 示例 |
+| --- | --- | --- | --- |
+| 系统域 | 某个系统 | 系统名 | `galaxy`、`openbao`、`kafka` |
+| 虚拟域 | 公司级跨系统约定,不属于任何单一系统实现 | 规范登记的保留名 | `application`、`service` |
+
+#### 系统域
+
+绝大多数资源归属某个系统,使用系统名作为概念域;系统域的名称与该系统一致。系统域级 URN 表示该系统本身(如 `urn:buka:galaxy`)。
+
+#### 虚拟域
+
+**虚拟域(virtual domain)**:资源类型的定义权不属于任何单一系统、而属于公司级跨系统约定的概念域。虚拟域不是系统名,也不对应任何部署单元;它通过资源级 URN 被跨系统引用。
+
+设立虚拟域须同时满足:
+
+1. 该资源类型被多个系统共同引用(如应用授权单位、服务身份与发现);
+2. 定义权若归属某个系统,会因该系统改名、拆分或替换而使标识失效;
+3. 存在唯一的公司级注册表定义其格式与实例,并已在本规范登记。
+
+约束:
+
+- 虚拟域名称不得与系统名相同,也不得再作为系统名注册;
+- 实现侧不得自行约定虚拟域;新增虚拟域必须先登记在本规范;
+- 虚拟域的域级 URN(`urn:buka:application`、`urn:buka:service`)只是命名空间,不指向任何对象,不能作为标识符使用。
+
+##### 虚拟域登记
+
+| 虚拟域 | 格式 | 定义方 | 语义 |
+| --- | --- | --- | --- |
+| `application` | `urn:buka:application:{handle}` | 应用注册表 | 应用身份:授权单位与 token audience;`handle` 全局唯一、创建后不可变 |
+| `service` | `urn:buka:service:{system}:{name}` | 服务注册表 | 服务身份与发现句柄;`system` 为 L1 系统,`name` 为 L2 服务;服务不是授权单位,不作为 token audience |
 
 ### 字符集
 
@@ -62,6 +91,9 @@ URN 支持两种粒度:
 | `openbao`    | `dev:kv:galaxy:database`     | `urn:buka:openbao:dev:kv:galaxy:database`        | OpenBao 开发环境 KV     |
 | `kafka`      | `prod:topic:galaxy-events`   | `urn:buka:kafka:prod:topic:galaxy-events`        | Kafka 生产环境 Topic    |
 | `kubernetes` | `prod:deployment:galaxy:api` | `urn:buka:kubernetes:prod:deployment:galaxy:api` | K8s 生产环境 Deployment |
+| `galaxy` | — | `urn:buka:galaxy` | Galaxy 系统(系统域级) |
+| `application` | `galaxy` | `urn:buka:application:galaxy` | Galaxy 应用(虚拟域,授权单位 / aud) |
+| `service` | `galaxy:backend` | `urn:buka:service:galaxy:backend` | Galaxy 后端服务(虚拟域,发现句柄) |
 
 ## 通配匹配
 
