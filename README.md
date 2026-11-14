@@ -38,7 +38,7 @@ npx skills update
 
 | Skill                         | 覆盖内容                                                                                                                                                         |
 | ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `nestjs-kit-coding-standards` | 模块目录组织与 dto/entity/service/controller/query 的编写规范（@Model/Column/Cardinality/command/@FilterQuery/Slice/@IsBrowserRequest 等，references/ 按需加载） |
+| `nestjs-kit-coding-standards` | 模块目录组织（features 功能分组、src/shared 跨模块共享层）与 dto/entity/service/controller/query 的编写规范（@Model/Column/Cardinality/command/@FilterQuery/Slice/@IsBrowserRequest 等，references/ 按需加载） |
 | `nestjs-kit-urn`              | URN 格式规范、概念域与资源段、通配匹配                                                                                                                           |
 | `nestjs-kit-exception`        | 异常工厂、@ModuleExceptions、错误码体系                                                                                                                          |
 | `nestjs-kit-logger`           | LoggerModule、@InjectLogger、LoggerConfig                                                                                                                        |

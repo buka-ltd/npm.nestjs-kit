@@ -13,7 +13,8 @@
 - `services/<module-name>.service.ts` 主 service
 - `services/<subresource>.service.ts` 子 service
 - `commands/<action>.command.ts`(只放 interface,不放 handler)
-- 目录归属与命名约定见 [SKILL.md 「目录组织」章](../SKILL.md#业务模块目录组织)
+- 模块按能力分组时,该能力的 service/provider 放 `features/<feature-name>/`(见 [SKILL.md 「features 子目录」](../SKILL.md#features-子目录))
+- 目录归属与命名约定见 [SKILL.md 「业务模块目录组织」章](../SKILL.md#业务模块目录组织)
 
 ## 速查表
 
@@ -70,7 +71,7 @@ export class CourseService {
 | 可独立理解的复杂职责(通知发送、审计日志、外部同步) | 独立 provider(`@Injectable()`),由主 service 注入 |
 | 公共方法逼近 10 个,且可按资源/职责切出明确主题组 | 按主题拆子 service |
 | 单文件数百行仍持续膨胀 | 切分 |
-| 多模块共需的能力(如权限判断、ID 生成) | 下沉到公共层目录(`src/shared/`) |
+| 多模块共需的能力(如权限判断、ID 生成) | 下沉到 `src/shared/<name>/`(见 [SKILL.md 「跨模块共享层」](../SKILL.md#跨模块共享层)) |
 
 ### 不拆信号(保持单 service)
 

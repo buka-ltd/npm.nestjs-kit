@@ -8,7 +8,7 @@
 
 ## 命名与放置
 
-- 请求 DTO 放 `<module>/dto/requests/`,响应 DTO 放 `<module>/dto/responses/`;跨模块共享的放公共层目录(如 `src/common/dto/`)。目录规范见 [SKILL.md 「目录组织」章](../SKILL.md#业务模块目录组织)
+- 请求 DTO 放 `<module>/dto/requests/`,响应 DTO 放 `<module>/dto/responses/`;跨模块共享的纯契约放 `src/shared/<name>/`(见 [SKILL.md 「跨模块共享层」章](../SKILL.md#跨模块共享层)),feature 独占的 DTO 放该 feature 的 `dto/`(见 [SKILL.md 「features 子目录」](../SKILL.md#features-子目录))。目录规范见 [SKILL.md 「业务模块目录组织」章](../SKILL.md#业务模块目录组织)
 - **一个 DTO 一个文件**,文件名与类名一一对应:`CreateStudentRequestDto` → `create-student-request.dto.ts`
 - 请求命名:`CreateXxxRequestDto` / `UpdateXxxRequestDto` / `XxxFilterQueryDto`;响应命名:`{FunctionName}ResponseDto`(pack 一个 `ResponseBodyType(...)`),列表元素用 `XxxBriefDto` / `XxxDetailDto`
 
