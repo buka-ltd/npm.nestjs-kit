@@ -1,12 +1,7 @@
 ---
 name: nestjs-kit-swagger
 description: >
-  本 skill 覆盖 @buka/nestjs-kit 的 Swagger 文档修补。当用户遇到 Swagger UI 中 object 型 query 参数
-  渲染成手敲 JSON 文本框、需要统一异常响应文档(unifyExceptionResponses)、
-  配置 SwaggerPatcher(deepObjectifyQueries/unifyExceptionResponses)、
-  按项目实际暴露状态码裁剪 insert 列表,或某端点错误体不符合统一信封需要豁免时使用本 skill。
-  SwaggerPatcher 只做文档层后处理、不改变运行时校验;运行时错误响应来自 nestjs-kit-exception,
-  @FilterQuery/@PageQuery 的 Swagger 声明随 nestjs-kit-coding-standards 生成。
+  在 NestJS 项目里配置或修补 Swagger 文档时加载本 skill。覆盖 object 型 query 参数被渲染成 JSON 文本框的修复(deepObjectifyQueries)、统一异常响应文档(unifyExceptionResponses)、按实际暴露状态码裁剪 insert 列表、端点错误体豁免(@SkipUnifiedExceptionResponse);只做文档层处理,不改运行时校验。
 ---
 
 # Swagger 文档修补(SwaggerPatcher)

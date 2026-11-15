@@ -1,11 +1,7 @@
 ---
 name: nestjs-kit-http
 description: >
-  本 skill 覆盖 @buka/nestjs-kit 的服务间 HTTP 调用与错误处理。当用户用 keq 调用下游/第三方服务、
-  把上游 4xx/5xx 响应自动转成带错误码的异常(throwOnResponseError 中间件)、
-  按上游错误码分发不同异常类(errorDispatchers)、捕获并处理 BukaRequestException(code/errorCode/details/fatal)、
-  或实现尊重 fatal 标记的重试策略时使用本 skill。
-  本服务作为被调用方的错误响应结构见 nestjs-kit-exception;本 skill 只覆盖调用方一侧。
+  在 NestJS 代码里调用下游或第三方服务、处理 keq 请求错误时加载本 skill。覆盖 throwOnResponseError 中间件(上游 4xx/5xx 自动转成带错误码的异常)、errorDispatchers 按上游错误码分发异常类、捕获并处理 BukaRequestException(code/errorCode/details/fatal)、尊重 fatal 标记的重试策略。
 ---
 
 # 服务间调用(keq 错误处理)

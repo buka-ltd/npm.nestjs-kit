@@ -1,6 +1,6 @@
 # Controller 编写与事务提交(HTTP 层)
 
-> 本文件由 [nestjs-kit-coding-standards/SKILL.md](../SKILL.md) 按需加载(写 controller 时读本文件)。导入来源、事务与异常红线等通用约定见 [SKILL.md 「通用约定」章](../SKILL.md#通用约定跨文件类型);目录归属见 [SKILL.md 「目录组织」章](../SKILL.md#业务模块目录组织)。
+> 本文件是 [编码规约](../SKILL.md) 的按需加载部分(写 controller 时读本文件)。导入来源、事务与异常等硬红线见 [SKILL.md 「硬红线」章](../SKILL.md#硬红线跨文件通用);目录归属见 [SKILL.md 「业务模块目录组织」章](../SKILL.md#业务模块目录组织)。
 
 ## 前置条件
 
@@ -15,7 +15,7 @@ src/modules/<module-name>/<module-name>.controller.ts    # 主 controller
 src/modules/<module-name>/<subresource>.controller.ts    # 拆出的子 controller
 ```
 
-目录与文件命名见 [SKILL.md 「目录组织」章](../SKILL.md#业务模块目录组织)(一个 controller 一个文件)。
+目录与文件命名见 [SKILL.md 「业务模块目录组织」章](../SKILL.md#业务模块目录组织)(一个 controller 一个文件)。
 
 ## 速查表
 

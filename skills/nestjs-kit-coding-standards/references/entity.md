@@ -1,6 +1,6 @@
 # 实体与关系(MikroORM 集成)
 
-> 本文件由 [nestjs-kit-coding-standards/SKILL.md](../SKILL.md) 按需加载(定义实体时读本文件)。导入来源、事务与异常红线等通用约定见 [SKILL.md 「通用约定」章](../SKILL.md#通用约定跨文件类型);目录归属见 [SKILL.md 「目录组织」章](../SKILL.md#业务模块目录组织)。
+> 本文件是 [编码规约](../SKILL.md) 的按需加载部分(定义实体时读本文件)。导入来源、事务与异常等硬红线见 [SKILL.md 「硬红线」章](../SKILL.md#硬红线跨文件通用);目录归属见 [SKILL.md 「业务模块目录组织」章](../SKILL.md#业务模块目录组织)。
 
 ## 前置条件
 
@@ -9,7 +9,7 @@
 
 ## 命名与放置
 
-实体存放于 `src/modules/<module-name>/entities/<name>.entity.ts`(目录规范见 [SKILL.md 「目录组织」章](../SKILL.md#业务模块目录组织))。一个实体一个文件,后缀 `.entity.ts`。若项目使用 `@nestjs/swagger` CLI 插件,`tsconfig.json` 的 `dtoFileNameSuffix` **不要包含 `.entity.ts`**——该插件对 MikroORM `Ref/Collection` 推断出的装饰器是错误的;实体的 Swagger 一律由 `Column.*`/`Cardinality.*` 自动生成。
+实体存放于 `src/modules/<module-name>/entities/<name>.entity.ts`(目录规范见 [SKILL.md 「业务模块目录组织」章](../SKILL.md#业务模块目录组织))。一个实体一个文件,后缀 `.entity.ts`。若项目使用 `@nestjs/swagger` CLI 插件,`tsconfig.json` 的 `dtoFileNameSuffix` **不要包含 `.entity.ts`**——该插件对 MikroORM `Ref/Collection` 推断出的装饰器是错误的;实体的 Swagger 一律由 `Column.*`/`Cardinality.*` 自动生成。
 
 ## 速查表
 

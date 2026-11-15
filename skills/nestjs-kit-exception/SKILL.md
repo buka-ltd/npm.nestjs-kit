@@ -1,13 +1,7 @@
 ---
 name: nestjs-kit-exception
 description: >
-  本 skill 定义 @buka/nestjs-kit 的结构化业务异常与错误码体系。当用户声明或修改模块错误码(@ModuleExceptions)、
-  用 9 个异常工厂抛出业务异常(BusinessException/SystemException/ThirdPartyException/AuthException/
-  ValidationException/ConflictException/FeatureException/RateLimitException/DegradeException)、
-  构造统一错误响应 {error:{code,message,details}}、编写 ExceptionDetail 结构化详情、
-  为二方包认领 moduleId、或查询 GET /error-codes 错误码时使用本 skill。
-  写业务代码时选择抛哪种异常、异常声明文件的位置同时涉及 nestjs-kit-coding-standards;
-  上游服务响应转异常涉及 nestjs-kit-http。
+  在 NestJS 代码里抛出业务异常、声明或修改模块错误码时加载本 skill。覆盖 @ModuleExceptions 错误码声明、9 个异常工厂(Business/System/ThirdParty/Auth/Validation/Conflict/Feature/RateLimit/Degrade)、统一错误响应 {error:{code,message,details}}、ExceptionDetail 结构化详情、二方包认领 moduleId 与 GET /error-codes 查询。
 ---
 
 # 异常与错误码(ExceptionModule)

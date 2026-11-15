@@ -1,9 +1,7 @@
 ---
 name: nestjs-kit-urn
 description: >
-  本 skill 定义 urn:buka 统一资源标识符(URN)规范。当用户构造或解析 urn:buka:... 标识、
-  确定资源归属的概念域(domain)与资源段(resource)命名、设计 env 段约定、
-  书写通配匹配模式(* 与 **)、或使用 @IsUrn/@IsDomainUrn/@MatchesUrn 校验器而需了解其语义背景时使用本 skill。
+  在构造或解析 urn:buka 标识、决定资源归属的概念域与资源段命名、设计 env 段、书写通配匹配(* 与 **)、使用 @IsUrn/@IsDomainUrn/@MatchesUrn 校验器并需其语义背景时加载本 skill。
 ---
 
 # URN 规范 (urn:buka)

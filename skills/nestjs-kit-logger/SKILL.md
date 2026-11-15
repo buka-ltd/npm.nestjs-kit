@@ -1,10 +1,7 @@
 ---
 name: nestjs-kit-logger
 description: >
-  本 skill 覆盖 @buka/nestjs-kit 的统一日志。当用户在 service/controller 中注入 logger(@InjectLogger)、
-  配置 LoggerModule(serviceName/level/pretty)、用 LoggerConfig 读取 LOG_* 环境变量、
-  理解 pino JSON 结构化日志(含 HTTP 请求自动日志、reqId 链路、Loki 检索字段)时使用本 skill。
-  写任何带日志的业务代码(含 catch 中记日志后 rethrow 的写法)时都应参考本 skill 的注入与脱敏约定。
+  在 NestJS 代码里注入 logger、写日志、配置日志模块时加载本 skill。覆盖 @InjectLogger(以类名为上下文)、LoggerModule 注册(serviceName/level/pretty)、LoggerConfig 读取 LOG_* 环境变量、pino JSON 结构化日志(HTTP 请求日志、reqId 链路、Loki 检索字段)、脱敏约定。
 ---
 
 # 统一日志(LoggerModule)

@@ -1,23 +1,14 @@
 ---
 name: nestjs-kit-coding-standards
 description: >
-  本 skill 定义 @buka/nestjs-kit 业务代码的文件级编写规范:声明 DTO(@Model/@Property/@Composite/@List/@Dictionary/@Enum、
-  PickType/OmitType/PartialType/IntersectionType、ResponseBodyType、EntityDto/@EntityRef/PrimaryKeyType)、
-  定义 MikroORM 实体(DiscreteEntity/LinearEntity/TimestampedEntity 基类、Column.*、Cardinality.*)、
-  编写 service(command 单参契约、Ref<Entity> 传递、em.flush 事务约定)与 controller(operationId 命名、中文 JSDoc、@IsBrowserRequest)、
-  实现 list 查询(@FilterQuery/OrderQueryType/@PageQuery/Slice/ParseUUIDv7Pipe)、
-  组织模块目录(features/ 功能分组、src/shared/ 跨模块共享层)与命名。
-  当用户编写或修改 .dto.ts/.entity.ts/.service.ts/.controller.ts 文件、
-  新增业务模块或 CRUD 接口、移动或重命名业务源码文件时使用本 skill;
-  只要在项目中新增或修改 NestJS 业务代码,即使用户未提到具体文件名也应使用。
-  异常抛出、日志、加密存储等模块级能力由对应 skill 覆盖,本 skill 只规定代码结构与文件级规范。
+  本项目 NestJS 编码规约(强制)。改代码前先加载本 skill:新增、修改、重构、移动重命名、按 review 或 lint 修复,即使请求未点名文件。规约覆盖目录与命名、模块与 provider 组织、DTO/实体/service/controller 写法、列表查询、事务与异常。按改动涉及的文件类型读对应 reference,不必通读。
 ---
 
-# nestjs-kit 编写规范(coding standards)
+# 编码规约(coding standards)
 
-本 skill 规定 @buka/nestjs-kit 业务代码的文件级编写规范,覆盖 DTO、实体、service、controller、list 查询、模块目录组织(features 功能分组)与跨模块共享层(src/shared)。
+本规约是 @buka/nestjs-kit 业务项目里全部 NestJS 代码的强制规范:动手改代码前先加载本 skill,按被改动文件的类型读对应 reference,改完对照规约自查一遍。
 
-## 前置条件
+## 适用前提
 
 以下机制由项目接入阶段统一提供,编写业务文件时直接依赖:
 
@@ -25,31 +16,9 @@ description: >
 - `DatabaseConfig` 默认 `flushMode: FlushMode.COMMIT`(查询前隐式 flush 已跟踪变更)。事务提交点在 controller 末尾统一 `em.flush()`(见 [references/controller.md](references/controller.md) 与 [references/service.md](references/service.md))。
 - Swagger 文档由 `@nestjs/swagger` CLI 插件从 controller/DTO 元数据生成,`SwaggerPatcher` 只做文档后处理(见 [nestjs-kit-swagger](../nestjs-kit-swagger/SKILL.md))。
 
-## 速查表(跨文件通用规则)
+未接入 @buka/nestjs-kit 的项目,依赖这些机制的条款不适用。
 
-| 要做什么 | 用什么 |
-|---|---|
-| kit API 导入 | `import { X } from '@buka/nestjs-kit'`(细则见「通用约定·导入来源」);`Ref`/`Collection`/`Cursor`/`EntityManager` 自 `@mikro-orm/core`;`@Entity` 自 `@mikro-orm/decorators/legacy` |
-| 声明 service/controller | 普通 `@Injectable()`/`@Controller()` 类,无需继承基类 |
-| 请求体校验转换 | 全局 `BukaValidationPipe`(由 `BukaModule` 注册;`@EntityRef` 自动转 wrapped `Ref`) |
-| 事务提交 | controller handler 末尾统一 `await this.em.flush()`;service 非计数器等原子场景不 flush |
-| 抛出异常 | `@ModuleExceptions` 声明的异常工厂(规范见 [nestjs-kit-exception](../nestjs-kit-exception/SKILL.md)) |
-| 响应结构 | 统一 `{ data, meta }`:单条 `ResponseBodyType.from()`,列表 `ListResponseBodyType.fromSlice()` |
-
-## references 导航
-
-本 skill 的 references/ 目录按文件类型拆分,按需加载——写某类文件时只读对应的 reference;新增一条完整 CRUD 链路(跨 5 类文件)时才通读全部。
-
-| 要写什么文件 | 读哪个 reference |
-|---|---|
-| 写 DTO(请求/响应) | [references/dto.md](references/dto.md) |
-| 定义实体 | [references/entity.md](references/entity.md) |
-| 实现 list 查询(过滤/排序/分页) | [references/query.md](references/query.md) |
-| 写 service(业务逻辑) | [references/service.md](references/service.md) |
-| 写 controller(HTTP 层) | [references/controller.md](references/controller.md) |
-| 文件放在哪个目录、如何命名 | 见下方「业务模块目录组织」与「跨模块共享层」两章 |
-
-## 通用约定(跨文件类型)
+## 硬红线(跨文件通用)
 
 以"该事实是否 ≥2 类文件共用"为判据——以下五条红线与一条全局数据流链路对所有文件类型成立:
 
@@ -85,6 +54,32 @@ CreateXxxRequestDto(显式声明字段,@Model/@Property/@EntityRef 等)
 ### @EntityRef 自动转换
 
 请求体中 `@EntityRef`/`PrimaryKeyType` 字段由全局 `BukaValidationPipe` 在运行时转成 `em.getReference(Entity, id)` 的 wrapped `Ref`,到 service 入参时已是可直接使用的 `Ref<Entity>`(见 [references/dto.md](references/dto.md) 的实体派生 DTO 章)。
+
+## 按文件类型读 reference
+
+本规约的 references/ 目录按文件类型拆分,按需加载——写某类文件时只读对应的 reference;新增一条完整 CRUD 链路(跨 5 类文件)时才通读全部。
+
+| 要写什么文件 | 读哪个 reference |
+|---|---|
+| 写 DTO(请求/响应) | [references/dto.md](references/dto.md) |
+| 定义实体 | [references/entity.md](references/entity.md) |
+| 实现 list 查询(过滤/排序/分页) | [references/query.md](references/query.md) |
+| 写 service(业务逻辑) | [references/service.md](references/service.md) |
+| 写 controller(HTTP 层) | [references/controller.md](references/controller.md) |
+| 文件放在哪个目录、如何命名 | 见下方「业务模块目录组织」与「跨模块共享层」两章 |
+
+改完自查:被改动的每类文件都对照过对应 reference,文件放在正确目录、类名与文件名一一对应、导入来源正确。
+
+## 速查表(跨文件通用规则)
+
+| 要做什么 | 用什么 |
+|---|---|
+| kit API 导入 | `import { X } from '@buka/nestjs-kit'`(细则见「硬红线·导入来源」);`Ref`/`Collection`/`Cursor`/`EntityManager` 自 `@mikro-orm/core`;`@Entity` 自 `@mikro-orm/decorators/legacy` |
+| 声明 service/controller | 普通 `@Injectable()`/`@Controller()` 类,无需继承基类 |
+| 请求体校验转换 | 全局 `BukaValidationPipe`(由 `BukaModule` 注册;`@EntityRef` 自动转 wrapped `Ref`) |
+| 事务提交 | controller handler 末尾统一 `await this.em.flush()`;service 非计数器等原子场景不 flush |
+| 抛出异常 | `@ModuleExceptions` 声明的异常工厂(规范见 [nestjs-kit-exception](../nestjs-kit-exception/SKILL.md)) |
+| 响应结构 | 统一 `{ data, meta }`:单条 `ResponseBodyType.from()`,列表 `ListResponseBodyType.fromSlice()` |
 
 ## 业务模块目录组织
 

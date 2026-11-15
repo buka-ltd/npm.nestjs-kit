@@ -1,11 +1,7 @@
 ---
 name: nestjs-kit-open-bao
 description: >
-  本 skill 覆盖 @buka/nestjs-kit 的 OpenBao/Vault 集成。当用户读写 KV 秘密
-  (OpenBaoHttpClient 的 kvReadDataPath/kvWriteDataPath)、配置认证方式(token/userpass/approle/kubernetes)、
-  管理 transit 加密密钥、使用 OpenBaoTokenManager 获取或续期 token、
-  或给自建 keq 客户端透传 token(setOpenBaoToken)时使用本 skill。
-  信封加密依赖 OpenBao transit,相关场景同时参考 nestjs-kit-crypto。
+  在项目里读写 KV 秘密、配置 OpenBao/Vault 认证、管理 transit 密钥、获取或续期 token 时加载本 skill。覆盖 OpenBaoHttpClient 的 kvReadDataPath/kvWriteDataPath、token/userpass/approle/kubernetes 认证、OpenBaoTokenManager、setOpenBaoToken 给自建 keq 客户端透传 token。
 ---
 
 # OpenBao / Vault 集成(OpenBaoModule)

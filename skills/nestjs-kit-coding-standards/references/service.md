@@ -1,6 +1,6 @@
 # Service 编写与事务约定(业务逻辑层)
 
-> 本文件由 [nestjs-kit-coding-standards/SKILL.md](../SKILL.md) 按需加载(写 service 时读本文件)。导入来源、事务与异常红线等通用约定见 [SKILL.md 「通用约定」章](../SKILL.md#通用约定跨文件类型);目录归属见 [SKILL.md 「目录组织」章](../SKILL.md#业务模块目录组织)。
+> 本文件是 [编码规约](../SKILL.md) 的按需加载部分(写 service 时读本文件)。导入来源、事务与异常等硬红线见 [SKILL.md 「硬红线」章](../SKILL.md#硬红线跨文件通用);目录归属见 [SKILL.md 「业务模块目录组织」章](../SKILL.md#业务模块目录组织)。
 
 ## 前置条件
 

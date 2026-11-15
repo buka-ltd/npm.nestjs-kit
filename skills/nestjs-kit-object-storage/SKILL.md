@@ -1,11 +1,7 @@
 ---
 name: nestjs-kit-object-storage
 description: >
-  本 skill 覆盖 @buka/nestjs-kit 的对象存储。当用户上传/下载文件(S3 或 MinIO)、
-  生成预签名下载 URL(getSignedUrl)、查询对象元数据/存在性或删除对象、
-  配置 ObjectStorageModule(endpoint/bucket/prefix/forcePathStyle)、
-  或用 ObjectStorageModuleConfig 从环境变量读取配置时使用本 skill。
-  涉及 Readable 流的消费与销毁、prefix 两级语义、MinIO 联调 400 等对象存储问题也应使用。
+  在 NestJS 代码里上传或下载文件、生成预签名 URL、查询元数据与存在性、删除对象、配置对象存储时加载本 skill。覆盖 S3 与 MinIO、getSignedUrl、ObjectStorageModule(endpoint/bucket/prefix/forcePathStyle)、ObjectStorageModuleConfig 读环境变量、Readable 流的消费与销毁、prefix 两级语义。
 ---
 
 # 对象存储(ObjectStorageModule)

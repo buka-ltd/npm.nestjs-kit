@@ -1,11 +1,7 @@
 ---
 name: nestjs-kit-crypto
 description: >
-  本 skill 覆盖 @buka/nestjs-kit 的加密三件套。当用户加密存储敏感字段(EnvelopeEncryptionModule 信封加密、
-  KeyEnvelope/EncryptedPayload)、为加密字段建立等值查询(BlindIndexModule 盲索引)、
-  存储密码或凭证(SaltedHashModule 加盐哈希)、在实体中嵌入加密列(Column.Embedded)、
-  或用 reencrypt 执行密钥轮换时使用本 skill。
-  信封加密依赖 OpenBao transit 前置注册,见 nestjs-kit-open-bao;实体与嵌入列声明见 nestjs-kit-coding-standards。
+  在 NestJS 代码里加密存储敏感字段、给加密字段建等值查询、存密码或凭证、执行密钥轮换时加载本 skill。覆盖 EnvelopeEncryptionModule(信封加密、KeyEnvelope/EncryptedPayload)、BlindIndexModule(盲索引)、SaltedHashModule(加盐哈希)、实体中嵌入加密列(Column.Embedded)与 reencrypt。
 ---
 
 # 加密三件套(信封加密 / 盲索引 / 加盐哈希)

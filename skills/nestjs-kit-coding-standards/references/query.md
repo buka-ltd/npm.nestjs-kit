@@ -1,10 +1,10 @@
 # list 查询三件套(过滤 / 排序 / 分页)
 
-> 本文件由 [nestjs-kit-coding-standards/SKILL.md](../SKILL.md) 按需加载(实现 list 查询时读本文件)。导入来源、事务与异常红线等通用约定见 [SKILL.md 「通用约定」章](../SKILL.md#通用约定跨文件类型);目录归属见 [SKILL.md 「目录组织」章](../SKILL.md#业务模块目录组织)。
+> 本文件是 [编码规约](../SKILL.md) 的按需加载部分(实现 list 查询时读本文件)。导入来源、事务与异常等硬红线见 [SKILL.md 「硬红线」章](../SKILL.md#硬红线跨文件通用);目录归属见 [SKILL.md 「业务模块目录组织」章](../SKILL.md#业务模块目录组织)。
 
 ## 命名与放置
 
-过滤 DTO(`XxxFilterQueryDto`)、排序类(`XxxOrderQuery`)与分页参数类型随请求参数 DTO 存放于 `dto/requests/`(命名与拆分规则见 [references/dto.md](dto.md) 与 [SKILL.md 「目录组织」章](../SKILL.md#业务模块目录组织))。
+过滤 DTO(`XxxFilterQueryDto`)、排序类(`XxxOrderQuery`)与分页参数类型随请求参数 DTO 存放于 `dto/requests/`(命名与拆分规则见 [references/dto.md](dto.md) 与 [SKILL.md 「业务模块目录组织」章](../SKILL.md#业务模块目录组织))。
 
 ## 速查表
 
