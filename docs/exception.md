@@ -211,7 +211,7 @@ NestJS 内置 HTTP 异常会被映射到预留错误码（`moduleId: 0`）：
 | 503         | `DEGRADE`     | 503             |
 | 504         | `THIRD_PARTY` | 504             |
 
-> `moduleId: 0` 为系统保留，业务模块应从 1 开始分配。
+> `moduleId: 0`（内置 HTTP 语义）与 `1`（客户端门禁）是公共号段，由 kit 占用；业务模块在 `1000` - `FZZZ` 范围内声明，见公司 `docs.specifications` 的 error-codes.md。
 
 ### BukaExceptions — 内置异常
 
@@ -242,6 +242,31 @@ throw new BukaExceptions.Unauthorized();
 | `BukaExceptions.BadGateway`           | `THIRD_PARTY` | 502        |
 | `BukaExceptions.GatewayTimeout`       | `THIRD_PARTY` | 504        |
 | `BukaExceptions.ServiceUnavailable`   | `DEGRADE`     | 503        |
+
+### ClientGateExceptions — 客户端门禁
+
+跨应用通用的「用户此刻做不了这件事，必须完成一个固定动作才能恢复」语义。它占用公共号段、任何系统都可抛出，不属于任何系统的业务语义：
+
+| 异常                                        | 语义             | sequenceId |
+| ------------------------------------------- | ---------------- | ---------- |
+| `ClientGateExceptions.ClientVersionRejected` | 客户端版本过低   | 1          |
+| `ClientGateExceptions.EntitlementRequired`   | 需要付费资格     | 2          |
+| `ClientGateExceptions.EntitlementExpired`    | 付费资格已失效   | 3          |
+| `ClientGateExceptions.Maintenance`           | 服务维护中       | 4          |
+| `ClientGateExceptions.CapabilityUnavailable` | 功能未开放       | 5          |
+| `ClientGateExceptions.PlanLimitReached`      | 已达当前方案上限 | 6          |
+
+全部属于 `FEATURE` 类别（HTTP 403）。参数走 `details`，作为**最后一个参数**传入详情数组：
+
+```typescript
+import { ClientGateExceptions } from "@buka/nestjs-kit";
+
+throw new ClientGateExceptions.PlanLimitReached("成员", 15, 10, [
+  { type: "client_gate", resource: "members", current: 15, max: 10 },
+]);
+```
+
+详情统一以 `type: 'client_gate'` 标识，字段按 `seq` 取（类型见 `PlanLimitDetail` 等导出）。
 
 如需禁用全局过滤器以自定义异常处理：
 

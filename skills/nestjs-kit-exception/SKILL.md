@@ -22,6 +22,7 @@ description: >
 | 参数校验错误 | `ValidationException`(400) |
 | 限流/降级 | `RateLimitException`(429) / `DegradeException`(503) |
 | 直接抛内置常用异常 | `BukaExceptions.NotFound` 等 |
+| 客户端门禁（版本过低 / 维护 / 付费资格 / 方案上限） | `ClientGateExceptions.*` |
 | 结构化错误详情 | `ExceptionDetail`(details 参数) |
 
 ## 文件位置
@@ -111,6 +112,18 @@ throw new BukaExceptions.BadRequest('自定义消息')
 
 完整列表:`BadRequest`(400)、`Unauthorized`(401)、`Forbidden`(403)、`NotFound`(404)、`Conflict`(409)、`UnsupportedMediaType`(415)、`TooManyRequests`(429)、`InternalServerError`(500)、`BadGateway`(502)、`GatewayTimeout`(504)、`ServiceUnavailable`(503)。
 
+`ClientGateExceptions`(moduleId: 1)是**客户端门禁**:用户此刻做不了某件事、必须完成一个固定动作才能恢复。它占用公共号段,任何系统都可抛出:
+
+```typescript
+throw new ClientGateExceptions.PlanLimitReached('成员', 15, 10, [
+  { type: 'client_gate', resource: 'members', current: 15, max: 10 },
+])
+```
+
+列表:`ClientVersionRejected`(1 版本过低)、`EntitlementRequired`(2 需要付费资格)、`EntitlementExpired`(3 付费资格失效)、`Maintenance`(4 维护中)、`CapabilityUnavailable`(5 功能未开放)、`PlanLimitReached`(6 已达方案上限);全部是 `FEATURE`/403。
+
+参数走 `details`(最后一个参数传详情数组),详情以 `type: 'client_gate'` 标识。
+
 > 内置 NestJS HttpException 也能被 filter 隐式映射,但业务代码统一走 `@ModuleExceptions` 工厂——错误码可检索、类别可控,裸 `throw new HttpException`(NestJS 内建类)跳过了错误码体系。
 
 ## 结构化详情(ExceptionDetail)
@@ -154,7 +167,7 @@ export class PaymentExceptions {
 
 ## 注意事项
 
-- 必须先登记再使用:`sequenceId` 模块内自增管理;`moduleId` 业务模块在 1000-FZZZ 范围内声明(跨服务复用的模块保持一致)
+- 必须先登记再使用:`sequenceId` 模块内自增管理;`moduleId` 业务模块在 1000-FZZZ 范围内声明(跨服务复用的模块保持一致);`moduleId: 0`(内置 HTTP 语义)与 `1`(客户端门禁)由 kit 占用,不要认领
 - `description` 必写——它是 `GET /error-codes` 错误码查询接口的排障材料
 - 内部错误使用 `SystemException`;第三方调用失败使用 `ThirdPartyException`(保留上游原始错误码,不包装成 SYSTEM,以正确告警归类)
 - 找不到资源用 `BusinessException`/`BukaExceptions.NotFound`

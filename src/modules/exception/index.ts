@@ -52,6 +52,17 @@ export type { ExceptionModuleOptions as ExceptionNestModuleOptions } from './exc
 // 内置异常 (moduleId: 0)
 export { BukaExceptions } from './buka.exceptions.js'
 
+// 客户端门禁 (moduleId: 1)
+export { ClientGateExceptions } from './client-gate.exceptions.js'
+export type {
+  CapabilityUnavailableDetail,
+  ClientGateDetail,
+  ClientVersionRejectedDetail,
+  EntitlementDetail,
+  MaintenanceDetail,
+  PlanLimitDetail,
+} from './client-gate.exceptions.js'
+
 // 过滤器
 export { ErrorCodeExceptionFilter } from './filters/exception.filter.js'
 
