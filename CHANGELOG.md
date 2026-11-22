@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.8.0](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.7.1...v4.8.0) (2026-11-22)
+
+
+### Features
+
+* 新增客户端门禁异常 ClientGateExceptions ([45c0a5c](https://github.com/buka-ltd/npm.nestjs-kit/commit/45c0a5cbc935e85885c9d3d57442b3bc8f32d433))
+
 ## [4.7.1](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.7.0...v4.7.1) (2026-11-13)
 
 
