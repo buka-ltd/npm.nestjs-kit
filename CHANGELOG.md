@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.9.0](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.8.0...v4.9.0) (2026-11-28)
+
+
+### Features
+
+* 新增协议签署门禁错误码 ([233dddc](https://github.com/buka-ltd/npm.nestjs-kit/commit/233dddcfbaa1c40859718172b69b9106dbaf8282))
+
 ## [4.8.0](https://github.com/buka-ltd/npm.nestjs-kit/compare/v4.7.1...v4.8.0) (2026-11-22)
 
 
