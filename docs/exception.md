@@ -255,6 +255,7 @@ throw new BukaExceptions.Unauthorized();
 | `ClientGateExceptions.Maintenance`           | 服务维护中       | 4          |
 | `ClientGateExceptions.CapabilityUnavailable` | 功能未开放       | 5          |
 | `ClientGateExceptions.PlanLimitReached`      | 已达当前方案上限 | 6          |
+| `ClientGateExceptions.AgreementSignatureRequired` | 协议签署未完成 | 7        |
 
 全部属于 `FEATURE` 类别（HTTP 403）。参数走 `details`，作为**最后一个参数**传入详情数组：
 

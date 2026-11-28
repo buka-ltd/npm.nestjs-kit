@@ -44,6 +44,30 @@ export interface PlanLimitDetail extends ClientGateDetail {
   readonly max: number
 }
 
+/** 待签署的一份协议（当前生效版本的摘要） */
+export interface AgreementSignatureRequirement {
+  /** 协议版本 ID，提交签署时原样回传 */
+  readonly agreementVersionId: string
+  /** 协议标识（slug） */
+  readonly slug: string
+  /** 协议标题 */
+  readonly title: string
+  /** 版本号 */
+  readonly version: number
+  /** 正文的内容寻址地址（含 hash 段，可直接打开） */
+  readonly href: string
+  /** 正文内容指纹（已编译 HTML 的 SHA-256） */
+  readonly contentHash: string
+  /** 版本发布时间（ISO 8601） */
+  readonly publishedAt?: string
+}
+
+/** 协议签署未完成 */
+export interface AgreementSignatureRequiredDetail extends ClientGateDetail {
+  /** 当前账户待签署的协议，至少一项 */
+  readonly agreements: readonly AgreementSignatureRequirement[]
+}
+
 
 /**
  * 客户端门禁（moduleId: 1）
@@ -127,5 +151,18 @@ export class ClientGateExceptions {
     sequenceId: 6,
     messageFactory: (resourceLabel: string, current: number, max: number) => `${resourceLabel}数量已达上限（${current}/${max}），请提升方案后继续操作`,
     description: '资源数量达到当前方案上限；需要提升方案或清理存量',
+  })
+
+  /**
+   * 协议签署未完成
+   *
+   * 协议发布新版本、或登录入口新绑定协议后，当前账户尚未签署生效版本时抛出。
+   * 客户端应展示不可关闭的协议签署页：列出待签署的协议、允许打开正文、
+   * 「同意并继续」提交签署，「不同意并退出登录」结束会话。
+   */
+  static readonly AgreementSignatureRequired = FeatureException({
+    sequenceId: 7,
+    messageFactory: () => '需要签署最新的协议后才能继续使用',
+    description: '当前账户尚未签署登录入口要求的最新协议版本；完成协议签署后才能继续使用',
   })
 }

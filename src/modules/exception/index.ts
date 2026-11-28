@@ -55,6 +55,8 @@ export { BukaExceptions } from './buka.exceptions.js'
 // 客户端门禁 (moduleId: 1)
 export { ClientGateExceptions } from './client-gate.exceptions.js'
 export type {
+  AgreementSignatureRequiredDetail,
+  AgreementSignatureRequirement,
   CapabilityUnavailableDetail,
   ClientGateDetail,
   ClientVersionRejectedDetail,

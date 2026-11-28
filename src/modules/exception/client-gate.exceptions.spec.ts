@@ -24,7 +24,7 @@ describe('ClientGateExceptions', () => {
     expect(error.httpStatus).toBe(403)
   })
 
-  it('六个场景的 seq 从 1 连续到 6', () => {
+  it('七个场景的 seq 从 1 连续到 7', () => {
     const errors = [
       new ClientGateExceptions.ClientVersionRejected('1.4.0', '1.0.0', []),
       new ClientGateExceptions.EntitlementRequired([]),
@@ -32,9 +32,10 @@ describe('ClientGateExceptions', () => {
       new ClientGateExceptions.Maintenance([]),
       new ClientGateExceptions.CapabilityUnavailable([]),
       new ClientGateExceptions.PlanLimitReached('slots', 10, 10, []),
+      new ClientGateExceptions.AgreementSignatureRequired([]),
     ]
 
-    expect(errors.map((error) => error.sequenceId)).toEqual([1, 2, 3, 4, 5, 6])
+    expect(errors.map((error) => error.sequenceId)).toEqual([1, 2, 3, 4, 5, 6, 7])
     expect(errors.map((error) => readableCode(error))).toEqual([
       'F0-0002-0001-001',
       'F0-0002-0001-002',
@@ -42,6 +43,7 @@ describe('ClientGateExceptions', () => {
       'F0-0002-0001-004',
       'F0-0002-0001-005',
       'F0-0002-0001-006',
+      'F0-0002-0001-007',
     ])
   })
 
@@ -75,6 +77,43 @@ describe('ClientGateExceptions', () => {
     expect(error.message).toBe('服务正在维护，请稍后重试')
     expect(error.details).toEqual([
       { type: 'client_gate', estimatedRecoveryAt: '2026-12-01T04:00:00.000Z', notice: '数据库迁移' },
+    ])
+  })
+
+  it('协议签署未完成：待签署协议随 details 透传，正文与指纹成对', () => {
+    const error = new ClientGateExceptions.AgreementSignatureRequired([
+      {
+        type: 'client_gate',
+        agreements: [
+          {
+            agreementVersionId: '0192f0c0-0000-7000-8000-000000000001',
+            slug: 'user-agreement',
+            title: '用户服务协议',
+            version: 3,
+            href: 'https://auth.buka.ltd/agreements/abc',
+            contentHash: 'a'.repeat(64),
+            publishedAt: '2026-11-20T00:00:00.000Z',
+          },
+        ],
+      },
+    ])
+
+    expect(error.message).toBe('需要签署最新的协议后才能继续使用')
+    expect(error.details).toEqual([
+      {
+        type: 'client_gate',
+        agreements: [
+          {
+            agreementVersionId: '0192f0c0-0000-7000-8000-000000000001',
+            slug: 'user-agreement',
+            title: '用户服务协议',
+            version: 3,
+            href: 'https://auth.buka.ltd/agreements/abc',
+            contentHash: 'a'.repeat(64),
+            publishedAt: '2026-11-20T00:00:00.000Z',
+          },
+        ],
+      },
     ])
   })
 })
